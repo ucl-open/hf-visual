@@ -1,5 +1,5 @@
 # Import core types
-from typing import Literal
+from typing import Literal, Optional
 from pydantic import Field
 
 from swc.aeon.io import reader
@@ -7,8 +7,11 @@ from swc.aeon.schema import BaseSchema, data_reader
 
 from ucl_open_hf_visual import __semver__
 
-# TODO - should inherit from some TaskParameters base class rather than BaseSchema
-class UclOpenHfVisualTaskParameters(BaseSchema):
+# TODO - this should be a general class that lives in ucl-open
+class TaskParameters(BaseSchema):
+    rng_seed: Optional[float] = Field(default=None, description="Seed of the random number generator")
+
+class UclOpenHfVisualTaskParameters(TaskParameters):
     ...
 
 
