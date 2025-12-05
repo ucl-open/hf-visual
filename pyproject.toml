@@ -1,0 +1,64 @@
+[build-system]
+requires = ["uv_build>=0.8.22"]
+build-backend = "uv_build"
+
+[project]
+name = "ucl-open-hf-visual"
+description = "A library that defines a ucl-open data schema for the hf-visual experiment."
+authors = [ {name = "RoboDoig", email = "a.erskine@neurogears.org"}]
+license = "MIT"
+requires-python = ">=3.11, <3.12"
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: Microsoft :: Windows",
+]
+version = "0.0.0-rc1"
+readme = {file = "README.md", content-type = "text/markdown"}
+
+dependencies = [
+  "swc-aeon>=0.1.0",
+  "pydantic-settings"
+]
+
+# [project.urls]
+# Documentation = "https://ucl-open.github.io/Ucl.Open.HfVisual/"
+# Repository = "https://github.com/UclOpen/Ucl.Open.HfVisual/"
+# Issues = "https://github.com/UclOpen/Ucl.Open.HfVisual/issues"
+# Changelog = "https://github.com/UclOpen/Ucl.Open.HfVisual/releases"
+
+[project.optional-dependencies]
+
+data = ["contraqctor<0.5.0"]
+
+[dependency-groups]
+
+dev = [
+    "ucl-open-hf-visual[launcher]",
+    "ucl-open-hf-visual[data]",
+    "ruff",
+    "codespell"
+]
+
+[project.scripts]
+hf-visual = "ucl_open_hf_visual.cli:main"
+
+[tool.ruff]
+line-length = 120
+target-version = 'py311'
+
+[tool.ruff.lint]
+extend-select = ['Q', 'RUF100', 'C90', 'I']
+extend-ignore = []
+mccabe = { max-complexity = 14 }
+pydocstyle = { convention = 'google' }
+
+[tool.codespell]
+skip = '.git,*.pdf,*.svg,./bonsai,*.bonsai,./docs/_build,uv.lock,*Generated.cs'
+ignore-words-list = 'nd'
+
+[tool.uv]
+default-groups = ['dev']
+required-version = '>=0.8.4'
+
+[tool.uv.sources]
+swc-aeon = { git = "https://github.com/SainsburyWellcomeCentre/aeon_api.git", branch = "pydantic-schema" }
