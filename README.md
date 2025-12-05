@@ -1,2 +1,2 @@
-# rig-template
-Template repository for an experimental framework using the ucl-open framework
+# hf-visual
+Repository for head-fixed visual sequence stimulation task
