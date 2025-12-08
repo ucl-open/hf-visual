@@ -10,6 +10,6 @@ from ucl_open_hf_visual import __semver__
 
 
 class UclOpenHfVisualRig(BaseSchema):
-    version: Literal[__semver__] = __semver__
+    version: Literal[__semver__] = __semver__ # type: ignore
     screen: Screen
     ...

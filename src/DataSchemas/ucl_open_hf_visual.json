@@ -1,0 +1,505 @@
+{
+  "$defs": {
+    "AindBehaviorSessionModel": {
+      "properties": {
+        "aind_behavior_services_pkg_version": {
+          "default": "0.12.5",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
+          "type": "string"
+        },
+        "version": {
+          "const": "0.12.5",
+          "default": "0.12.5",
+          "title": "Version",
+          "type": "string"
+        },
+        "experiment": {
+          "default": null,
+          "description": "Name of the experiment",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Experiment"
+        },
+        "experimenter": {
+          "default": [],
+          "description": "Name of the experimenter",
+          "items": {
+            "type": "string"
+          },
+          "title": "Experimenter",
+          "type": "array"
+        },
+        "date": {
+          "description": "Date of the experiment",
+          "format": "date-time",
+          "title": "Date",
+          "type": "string"
+        },
+        "root_path": {
+          "description": "Root path where data will be logged",
+          "title": "Root Path",
+          "type": "string"
+        },
+        "session_name": {
+          "default": null,
+          "description": "Name of the session. This will be used to create a folder in the root path. If not provided, it will be generated using subject and date.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Session Name"
+        },
+        "subject": {
+          "description": "Name of the subject",
+          "title": "Subject",
+          "type": "string"
+        },
+        "experiment_version": {
+          "default": "",
+          "deprecated": true,
+          "description": "Version of the experiment",
+          "title": "Experiment Version",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "description": "Notes about the experiment",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        },
+        "commit_hash": {
+          "default": null,
+          "description": "Commit hash of the repository",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Commit Hash"
+        },
+        "allow_dirty_repo": {
+          "default": false,
+          "description": "Allow running from a dirty repository",
+          "title": "Allow Dirty Repo",
+          "type": "boolean"
+        },
+        "skip_hardware_validation": {
+          "default": false,
+          "description": "Skip hardware validation",
+          "title": "Skip Hardware Validation",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "root_path",
+        "subject"
+      ],
+      "title": "AindBehaviorSessionModel",
+      "type": "object"
+    },
+    "DisplayCalibration": {
+      "properties": {
+        "intrinsics": {
+          "$ref": "#/$defs/DisplayIntrinsics",
+          "default": {
+            "frameWidth": 1920,
+            "frameHeight": 1080,
+            "displayWidth": 20.0,
+            "displayHeight": 15.0
+          },
+          "description": "Intrinsics",
+          "title": "Intrinsics"
+        },
+        "extrinsics": {
+          "$ref": "#/$defs/DisplayExtrinsics",
+          "default": {
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "translation": {
+              "x": 0.0,
+              "y": 1.309016,
+              "z": -13.27
+            }
+          },
+          "description": "Extrinsics",
+          "title": "Extrinsics"
+        }
+      },
+      "title": "DisplayCalibration",
+      "type": "object"
+    },
+    "DisplayExtrinsics": {
+      "properties": {
+        "rotation": {
+          "$ref": "#/$defs/Vector3",
+          "default": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "description": "Rotation vector (radians)",
+          "title": "Rotation"
+        },
+        "translation": {
+          "$ref": "#/$defs/Vector3",
+          "default": {
+            "x": 0.0,
+            "y": 1.309016,
+            "z": -13.27
+          },
+          "description": "Translation (in cm)",
+          "title": "Translation"
+        }
+      },
+      "title": "DisplayExtrinsics",
+      "type": "object"
+    },
+    "DisplayIntrinsics": {
+      "properties": {
+        "frameWidth": {
+          "default": 1920,
+          "description": "Frame width (px)",
+          "minimum": 0,
+          "title": "FrameWidth",
+          "type": "integer"
+        },
+        "frameHeight": {
+          "default": 1080,
+          "description": "Frame height (px)",
+          "minimum": 0,
+          "title": "FrameHeight",
+          "type": "integer"
+        },
+        "displayWidth": {
+          "default": 20,
+          "description": "Display width (cm)",
+          "minimum": 0,
+          "title": "DisplayWidth",
+          "type": "number"
+        },
+        "displayHeight": {
+          "default": 15,
+          "description": "Display width (cm)",
+          "minimum": 0,
+          "title": "DisplayHeight",
+          "type": "number"
+        }
+      },
+      "title": "DisplayIntrinsics",
+      "type": "object"
+    },
+    "DisplaysCalibration": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "displayHeight": 15.0,
+              "displayWidth": 20.0,
+              "frameHeight": 1080,
+              "frameWidth": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": -16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            }
+          },
+          "description": "Left display calibration",
+          "title": "Left"
+        },
+        "center": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "displayHeight": 15.0,
+              "displayWidth": 20.0,
+              "frameHeight": 1080,
+              "frameWidth": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 0.0,
+                "y": 1.309016,
+                "z": -13.27
+              }
+            }
+          },
+          "description": "Center display calibration",
+          "title": "Center"
+        },
+        "right": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "displayHeight": 15.0,
+              "displayWidth": 20.0,
+              "frameHeight": 1080,
+              "frameWidth": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": -1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            }
+          },
+          "description": "Right display calibration",
+          "title": "Right"
+        }
+      },
+      "title": "DisplaysCalibration",
+      "type": "object"
+    },
+    "Screen": {
+      "properties": {
+        "deviceType": {
+          "const": "Screen",
+          "default": "Screen",
+          "description": "Device type",
+          "title": "DeviceType",
+          "type": "string"
+        },
+        "displayIndex": {
+          "default": 1,
+          "description": "Display index",
+          "title": "DisplayIndex",
+          "type": "integer"
+        },
+        "targetRenderFrequency": {
+          "default": 60,
+          "description": "Target render frequency",
+          "title": "TargetRenderFrequency",
+          "type": "number"
+        },
+        "targetUpdateFrequency": {
+          "default": 120,
+          "description": "Target update frequency",
+          "title": "TargetUpdateFrequency",
+          "type": "number"
+        },
+        "textureAssetsDirectory": {
+          "default": "Textures",
+          "description": "Calibration directory",
+          "title": "TextureAssetsDirectory",
+          "type": "string"
+        },
+        "calibration": {
+          "$ref": "#/$defs/DisplaysCalibration",
+          "default": {
+            "left": {
+              "extrinsics": {
+                "rotation": {
+                  "x": 0.0,
+                  "y": 1.0472,
+                  "z": 0.0
+                },
+                "translation": {
+                  "x": -16.6917756,
+                  "y": 1.309016,
+                  "z": -3.575264
+                }
+              },
+              "intrinsics": {
+                "displayHeight": 15.0,
+                "displayWidth": 20.0,
+                "frameHeight": 1080,
+                "frameWidth": 1920
+              }
+            },
+            "center": {
+              "extrinsics": {
+                "rotation": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0
+                },
+                "translation": {
+                  "x": 0.0,
+                  "y": 1.309016,
+                  "z": -13.27
+                }
+              },
+              "intrinsics": {
+                "displayHeight": 15.0,
+                "displayWidth": 20.0,
+                "frameHeight": 1080,
+                "frameWidth": 1920
+              }
+            },
+            "right": {
+              "extrinsics": {
+                "rotation": {
+                  "x": 0.0,
+                  "y": -1.0472,
+                  "z": 0.0
+                },
+                "translation": {
+                  "x": 16.6917756,
+                  "y": 1.309016,
+                  "z": -3.575264
+                }
+              },
+              "intrinsics": {
+                "displayHeight": 15.0,
+                "displayWidth": 20.0,
+                "frameHeight": 1080,
+                "frameWidth": 1920
+              }
+            }
+          },
+          "description": "Screen calibration",
+          "title": "Calibration"
+        },
+        "brightness": {
+          "default": 0,
+          "description": "Brightness",
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Brightness",
+          "type": "number"
+        },
+        "contrast": {
+          "default": 1,
+          "description": "Contrast",
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Contrast",
+          "type": "number"
+        }
+      },
+      "title": "Screen",
+      "type": "object"
+    },
+    "UclOpenHfVisualRig": {
+      "properties": {
+        "version": {
+          "const": "0.0.0-rc1",
+          "default": "0.0.0-rc1",
+          "title": "Version",
+          "type": "string"
+        },
+        "screen": {
+          "$ref": "#/$defs/Screen"
+        }
+      },
+      "required": [
+        "screen"
+      ],
+      "title": "UclOpenHfVisualRig",
+      "type": "object"
+    },
+    "UclOpenHfVisualTaskLogic": {
+      "properties": {
+        "version": {
+          "const": "0.0.0-rc1",
+          "default": "0.0.0-rc1",
+          "title": "Version",
+          "type": "string"
+        },
+        "name": {
+          "const": "UclOpenHfVisual",
+          "default": "UclOpenHfVisual",
+          "description": "Name of the task logic",
+          "title": "Name",
+          "type": "string"
+        },
+        "taskParameters": {
+          "$ref": "#/$defs/UclOpenHfVisualTaskParameters",
+          "description": "Parameters of the task logic",
+          "title": "TaskParameters"
+        }
+      },
+      "required": [
+        "taskParameters"
+      ],
+      "title": "UclOpenHfVisualTaskLogic",
+      "type": "object"
+    },
+    "UclOpenHfVisualTaskParameters": {
+      "properties": {
+        "rngSeed": {
+          "default": null,
+          "description": "Seed of the random number generator",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "RngSeed"
+        }
+      },
+      "title": "UclOpenHfVisualTaskParameters",
+      "type": "object"
+    },
+    "Vector3": {
+      "properties": {
+        "x": {
+          "default": 0,
+          "description": "X coordinate of the point",
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "default": 0,
+          "description": "Y coordinate of the point",
+          "title": "Y",
+          "type": "number"
+        },
+        "z": {
+          "default": 0,
+          "description": "Z coordinate of the point",
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "title": "Vector3",
+      "type": "object"
+    }
+  }
+}

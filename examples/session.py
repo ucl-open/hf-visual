@@ -5,7 +5,9 @@ from swc.aeon.schema import Experiment
 
 # TODO - autofill experiment fields
 session = Experiment(
-
+    workflow="main.bonsai",
+    commit="",
+    repository_url="https://github.com/ucl-open/hf-visual"
 )
 
 def main(path_seed: str = "./local/{schema}.json"):
