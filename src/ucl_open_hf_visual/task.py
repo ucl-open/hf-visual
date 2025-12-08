@@ -16,7 +16,7 @@ class UclOpenHfVisualTaskParameters(TaskParameters):
 
 
 class UclOpenHfVisualTaskLogic(BaseSchema):
-    version: Literal[__semver__] = __semver__
+    version: Literal[__semver__] = __semver__ # type: ignore
     name: Literal["UclOpenHfVisual"] = Field(default="UclOpenHfVisual", description="Name of the task logic", frozen=True)
     task_parameters: UclOpenHfVisualTaskParameters = Field(description="Parameters of the task logic")
     ...

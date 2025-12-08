@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Union
 
 import pydantic
-from aind_behavior_services.session import AindBehaviorSessionModel
+from swc.aeon.schema import Experiment
 from aind_behavior_services.utils import BonsaiSgenSerializers, convert_pydantic_to_bonsai
 
 import ucl_open_hf_visual.rig
@@ -17,7 +17,7 @@ def main():
     models = [
         ucl_open_hf_visual.task.UclOpenHfVisualTaskLogic,
         ucl_open_hf_visual.rig.UclOpenHfVisualRig,
-        AindBehaviorSessionModel,
+        Experiment,
     ]
     model = pydantic.RootModel[Union[tuple(models)]]
 
