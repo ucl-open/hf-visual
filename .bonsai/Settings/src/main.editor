@@ -41,7 +41,5 @@
     </DockWindows>
     <FloatWindows Count="0" />
   </DockPanel>
-  <WatchSettings>
-    <Watch Path="3.4" />
-  </WatchSettings>
+  <WatchSettings />
 </EditorSettings>

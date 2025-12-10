@@ -4,7 +4,6 @@
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:UclOpenHfVisualDataSchema;assembly=Extensions"
-                 xmlns:port="clr-namespace:Bonsai.IO.Ports;assembly=Bonsai.System"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -137,157 +136,33 @@
           </Edges>
         </Workflow>
       </Expression>
-      <Expression xsi:type="GroupWorkflow">
-        <Name>SerialDevice</Name>
-        <Workflow>
-          <Nodes>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="PortName" />
-              <Property Name="BaudRate" />
-              <Property Name="Encoding" />
-              <Property Name="NewLine" />
-              <Property Name="Parity" />
-              <Property Name="ParityReplace" />
-              <Property Name="DataBits" />
-              <Property Name="StopBits" />
-              <Property Name="Handshake" />
-              <Property Name="DiscardNull" />
-              <Property Name="DtrEnable" />
-              <Property Name="RtsEnable" />
-              <Property Name="ReadBufferSize" />
-              <Property Name="WriteBufferSize" />
-              <Property Name="ReceivedBytesThreshold" />
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Name" Description="Name of this serial device" Category="Connection" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="StringProperty">
-                <Value>Arduino</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Name" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="port:CreateSerialPort">
-                <port:Name>Arduino</port:Name>
-                <port:PortName>COM10</port:PortName>
-                <port:BaudRate>1000000</port:BaudRate>
-                <port:NewLine>\n</port:NewLine>
-                <port:Parity>None</port:Parity>
-                <port:ParityReplace>63</port:ParityReplace>
-                <port:DataBits>8</port:DataBits>
-                <port:StopBits>One</port:StopBits>
-                <port:Handshake>None</port:Handshake>
-                <port:DiscardNull>false</port:DiscardNull>
-                <port:DtrEnable>false</port:DtrEnable>
-                <port:RtsEnable>false</port:RtsEnable>
-                <port:ReadBufferSize>4096</port:ReadBufferSize>
-                <port:WriteBufferSize>2048</port:WriteBufferSize>
-                <port:ReceivedBytesThreshold>1</port:ReceivedBytesThreshold>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Zip" />
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Pattern" />
-              <Property Name="Separator" />
-            </Expression>
-            <Expression xsi:type="rx:SelectMany">
-              <Name>Parse</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Item2</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Take">
-                      <rx:Count>1</rx:Count>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:AsyncSubject">
-                    <Name>portname</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>portname</Name>
-                  </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="PortName" />
-                    </PropertyMappings>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="port:SerialReadLine">
-                      <port:PortName>Arduino</port:PortName>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Pattern" />
-                    <Property Name="Separator" />
-                  </Expression>
-                  <Expression xsi:type="Parse">
-                    <Pattern>%f</Pattern>
-                    <Separator>,</Separator>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="8" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source2" />
-                  <Edge From="8" To="9" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Name" DisplayName="SerialMessageSubjectName" Category="Subjects" />
-            </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>SerialMessages</Name>
-            </Expression>
-            <Expression xsi:type="WorkflowOutput" />
-          </Nodes>
-          <Edges>
-            <Edge From="0" To="4" Label="Source1" />
-            <Edge From="1" To="2" Label="Source1" />
-            <Edge From="2" To="3" Label="Source1" />
-            <Edge From="2" To="5" Label="Source2" />
-            <Edge From="3" To="4" Label="Source2" />
-            <Edge From="4" To="5" Label="Source1" />
-            <Edge From="5" To="7" Label="Source1" />
-            <Edge From="6" To="7" Label="Source2" />
-            <Edge From="7" To="9" Label="Source1" />
-            <Edge From="8" To="9" Label="Source2" />
-            <Edge From="9" To="10" Label="Source1" />
-          </Edges>
-        </Workflow>
+      <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Devices:SerialDevice.bonsai">
+        <PortName>COM10</PortName>
+        <BaudRate>1000000</BaudRate>
+        <Encoding xsi:nil="true" />
+        <NewLine>\n</NewLine>
+        <Parity>None</Parity>
+        <ParityReplace>63</ParityReplace>
+        <DataBits>8</DataBits>
+        <StopBits>One</StopBits>
+        <Handshake>None</Handshake>
+        <DiscardNull>false</DiscardNull>
+        <DtrEnable>false</DtrEnable>
+        <RtsEnable>false</RtsEnable>
+        <ReadBufferSize>4096</ReadBufferSize>
+        <WriteBufferSize>2048</WriteBufferSize>
+        <ReceivedBytesThreshold>1</ReceivedBytesThreshold>
+        <Name>Arduino</Name>
+        <Pattern>%f</Pattern>
+        <Separator>,</Separator>
+        <SerialMessageSubjectName>SerialMessages</SerialMessageSubjectName>
       </Expression>
-      <Expression xsi:type="Index">
-        <Operand xsi:type="IntProperty">
-          <Value>5</Value>
-        </Operand>
-      </Expression>
-      <Expression xsi:type="Divide">
-        <Operand xsi:type="FloatProperty">
-          <Value>1000</Value>
-        </Operand>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>SerialMessages</Name>
       </Expression>
     </Nodes>
     <Edges>
       <Edge From="0" To="1" Label="Source1" />
-      <Edge From="3" To="4" Label="Source1" />
-      <Edge From="4" To="5" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
