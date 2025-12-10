@@ -1,5 +1,5 @@
 # Import core types
-from typing import Literal, Optional
+from typing import Literal, Optional, List
 from pydantic import Field
 
 from ucl_open.rigs.base import BaseSchema
@@ -11,8 +11,10 @@ class TaskParameters(BaseSchema):
     rng_seed: Optional[float] = Field(default=None, description="Seed of the random number generator")
 
 class UclOpenHfVisualTaskParameters(TaskParameters):
-    ...
-
+    available_textures: List[str]
+    inter_presentation_texture: str
+    presentation_time: float
+    inter_presentation_time: float
 
 class UclOpenHfVisualTaskLogic(BaseSchema):
     version: Literal[__semver__] = __semver__ # type: ignore

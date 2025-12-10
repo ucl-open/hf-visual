@@ -6,7 +6,12 @@ from ucl_open_hf_visual.task import (
 )
 
 task_logic = UclOpenHfVisualTaskLogic(
-    task_parameters=UclOpenHfVisualTaskParameters(),
+    task_parameters=UclOpenHfVisualTaskParameters(
+        available_textures=["txtr1", "txtr2"],
+        inter_presentation_texture="grey",
+        presentation_time=1,
+        inter_presentation_time=0.5
+    ),
 )
 
 def main(path_seed: str = "./local/{schema}.json"):
