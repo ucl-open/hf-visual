@@ -15,7 +15,10 @@ rig = UclOpenHfVisualRig(
         texture_assets_directory="../textures"
     ),
     arduino=SerialDeviceModule(
-        port_name="COM4"
+        port_name="COM10",
+        baud_rate=1000000,
+        new_line="\n",
+        pattern="%d"
     )
 )
 
