@@ -3,12 +3,18 @@ import os
 from ucl_open_hf_visual.rig import (
     UclOpenHfVisualRig
 )
-from ucl_open_hf_visual.visual_stimulation import (
-    Screen
+from ucl_open.rigs.device import (
+    SerialDeviceModule
+)
+from ucl_open.rigs.device import (
+    Screen,
 )
 
 rig = UclOpenHfVisualRig(
-    screen=Screen()
+    screen=Screen(),
+    arduino=SerialDeviceModule(
+        port_name="COM4"
+    )
 )
 
 def main(path_seed: str = "./local/{schema}.json"):

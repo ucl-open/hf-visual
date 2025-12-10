@@ -775,7 +775,7 @@ requires-dist = [
     { name = "contraqctor", marker = "extra == 'data'", specifier = "<0.5.0" },
     { name = "pydantic-settings" },
     { name = "swc-aeon", specifier = ">=0.1.0" },
-    { name = "ucl-open-rigs", git = "https://github.com/ucl-open/ucl_open_rigs/" },
+    { name = "ucl-open-rigs", git = "https://github.com/ucl-open/ucl_open_rigs/?branch=visual-displays" },
 ]
 provides-extras = ["data"]
 
@@ -790,7 +790,7 @@ dev = [
 [[package]]
 name = "ucl-open-rigs"
 version = "0.1.0"
-source = { git = "https://github.com/ucl-open/ucl_open_rigs/#9fb717371a02c4ac9a4afa0dd38d337857feebfa" }
+source = { git = "https://github.com/ucl-open/ucl_open_rigs/?branch=visual-displays#1bdf5495e28d3dc764657a146ee020625ea7daa1" }
 dependencies = [
     { name = "pydantic" },
     { name = "pydantic-yaml" },
