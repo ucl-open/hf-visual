@@ -11,7 +11,9 @@ from ucl_open.rigs.device import (
 )
 
 rig = UclOpenHfVisualRig(
-    screen=Screen(),
+    screen=Screen(
+        texture_assets_directory="../textures"
+    ),
     arduino=SerialDeviceModule(
         port_name="COM4"
     )
