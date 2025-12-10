@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Union
 
 import pydantic
-from swc.aeon.schema import Experiment
+from ucl_open.rigs.experiment import Experiment
 from aind_behavior_services.utils import BonsaiSgenSerializers, convert_pydantic_to_bonsai
 
 import ucl_open_hf_visual.rig

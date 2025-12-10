@@ -176,7 +176,7 @@
       "type": "object"
     },
     "Experiment": {
-      "description": "The base class for creating experiment models.",
+      "description": "The base class for creating ucl-open experiment models.",
       "properties": {
         "workflow": {
           "description": "Path to the workflow running the experiment.",
@@ -184,7 +184,7 @@
           "type": "string"
         },
         "commit": {
-          "description": "Commit hash of the experiment repo.",
+          "description": "Commit hash of the experiment/rig repo.",
           "title": "Commit",
           "type": "string"
         },

@@ -435,10 +435,10 @@ namespace UclOpenHfVisualDataSchema
 
 
     /// <summary>
-    /// The base class for creating experiment models.
+    /// The base class for creating ucl-open experiment models.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("The base class for creating experiment models.")]
+    [System.ComponentModel.DescriptionAttribute("The base class for creating ucl-open experiment models.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Experiment
@@ -479,10 +479,10 @@ namespace UclOpenHfVisualDataSchema
         }
     
         /// <summary>
-        /// Commit hash of the experiment repo.
+        /// Commit hash of the experiment/rig repo.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("commit", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Commit hash of the experiment repo.")]
+        [System.ComponentModel.DescriptionAttribute("Commit hash of the experiment/rig repo.")]
         public string Commit
         {
             get

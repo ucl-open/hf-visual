@@ -1,7 +1,7 @@
 import datetime
 import os
 
-from swc.aeon.schema import Experiment
+from ucl_open.rigs.experiment import Experiment
 
 # TODO - autofill experiment fields
 session = Experiment(

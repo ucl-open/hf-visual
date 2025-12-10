@@ -17,7 +17,6 @@ def main(path_seed: str = "./local/{schema}.json"):
 
     for model in models:
         with open(path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8") as f:
-            print(model.model_config["alias_generator"])
             f.write(model.model_dump_json(indent=2, by_alias=True))
 
 
