@@ -177,8 +177,8 @@
                 <VisualizerSettings>
                   <RollingGraphVisualizer>
                     <Capacity>0</Capacity>
-                    <Min>-10000</Min>
-                    <Max>100000</Max>
+                    <Min>-1</Min>
+                    <Max>1</Max>
                     <AutoScale>true</AutoScale>
                   </RollingGraphVisualizer>
                 </VisualizerSettings>
@@ -226,8 +226,8 @@
                 <VisualizerSettings>
                   <TimeSeriesVisualizer>
                     <Capacity>640</Capacity>
-                    <Min>120</Min>
-                    <Max>150</Max>
+                    <Min>10</Min>
+                    <Max>30</Max>
                     <AutoScale>true</AutoScale>
                   </TimeSeriesVisualizer>
                 </VisualizerSettings>

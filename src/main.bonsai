@@ -553,9 +553,9 @@
                     <LocationY>-1</LocationY>
                     <Layer>0</Layer>
                     <Angle>0</Angle>
-                    <ColorR>1</ColorR>
-                    <ColorG>1</ColorG>
-                    <ColorB>1</ColorB>
+                    <ColorR>0</ColorR>
+                    <ColorG>0</ColorG>
+                    <ColorB>0</ColorB>
                     <ColorA>1</ColorA>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -802,7 +802,7 @@
                   </Expression>
                   <Expression xsi:type="Index">
                     <Operand xsi:type="StringProperty">
-                      <Value>SynthIm_1_1</Value>
+                      <Value>SN_1_1</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -1338,7 +1338,7 @@
                     <Property Name="Selector" />
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-40-28\Arduino\Arduino.csv</io:FileName>
+                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\Arduino\Arduino.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1457,7 +1457,7 @@
                     <Property Name="Selector" />
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-40-28\ArduinoPhotodiode\ArduinoPhotodiode.csv</io:FileName>
+                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\ArduinoPhotodiode\ArduinoPhotodiode.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1576,7 +1576,7 @@
                     <Property Name="Selector" />
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-40-28\Texture\Texture.csv</io:FileName>
+                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\Texture\Texture.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1685,7 +1685,7 @@
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName />
+                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\VideoData\VideoData.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1764,7 +1764,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="cv:VideoWriter">
-                      <cv:FileName />
+                      <cv:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\VideoData\VideoData.avi</cv:FileName>
                       <cv:Suffix>None</cv:Suffix>
                       <cv:Buffered>true</cv:Buffered>
                       <cv:Overwrite>false</cv:Overwrite>
@@ -1889,7 +1889,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p5:JsonWriter">
-                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-40-28\RigSchema\RigSchema.json</p5:Path>
+                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\RigSchema\RigSchema.json</p5:Path>
                       <p5:Suffix>None</p5:Suffix>
                       <p5:Overwrite>false</p5:Overwrite>
                     </Combinator>
@@ -2000,7 +2000,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p5:JsonWriter">
-                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-40-28\TaskLogicSchema\TaskLogicSchema.json</p5:Path>
+                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\TaskLogicSchema\TaskLogicSchema.json</p5:Path>
                       <p5:Suffix>None</p5:Suffix>
                       <p5:Overwrite>false</p5:Overwrite>
                     </Combinator>
@@ -2115,7 +2115,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p5:JsonWriter">
-                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-40-28\SessionSchema\SessionSchema.json</p5:Path>
+                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\SessionSchema\SessionSchema.json</p5:Path>
                       <p5:Suffix>None</p5:Suffix>
                       <p5:Overwrite>false</p5:Overwrite>
                     </Combinator>
