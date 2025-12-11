@@ -72,4 +72,107 @@
       </WindowSettings>
     </NestedLayout>
   </WindowSettings>
+  <WindowSettings Index="11">
+    <Location>
+      <X>120</X>
+      <Y>130</Y>
+    </Location>
+    <Size>
+      <Width>418</Width>
+      <Height>377</Height>
+    </Size>
+    <VisualizerTypeName>Bonsai.Gui.TableLayoutPanelVisualizer</VisualizerTypeName>
+    <VisualizerSettings>
+      <TableLayoutPanelVisualizer>
+        <MashupSettings>
+          <VisualizerTypeName>Bonsai.Gui.GroupBoxVisualizer</VisualizerTypeName>
+          <VisualizerSettings>
+            <GroupBoxVisualizer>
+              <MashupSettings>
+                <VisualizerTypeName>Bonsai.Gui.TableLayoutPanelVisualizer</VisualizerTypeName>
+                <VisualizerSettings>
+                  <TableLayoutPanelVisualizer>
+                    <MashupSettings>
+                      <VisualizerTypeName>Bonsai.Gui.ButtonVisualizer</VisualizerTypeName>
+                      <VisualizerSettings>
+                        <ButtonVisualizer />
+                      </VisualizerSettings>
+                    </MashupSettings>
+                    <MashupSettings>
+                      <VisualizerTypeName>Bonsai.Gui.ButtonVisualizer</VisualizerTypeName>
+                      <VisualizerSettings>
+                        <ButtonVisualizer />
+                      </VisualizerSettings>
+                    </MashupSettings>
+                  </TableLayoutPanelVisualizer>
+                </VisualizerSettings>
+              </MashupSettings>
+            </GroupBoxVisualizer>
+          </VisualizerSettings>
+        </MashupSettings>
+        <MashupSettings>
+          <VisualizerTypeName>Bonsai.Gui.GroupBoxVisualizer</VisualizerTypeName>
+          <VisualizerSettings>
+            <GroupBoxVisualizer>
+              <MashupSettings>
+                <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
+                <VisualizerSettings>
+                  <ObjectTextVisualizer />
+                </VisualizerSettings>
+              </MashupSettings>
+            </GroupBoxVisualizer>
+          </VisualizerSettings>
+        </MashupSettings>
+        <MashupSettings>
+          <VisualizerTypeName>Bonsai.Gui.GroupBoxVisualizer</VisualizerTypeName>
+          <VisualizerSettings>
+            <GroupBoxVisualizer>
+              <MashupSettings>
+                <VisualizerTypeName>Bonsai.Gui.ZedGraph.RollingGraphVisualizer</VisualizerTypeName>
+                <VisualizerSettings>
+                  <RollingGraphVisualizer>
+                    <Capacity>0</Capacity>
+                    <Min>-1</Min>
+                    <Max>1</Max>
+                    <AutoScale>true</AutoScale>
+                  </RollingGraphVisualizer>
+                </VisualizerSettings>
+              </MashupSettings>
+            </GroupBoxVisualizer>
+          </VisualizerSettings>
+        </MashupSettings>
+        <MashupSettings>
+          <VisualizerTypeName>Bonsai.Gui.GroupBoxVisualizer</VisualizerTypeName>
+          <VisualizerSettings>
+            <GroupBoxVisualizer>
+              <MashupSettings>
+                <VisualizerTypeName>Bonsai.Gui.ZedGraph.RollingGraphVisualizer</VisualizerTypeName>
+                <VisualizerSettings>
+                  <RollingGraphVisualizer>
+                    <Capacity>0</Capacity>
+                    <Min>0</Min>
+                    <Max>1.1</Max>
+                    <AutoScale>true</AutoScale>
+                  </RollingGraphVisualizer>
+                </VisualizerSettings>
+              </MashupSettings>
+            </GroupBoxVisualizer>
+          </VisualizerSettings>
+        </MashupSettings>
+        <MashupSettings>
+          <VisualizerTypeName>Bonsai.Gui.GroupBoxVisualizer</VisualizerTypeName>
+          <VisualizerSettings>
+            <GroupBoxVisualizer>
+              <MashupSettings>
+                <VisualizerTypeName>Bonsai.Vision.Design.IplImageVisualizer</VisualizerTypeName>
+                <VisualizerSettings>
+                  <IplImageVisualizer />
+                </VisualizerSettings>
+              </MashupSettings>
+            </GroupBoxVisualizer>
+          </VisualizerSettings>
+        </MashupSettings>
+      </TableLayoutPanelVisualizer>
+    </VisualizerSettings>
+  </WindowSettings>
 </VisualizerLayout>
