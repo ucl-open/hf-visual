@@ -13,10 +13,20 @@ from ucl_open.rigs.device import (
 from ucl_open.rigs.video import (
     SpinnakerCamera
 )
+from ucl_open.rigs.displays import (
+    DisplayCalibration,
+    DisplayIntrinsics
+)
 
 rig = UclOpenHfVisualRig(
     screen=Screen(
-        texture_assets_directory="../textures"
+        texture_assets_directory="../textures",
+        calibration={"main": DisplayCalibration(
+            intrinsics=DisplayIntrinsics(
+                frame_width=640,
+                frame_height=480
+            )
+        )}
     ),
     sync_quad=SyncQuad(
         extent_x=0.1,
