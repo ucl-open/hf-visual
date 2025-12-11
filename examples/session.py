@@ -9,7 +9,9 @@ session = UclOpenSession(
     workflow="main.bonsai",
     commit="",
     repository_url="https://github.com/ucl-open/hf-visual",
-    logging_root_path="C:/Users/neurogears/source/repos/ucl-open/hf-visual/temp_data"
+    logging_root_path="C:/Users/neurogears/source/repos/ucl-open/hf-visual/temp_data",
+    animal_id="Plimbo",
+    session_id="001"
 )
 
 def main(path_seed: str = "./local/{schema}.json"):

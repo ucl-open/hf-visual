@@ -1781,6 +1781,10 @@ namespace UclOpenHfVisualDataSchema
     
         private string _loggingRootPath;
     
+        private string _animalId;
+    
+        private string _sessionId;
+    
         public UclOpenSession()
         {
         }
@@ -1791,6 +1795,8 @@ namespace UclOpenHfVisualDataSchema
             _commit = other._commit;
             _repositoryUrl = other._repositoryUrl;
             _loggingRootPath = other._loggingRootPath;
+            _animalId = other._animalId;
+            _sessionId = other._sessionId;
         }
     
         /// <summary>
@@ -1857,6 +1863,32 @@ namespace UclOpenHfVisualDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("animalId", Required=Newtonsoft.Json.Required.Always)]
+        public string AnimalId
+        {
+            get
+            {
+                return _animalId;
+            }
+            set
+            {
+                _animalId = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("sessionId", Required=Newtonsoft.Json.Required.Always)]
+        public string SessionId
+        {
+            get
+            {
+                return _sessionId;
+            }
+            set
+            {
+                _sessionId = value;
+            }
+        }
+    
         public System.IObservable<UclOpenSession> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new UclOpenSession(this)));
@@ -1872,7 +1904,9 @@ namespace UclOpenHfVisualDataSchema
             stringBuilder.Append("Workflow = " + _workflow + ", ");
             stringBuilder.Append("Commit = " + _commit + ", ");
             stringBuilder.Append("RepositoryUrl = " + _repositoryUrl + ", ");
-            stringBuilder.Append("LoggingRootPath = " + _loggingRootPath);
+            stringBuilder.Append("LoggingRootPath = " + _loggingRootPath + ", ");
+            stringBuilder.Append("AnimalId = " + _animalId + ", ");
+            stringBuilder.Append("SessionId = " + _sessionId);
             return true;
         }
     

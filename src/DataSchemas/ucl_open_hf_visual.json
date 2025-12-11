@@ -526,13 +526,23 @@
         "loggingRootPath": {
           "title": "LoggingRootPath",
           "type": "string"
+        },
+        "animalId": {
+          "title": "AnimalId",
+          "type": "string"
+        },
+        "sessionId": {
+          "title": "SessionId",
+          "type": "string"
         }
       },
       "required": [
         "workflow",
         "commit",
         "repositoryUrl",
-        "loggingRootPath"
+        "loggingRootPath",
+        "animalId",
+        "sessionId"
       ],
       "title": "UclOpenSession",
       "type": "object"
