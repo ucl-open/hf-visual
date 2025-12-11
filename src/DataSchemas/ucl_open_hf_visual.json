@@ -348,6 +348,60 @@
       "title": "Screen",
       "type": "object"
     },
+    "SpinnakerCamera": {
+      "properties": {
+        "cameraType": {
+          "const": "Spinnaker",
+          "default": "Spinnaker",
+          "description": "Camera type discriminator for Spinnaker devices.",
+          "title": "CameraType",
+          "type": "string"
+        },
+        "triggerFrequency": {
+          "default": 50,
+          "description": "The frequency at which the camera is triggered (in Hz).",
+          "minimum": 1,
+          "title": "TriggerFrequency",
+          "type": "number"
+        },
+        "exposureTime": {
+          "default": 15000,
+          "description": "The exposure time for the camera (in microseconds).",
+          "minimum": 0,
+          "title": "ExposureTime",
+          "type": "number"
+        },
+        "serialNumber": {
+          "default": "00000",
+          "description": "The serial number of the camera.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "SerialNumber"
+        },
+        "gain": {
+          "default": 1,
+          "description": "The camera gain.",
+          "minimum": 0,
+          "title": "Gain",
+          "type": "number"
+        },
+        "binning": {
+          "default": 1,
+          "description": "The binning setting for the camera.",
+          "minimum": 1,
+          "title": "Binning",
+          "type": "integer"
+        }
+      },
+      "title": "SpinnakerCamera",
+      "type": "object"
+    },
     "SyncQuad": {
       "properties": {
         "extentX": {
@@ -393,12 +447,17 @@
         "arduino": {
           "$ref": "#/$defs/MatrixArduino",
           "title": "Arduino"
+        },
+        "eyeCamera": {
+          "$ref": "#/$defs/SpinnakerCamera",
+          "title": "EyeCamera"
         }
       },
       "required": [
         "screen",
         "syncQuad",
-        "arduino"
+        "arduino",
+        "eyeCamera"
       ],
       "title": "UclOpenHfVisualRig",
       "type": "object"

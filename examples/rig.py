@@ -10,6 +10,9 @@ from ucl_open_hf_visual.rig import (
 from ucl_open.rigs.device import (
     Screen,
 )
+from ucl_open.rigs.video import (
+    SpinnakerCamera
+)
 
 rig = UclOpenHfVisualRig(
     screen=Screen(
@@ -25,6 +28,12 @@ rig = UclOpenHfVisualRig(
         port_name="COM10",
         baud_rate=1000000,
         new_line="\n"
+    ),
+    eye_camera=SpinnakerCamera(
+        exposure_time=5000,
+        serial_number="00000",
+        gain=0,
+        binning=1
     )
 )
 

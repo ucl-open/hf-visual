@@ -1213,6 +1213,181 @@ namespace UclOpenHfVisualDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class SpinnakerCamera
+    {
+    
+        private string _cameraType;
+    
+        private double _triggerFrequency;
+    
+        private double _exposureTime;
+    
+        private string _serialNumber;
+    
+        private double _gain;
+    
+        private int _binning;
+    
+        public SpinnakerCamera()
+        {
+            _cameraType = "Spinnaker";
+            _triggerFrequency = 50D;
+            _exposureTime = 15000D;
+            _gain = 1D;
+            _binning = 1;
+        }
+    
+        protected SpinnakerCamera(SpinnakerCamera other)
+        {
+            _cameraType = other._cameraType;
+            _triggerFrequency = other._triggerFrequency;
+            _exposureTime = other._exposureTime;
+            _serialNumber = other._serialNumber;
+            _gain = other._gain;
+            _binning = other._binning;
+        }
+    
+        /// <summary>
+        /// Camera type discriminator for Spinnaker devices.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("cameraType")]
+        [System.ComponentModel.DescriptionAttribute("Camera type discriminator for Spinnaker devices.")]
+        public string CameraType
+        {
+            get
+            {
+                return _cameraType;
+            }
+            set
+            {
+                _cameraType = value;
+            }
+        }
+    
+        /// <summary>
+        /// The frequency at which the camera is triggered (in Hz).
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("triggerFrequency")]
+        [System.ComponentModel.DescriptionAttribute("The frequency at which the camera is triggered (in Hz).")]
+        public double TriggerFrequency
+        {
+            get
+            {
+                return _triggerFrequency;
+            }
+            set
+            {
+                _triggerFrequency = value;
+            }
+        }
+    
+        /// <summary>
+        /// The exposure time for the camera (in microseconds).
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("exposureTime")]
+        [System.ComponentModel.DescriptionAttribute("The exposure time for the camera (in microseconds).")]
+        public double ExposureTime
+        {
+            get
+            {
+                return _exposureTime;
+            }
+            set
+            {
+                _exposureTime = value;
+            }
+        }
+    
+        /// <summary>
+        /// The serial number of the camera.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("serialNumber")]
+        [System.ComponentModel.DescriptionAttribute("The serial number of the camera.")]
+        public string SerialNumber
+        {
+            get
+            {
+                return _serialNumber;
+            }
+            set
+            {
+                _serialNumber = value;
+            }
+        }
+    
+        /// <summary>
+        /// The camera gain.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("gain")]
+        [System.ComponentModel.DescriptionAttribute("The camera gain.")]
+        public double Gain
+        {
+            get
+            {
+                return _gain;
+            }
+            set
+            {
+                _gain = value;
+            }
+        }
+    
+        /// <summary>
+        /// The binning setting for the camera.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("binning")]
+        [System.ComponentModel.DescriptionAttribute("The binning setting for the camera.")]
+        public int Binning
+        {
+            get
+            {
+                return _binning;
+            }
+            set
+            {
+                _binning = value;
+            }
+        }
+    
+        public System.IObservable<SpinnakerCamera> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new SpinnakerCamera(this)));
+        }
+    
+        public System.IObservable<SpinnakerCamera> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new SpinnakerCamera(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("CameraType = " + _cameraType + ", ");
+            stringBuilder.Append("TriggerFrequency = " + _triggerFrequency + ", ");
+            stringBuilder.Append("ExposureTime = " + _exposureTime + ", ");
+            stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
+            stringBuilder.Append("Gain = " + _gain + ", ");
+            stringBuilder.Append("Binning = " + _binning);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class SyncQuad
     {
     
@@ -1336,12 +1511,15 @@ namespace UclOpenHfVisualDataSchema
     
         private MatrixArduino _arduino;
     
+        private SpinnakerCamera _eyeCamera;
+    
         public UclOpenHfVisualRig()
         {
             _version = "0.0.0-rc1";
             _screen = new Screen();
             _syncQuad = new SyncQuad();
             _arduino = new MatrixArduino();
+            _eyeCamera = new SpinnakerCamera();
         }
     
         protected UclOpenHfVisualRig(UclOpenHfVisualRig other)
@@ -1350,6 +1528,7 @@ namespace UclOpenHfVisualDataSchema
             _screen = other._screen;
             _syncQuad = other._syncQuad;
             _arduino = other._arduino;
+            _eyeCamera = other._eyeCamera;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("version")]
@@ -1407,6 +1586,20 @@ namespace UclOpenHfVisualDataSchema
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("eyeCamera", Required=Newtonsoft.Json.Required.Always)]
+        public SpinnakerCamera EyeCamera
+        {
+            get
+            {
+                return _eyeCamera;
+            }
+            set
+            {
+                _eyeCamera = value;
+            }
+        }
+    
         public System.IObservable<UclOpenHfVisualRig> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new UclOpenHfVisualRig(this)));
@@ -1422,7 +1615,8 @@ namespace UclOpenHfVisualDataSchema
             stringBuilder.Append("Version = " + _version + ", ");
             stringBuilder.Append("Screen = " + _screen + ", ");
             stringBuilder.Append("SyncQuad = " + _syncQuad + ", ");
-            stringBuilder.Append("Arduino = " + _arduino);
+            stringBuilder.Append("Arduino = " + _arduino + ", ");
+            stringBuilder.Append("EyeCamera = " + _eyeCamera);
             return true;
         }
     
@@ -1844,6 +2038,11 @@ namespace UclOpenHfVisualDataSchema
             return Process<Screen>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
+        {
+            return Process<SpinnakerCamera>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<SyncQuad> source)
         {
             return Process<SyncQuad>(source);
@@ -1885,6 +2084,7 @@ namespace UclOpenHfVisualDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MatrixArduino>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MatrixArduinoData>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SyncQuad>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenHfVisualRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenHfVisualTaskLogic>))]
