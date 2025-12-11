@@ -150,8 +150,8 @@
                 <VisualizerSettings>
                   <RollingGraphVisualizer>
                     <Capacity>0</Capacity>
-                    <Min>0</Min>
-                    <Max>1.1</Max>
+                    <Min>0.95</Min>
+                    <Max>1.05</Max>
                     <AutoScale>true</AutoScale>
                   </RollingGraphVisualizer>
                 </VisualizerSettings>
@@ -181,8 +181,8 @@
                 <VisualizerSettings>
                   <TimeSeriesVisualizer>
                     <Capacity>640</Capacity>
-                    <Min>876</Min>
-                    <Max>882</Max>
+                    <Min>934</Min>
+                    <Max>948</Max>
                     <AutoScale>true</AutoScale>
                   </TimeSeriesVisualizer>
                 </VisualizerSettings>
@@ -192,5 +192,24 @@
         </MashupSettings>
       </TableLayoutPanelVisualizer>
     </VisualizerSettings>
+  </WindowSettings>
+  <WindowSettings Index="12">
+    <NestedLayout>
+      <WindowSettings Index="31">
+        <Visible>false</Visible>
+        <Location>
+          <X>144</X>
+          <Y>156</Y>
+        </Location>
+        <Size>
+          <Width>994</Width>
+          <Height>196</Height>
+        </Size>
+        <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
+        <VisualizerSettings>
+          <ObjectTextVisualizer />
+        </VisualizerSettings>
+      </WindowSettings>
+    </NestedLayout>
   </WindowSettings>
 </VisualizerLayout>
