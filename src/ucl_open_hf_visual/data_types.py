@@ -7,3 +7,7 @@ class MatrixArduinoData(BaseSchema):
     last_sync_pulse_time: int
     photodiode_val: int
     current_ms: int
+    
+class MatrixArduinoPhotodiodeData(BaseSchema):
+    photodiode_val: int
+    sync_val: int

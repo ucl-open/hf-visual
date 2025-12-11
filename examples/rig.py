@@ -5,6 +5,7 @@ from ucl_open_hf_visual.rig import (
 )
 from ucl_open_hf_visual.rig import (
     MatrixArduino,
+    MatrixArduinoPhotodiode,
     SyncQuad
 )
 from ucl_open.rigs.device import (
@@ -39,11 +40,10 @@ rig = UclOpenHfVisualRig(
         baud_rate=1000000,
         new_line="\n"
     ),
-    eye_camera=SpinnakerCamera(
-        exposure_time=5000,
-        serial_number="00000",
-        gain=0,
-        binning=1
+    arduino_photodiode=MatrixArduinoPhotodiode(
+        port_name="COM11",
+        baud_rate=250000,
+        new_line="\n"
     )
 )
 

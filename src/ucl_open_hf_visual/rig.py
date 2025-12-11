@@ -5,7 +5,7 @@ from pydantic import Field
 from ucl_open.rigs.base import BaseSchema
 from ucl_open.rigs.device import Screen # TODO - change to ucl rigs
 from ucl_open.rigs.device import SerialDeviceModule
-from ucl_open.rigs.video import SpinnakerCamera
+# from ucl_open.rigs.video import ArducamOV9180
 
 from ucl_open_hf_visual import __semver__
 
@@ -19,11 +19,14 @@ class SyncQuad(BaseSchema):
 
 class MatrixArduino(SerialDeviceModule):
     device_type: Literal["MatrixArduino"] = "MatrixArduino"
+    
+class MatrixArduinoPhotodiode(SerialDeviceModule):
+    device_type: Literal["MatrixArduinoPhotodiode"] = "MatrixArduinoPhotodiode"
 
 class UclOpenHfVisualRig(BaseSchema):
     version: Literal[__semver__] = __semver__ # type: ignore
     screen: Screen
     sync_quad: SyncQuad
     arduino: MatrixArduino
-    eye_camera: SpinnakerCamera
+    arduino_photodiode: MatrixArduinoPhotodiode
     ...

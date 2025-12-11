@@ -252,6 +252,144 @@
       "title": "MatrixArduinoData",
       "type": "object"
     },
+    "MatrixArduinoPhotodiode": {
+      "properties": {
+        "deviceType": {
+          "const": "MatrixArduinoPhotodiode",
+          "default": "MatrixArduinoPhotodiode",
+          "title": "DeviceType",
+          "type": "string"
+        },
+        "portName": {
+          "description": "The name of the device serial port.",
+          "examples": [
+            "COMx"
+          ],
+          "title": "PortName",
+          "type": "string"
+        },
+        "baudRate": {
+          "default": 9600,
+          "description": "Baud rate for serial communication.",
+          "title": "BaudRate",
+          "type": "integer"
+        },
+        "encoding": {
+          "default": null,
+          "description": "Optional text encoding for interpreting incoming bytes.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Encoding"
+        },
+        "newLine": {
+          "default": "\r\n",
+          "description": "Line termination sequence used to delimit incoming messages.",
+          "title": "NewLine",
+          "type": "string"
+        },
+        "parity": {
+          "default": "None",
+          "description": "Parity checking mode for the serial port.",
+          "title": "Parity",
+          "type": "string"
+        },
+        "parityReplace": {
+          "default": 63,
+          "description": "Byte used to replace invalid bytes detected by a parity error.",
+          "title": "ParityReplace",
+          "type": "integer"
+        },
+        "dataBits": {
+          "default": 8,
+          "description": "Number of data bits per serial frame.",
+          "title": "DataBits",
+          "type": "integer"
+        },
+        "stopBits": {
+          "default": "One",
+          "description": "Number of stop bits per serial frame.",
+          "title": "StopBits",
+          "type": "string"
+        },
+        "handshake": {
+          "default": "None",
+          "description": "Hardware or software handshaking mode.",
+          "title": "Handshake",
+          "type": "string"
+        },
+        "discardNull": {
+          "default": false,
+          "description": "Whether to discard null bytes appearing in the serial stream.",
+          "title": "DiscardNull",
+          "type": "boolean"
+        },
+        "dtrEnable": {
+          "default": false,
+          "description": "Whether to enable Data Terminal Ready (DTR) control line.",
+          "title": "DtrEnable",
+          "type": "boolean"
+        },
+        "rtsEnable": {
+          "default": false,
+          "description": "Whether to enable Request To Send (RTS) control line.",
+          "title": "RtsEnable",
+          "type": "boolean"
+        },
+        "readBufferSize": {
+          "default": 4096,
+          "description": "Size, in bytes, of the read buffer.",
+          "title": "ReadBufferSize",
+          "type": "integer"
+        },
+        "writeBufferSize": {
+          "default": 2048,
+          "description": "Size, in bytes, of the write buffer.",
+          "title": "WriteBufferSize",
+          "type": "integer"
+        },
+        "receivedBytesThreshold": {
+          "default": 1,
+          "description": "Minimum number of bytes in the buffer that triggers a read event.",
+          "title": "ReceivedBytesThreshold",
+          "type": "integer"
+        },
+        "serialMessageSubjectName": {
+          "default": "SerialMessages",
+          "description": "Name of the subject to which parsed serial messages are published.",
+          "title": "SerialMessageSubjectName",
+          "type": "string"
+        }
+      },
+      "required": [
+        "portName"
+      ],
+      "title": "MatrixArduinoPhotodiode",
+      "type": "object"
+    },
+    "MatrixArduinoPhotodiodeData": {
+      "properties": {
+        "photodiodeVal": {
+          "title": "PhotodiodeVal",
+          "type": "integer"
+        },
+        "syncVal": {
+          "title": "SyncVal",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "photodiodeVal",
+        "syncVal"
+      ],
+      "title": "MatrixArduinoPhotodiodeData",
+      "type": "object"
+    },
     "Screen": {
       "properties": {
         "deviceType": {
@@ -321,60 +459,6 @@
       "title": "Screen",
       "type": "object"
     },
-    "SpinnakerCamera": {
-      "properties": {
-        "cameraType": {
-          "const": "Spinnaker",
-          "default": "Spinnaker",
-          "description": "Camera type discriminator for Spinnaker devices.",
-          "title": "CameraType",
-          "type": "string"
-        },
-        "triggerFrequency": {
-          "default": 50,
-          "description": "The frequency at which the camera is triggered (in Hz).",
-          "minimum": 1,
-          "title": "TriggerFrequency",
-          "type": "number"
-        },
-        "exposureTime": {
-          "default": 15000,
-          "description": "The exposure time for the camera (in microseconds).",
-          "minimum": 0,
-          "title": "ExposureTime",
-          "type": "number"
-        },
-        "serialNumber": {
-          "default": "00000",
-          "description": "The serial number of the camera.",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "SerialNumber"
-        },
-        "gain": {
-          "default": 1,
-          "description": "The camera gain.",
-          "minimum": 0,
-          "title": "Gain",
-          "type": "number"
-        },
-        "binning": {
-          "default": 1,
-          "description": "The binning setting for the camera.",
-          "minimum": 1,
-          "title": "Binning",
-          "type": "integer"
-        }
-      },
-      "title": "SpinnakerCamera",
-      "type": "object"
-    },
     "SyncQuad": {
       "properties": {
         "extentX": {
@@ -421,16 +505,16 @@
           "$ref": "#/$defs/MatrixArduino",
           "title": "Arduino"
         },
-        "eyeCamera": {
-          "$ref": "#/$defs/SpinnakerCamera",
-          "title": "EyeCamera"
+        "arduinoPhotodiode": {
+          "$ref": "#/$defs/MatrixArduinoPhotodiode",
+          "title": "ArduinoPhotodiode"
         }
       },
       "required": [
         "screen",
         "syncQuad",
         "arduino",
-        "eyeCamera"
+        "arduinoPhotodiode"
       ],
       "title": "UclOpenHfVisualRig",
       "type": "object"

@@ -20,7 +20,8 @@ def main():
         ucl_open_hf_visual.task.UclOpenHfVisualTaskLogic,
         ucl_open_hf_visual.rig.UclOpenHfVisualRig,
         ucl_open_hf_visual.session.UclOpenSession,
-        ucl_open_hf_visual.data_types.MatrixArduinoData
+        ucl_open_hf_visual.data_types.MatrixArduinoData,
+        ucl_open_hf_visual.data_types.MatrixArduinoPhotodiodeData
     ]
     model = pydantic.RootModel[Union[tuple(models)]]
 
