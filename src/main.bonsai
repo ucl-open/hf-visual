@@ -5,6 +5,7 @@
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:UclOpenHfVisualDataSchema;assembly=Extensions"
                  xmlns:p2="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
+                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:p3="clr-namespace:;assembly=Extensions"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
@@ -34,7 +35,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="io:ReadAllText">
-                <io:Path>C:\Users\neurogears\source\repos\ucl-open\hf-visual\local\Experiment.json</io:Path>
+                <io:Path>C:\Users\neurogears\source\repos\ucl-open\hf-visual\local\UclOpenSession.json</io:Path>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:AsyncSubject">
@@ -89,7 +90,7 @@
               <Name>RawSessionSchema</Name>
             </Expression>
             <Expression xsi:type="p1:DeserializeFromJson">
-              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:Experiment" />
+              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:UclOpenSession" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -97,7 +98,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:AsyncSubject">
-              <Name>SubjectSchema</Name>
+              <Name>SessionSchema</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>RawRigSchema</Name>
@@ -158,6 +159,9 @@
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p2:Unit">
               <rx:Name>StopExperiment</rx:Name>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:String">
+              <rx:Name>CurrentTexture</rx:Name>
             </Expression>
           </Nodes>
           <Edges />
@@ -612,6 +616,40 @@
                       </Edges>
                     </Workflow>
                   </Expression>
+                  <Expression xsi:type="rx:Sink">
+                    <Name>UpdateCurrentTexture</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskLogicParameters</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>InterPresentationTexture</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item2</Selector>
+                        </Expression>
+                        <Expression xsi:type="MulticastSubject">
+                          <Name>CurrentTexture</Name>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="3" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TaskLogicParameters</Name>
                   </Expression>
@@ -689,6 +727,36 @@
                       </Edges>
                     </Workflow>
                   </Expression>
+                  <Expression xsi:type="rx:Sink">
+                    <Name>UpdateCurrentTexture</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TextureName</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item2</Selector>
+                        </Expression>
+                        <Expression xsi:type="MulticastSubject">
+                          <Name>CurrentTexture</Name>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TaskLogicParameters</Name>
                   </Expression>
@@ -724,26 +792,28 @@
                   <Edge From="6" To="7" Label="Source2" />
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="9" To="14" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="15" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source2" />
-                  <Edge From="14" To="16" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source2" />
-                  <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="20" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source2" />
-                  <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source2" />
+                  <Edge From="15" To="17" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source2" />
+                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="18" To="21" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="20" To="21" Label="Source2" />
                   <Edge From="21" To="22" Label="Source1" />
-                  <Edge From="22" To="27" Label="Source1" />
+                  <Edge From="22" To="23" Label="Source1" />
                   <Edge From="23" To="24" Label="Source1" />
-                  <Edge From="24" To="25" Label="Source1" />
+                  <Edge From="24" To="29" Label="Source1" />
                   <Edge From="25" To="26" Label="Source1" />
-                  <Edge From="26" To="27" Label="Source2" />
+                  <Edge From="26" To="27" Label="Source1" />
                   <Edge From="27" To="28" Label="Source1" />
-                  <Edge From="28" To="29" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source2" />
+                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="30" To="31" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -857,14 +927,14 @@
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="SubscribeSubject">
-              <Name>MatrixArduino</Name>
+              <Name>CurrentTexture</Name>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="gui:GroupBoxBuilder">
-              <gui:Name>Matrix Arduino</gui:Name>
+              <gui:Name>CurrentTexture</gui:Name>
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
-              <gui:Text>MatrixArduino</gui:Text>
+              <gui:Text>Current Texture</gui:Text>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="SubscribeSubject">
@@ -930,10 +1000,24 @@
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="gui:GroupBoxBuilder">
-              <gui:Name>Displau</gui:Name>
+              <gui:Name>Display</gui:Name>
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
               <gui:Text>Display</gui:Text>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>MatrixArduino</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Value.PhotodiodeVal</Selector>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="gui:GroupBoxBuilder">
+              <gui:Name>Photodiode</gui:Name>
+              <gui:Enabled>true</gui:Enabled>
+              <gui:Visible>true</gui:Visible>
+              <gui:Text>Photodiode</gui:Text>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="gui:TableLayoutPanelBuilder">
@@ -958,17 +1042,17 @@
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="34" Label="Source1" />
+            <Edge From="9" To="39" Label="Source1" />
             <Edge From="10" To="11" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="34" Label="Source2" />
+            <Edge From="13" To="39" Label="Source2" />
             <Edge From="14" To="15" Label="Source1" />
             <Edge From="15" To="16" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="34" Label="Source3" />
+            <Edge From="19" To="39" Label="Source3" />
             <Edge From="20" To="21" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
             <Edge From="22" To="23" Label="Source1" />
@@ -978,12 +1062,17 @@
             <Edge From="26" To="27" Label="Source1" />
             <Edge From="27" To="28" Label="Source1" />
             <Edge From="28" To="29" Label="Source1" />
-            <Edge From="29" To="34" Label="Source4" />
+            <Edge From="29" To="39" Label="Source4" />
             <Edge From="30" To="31" Label="Source1" />
             <Edge From="31" To="32" Label="Source1" />
             <Edge From="32" To="33" Label="Source1" />
-            <Edge From="33" To="34" Label="Source5" />
+            <Edge From="33" To="39" Label="Source5" />
             <Edge From="34" To="35" Label="Source1" />
+            <Edge From="35" To="36" Label="Source1" />
+            <Edge From="36" To="37" Label="Source1" />
+            <Edge From="37" To="38" Label="Source1" />
+            <Edge From="38" To="39" Label="Source6" />
+            <Edge From="39" To="40" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -991,10 +1080,21 @@
         <Name>Logging</Name>
         <Workflow>
           <Nodes>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SessionSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>LoggingRootPath</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Path" />
+              </PropertyMappings>
+            </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Logging:LogController.bonsai">
               <SubjectId>Algernon</SubjectId>
               <SessionId>001</SessionId>
-              <Path>C:\Users\neurogears\source\repos\ucl-open\hf-visual\temp_data</Path>
+              <Path>C:/Users/neurogears/source/repos/ucl-open/hf-visual/temp_data</Path>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>MatrixArduino</Name>
@@ -1088,7 +1188,7 @@
                     <Property Name="Selector" />
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>C:\Users\neurogears\source\repos\ucl-open\hf-visual\temp_data\sub-Algernon\ses-001_date-2025-12-11T14-52-00\Arduino\Arduino.csv</io:FileName>
+                    <io:FileName>C:/Users/neurogears/source/repos/ucl-open/hf-visual/temp_data\sub-Algernon\ses-001_date-2025-12-11T15-19-14\Arduino\Arduino.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1109,8 +1209,11 @@
             </Expression>
           </Nodes>
           <Edges>
-            <Edge From="1" To="3" Label="Source1" />
-            <Edge From="2" To="3" Label="Source2" />
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="4" To="6" Label="Source1" />
+            <Edge From="5" To="6" Label="Source2" />
           </Edges>
         </Workflow>
       </Expression>

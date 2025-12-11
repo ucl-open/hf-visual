@@ -8,6 +8,7 @@ from aind_behavior_services.utils import BonsaiSgenSerializers, convert_pydantic
 import ucl_open_hf_visual.rig
 import ucl_open_hf_visual.task
 import ucl_open_hf_visual.data_types
+import ucl_open_hf_visual.session
 
 SCHEMA_ROOT = Path("./src/DataSchemas/")
 EXTENSIONS_ROOT = Path("./src/Extensions/")
@@ -18,7 +19,7 @@ def main():
     models = [
         ucl_open_hf_visual.task.UclOpenHfVisualTaskLogic,
         ucl_open_hf_visual.rig.UclOpenHfVisualRig,
-        Experiment,
+        ucl_open_hf_visual.session.UclOpenSession,
         ucl_open_hf_visual.data_types.MatrixArduinoData
     ]
     model = pydantic.RootModel[Union[tuple(models)]]

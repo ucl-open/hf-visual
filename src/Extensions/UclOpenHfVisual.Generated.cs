@@ -321,117 +321,6 @@ namespace UclOpenHfVisualDataSchema
     }
 
 
-    /// <summary>
-    /// The base class for creating ucl-open experiment models.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("The base class for creating ucl-open experiment models.")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class Experiment
-    {
-    
-        private string _workflow;
-    
-        private string _commit;
-    
-        private string _repositoryUrl;
-    
-        public Experiment()
-        {
-        }
-    
-        protected Experiment(Experiment other)
-        {
-            _workflow = other._workflow;
-            _commit = other._commit;
-            _repositoryUrl = other._repositoryUrl;
-        }
-    
-        /// <summary>
-        /// Path to the workflow running the experiment.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("workflow", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Path to the workflow running the experiment.")]
-        public string Workflow
-        {
-            get
-            {
-                return _workflow;
-            }
-            set
-            {
-                _workflow = value;
-            }
-        }
-    
-        /// <summary>
-        /// Commit hash of the experiment/rig repo.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("commit", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Commit hash of the experiment/rig repo.")]
-        public string Commit
-        {
-            get
-            {
-                return _commit;
-            }
-            set
-            {
-                _commit = value;
-            }
-        }
-    
-        /// <summary>
-        /// The URL of the git repository used to version experiment source code.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("repositoryUrl", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("The URL of the git repository used to version experiment source code.")]
-        public string RepositoryUrl
-        {
-            get
-            {
-                return _repositoryUrl;
-            }
-            set
-            {
-                _repositoryUrl = value;
-            }
-        }
-    
-        public System.IObservable<Experiment> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Experiment(this)));
-        }
-    
-        public System.IObservable<Experiment> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Experiment(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Workflow = " + _workflow + ", ");
-            stringBuilder.Append("Commit = " + _commit + ", ");
-            stringBuilder.Append("RepositoryUrl = " + _repositoryUrl);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
@@ -1881,6 +1770,130 @@ namespace UclOpenHfVisualDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class UclOpenSession
+    {
+    
+        private string _workflow;
+    
+        private string _commit;
+    
+        private string _repositoryUrl;
+    
+        private string _loggingRootPath;
+    
+        public UclOpenSession()
+        {
+        }
+    
+        protected UclOpenSession(UclOpenSession other)
+        {
+            _workflow = other._workflow;
+            _commit = other._commit;
+            _repositoryUrl = other._repositoryUrl;
+            _loggingRootPath = other._loggingRootPath;
+        }
+    
+        /// <summary>
+        /// Path to the workflow running the experiment.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("workflow", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Path to the workflow running the experiment.")]
+        public string Workflow
+        {
+            get
+            {
+                return _workflow;
+            }
+            set
+            {
+                _workflow = value;
+            }
+        }
+    
+        /// <summary>
+        /// Commit hash of the experiment/rig repo.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commit", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Commit hash of the experiment/rig repo.")]
+        public string Commit
+        {
+            get
+            {
+                return _commit;
+            }
+            set
+            {
+                _commit = value;
+            }
+        }
+    
+        /// <summary>
+        /// The URL of the git repository used to version experiment source code.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("repositoryUrl", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The URL of the git repository used to version experiment source code.")]
+        public string RepositoryUrl
+        {
+            get
+            {
+                return _repositoryUrl;
+            }
+            set
+            {
+                _repositoryUrl = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("loggingRootPath", Required=Newtonsoft.Json.Required.Always)]
+        public string LoggingRootPath
+        {
+            get
+            {
+                return _loggingRootPath;
+            }
+            set
+            {
+                _loggingRootPath = value;
+            }
+        }
+    
+        public System.IObservable<UclOpenSession> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new UclOpenSession(this)));
+        }
+    
+        public System.IObservable<UclOpenSession> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new UclOpenSession(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Workflow = " + _workflow + ", ");
+            stringBuilder.Append("Commit = " + _commit + ", ");
+            stringBuilder.Append("RepositoryUrl = " + _repositoryUrl + ", ");
+            stringBuilder.Append("LoggingRootPath = " + _loggingRootPath);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Vector3
     {
     
@@ -2018,11 +2031,6 @@ namespace UclOpenHfVisualDataSchema
             return Process<DisplayIntrinsics>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Experiment> source)
-        {
-            return Process<Experiment>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<MatrixArduino> source)
         {
             return Process<MatrixArduino>(source);
@@ -2063,6 +2071,11 @@ namespace UclOpenHfVisualDataSchema
             return Process<UclOpenHfVisualTaskParameters>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<UclOpenSession> source)
+        {
+            return Process<UclOpenSession>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Vector3> source)
         {
             return Process<Vector3>(source);
@@ -2080,7 +2093,6 @@ namespace UclOpenHfVisualDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayExtrinsics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayIntrinsics>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Experiment>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MatrixArduino>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MatrixArduinoData>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
@@ -2089,6 +2101,7 @@ namespace UclOpenHfVisualDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenHfVisualRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenHfVisualTaskLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenHfVisualTaskParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenSession>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {

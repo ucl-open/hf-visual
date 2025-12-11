@@ -172,6 +172,24 @@
             </GroupBoxVisualizer>
           </VisualizerSettings>
         </MashupSettings>
+        <MashupSettings>
+          <VisualizerTypeName>Bonsai.Gui.GroupBoxVisualizer</VisualizerTypeName>
+          <VisualizerSettings>
+            <GroupBoxVisualizer>
+              <MashupSettings>
+                <VisualizerTypeName>Bonsai.Design.Visualizers.TimeSeriesVisualizer</VisualizerTypeName>
+                <VisualizerSettings>
+                  <TimeSeriesVisualizer>
+                    <Capacity>640</Capacity>
+                    <Min>930</Min>
+                    <Max>955</Max>
+                    <AutoScale>true</AutoScale>
+                  </TimeSeriesVisualizer>
+                </VisualizerSettings>
+              </MashupSettings>
+            </GroupBoxVisualizer>
+          </VisualizerSettings>
+        </MashupSettings>
       </TableLayoutPanelVisualizer>
     </VisualizerSettings>
   </WindowSettings>
