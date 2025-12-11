@@ -435,236 +435,7 @@ namespace UclOpenHfVisualDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class Screen
-    {
-    
-        private string _deviceType;
-    
-        private int _displayIndex;
-    
-        private double _targetRenderFrequency;
-    
-        private double _targetUpdateFrequency;
-    
-        private string _textureAssetsDirectory;
-    
-        private System.Collections.Generic.Dictionary<string, DisplayCalibration> _calibration;
-    
-        private double _brightness;
-    
-        private double _contrast;
-    
-        public Screen()
-        {
-            _deviceType = "Screen";
-            _displayIndex = 1;
-            _targetRenderFrequency = 60D;
-            _targetUpdateFrequency = 120D;
-            _textureAssetsDirectory = "Textures";
-            _brightness = 0D;
-            _contrast = 1D;
-        }
-    
-        protected Screen(Screen other)
-        {
-            _deviceType = other._deviceType;
-            _displayIndex = other._displayIndex;
-            _targetRenderFrequency = other._targetRenderFrequency;
-            _targetUpdateFrequency = other._targetUpdateFrequency;
-            _textureAssetsDirectory = other._textureAssetsDirectory;
-            _calibration = other._calibration;
-            _brightness = other._brightness;
-            _contrast = other._contrast;
-        }
-    
-        /// <summary>
-        /// Device type
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("deviceType")]
-        [System.ComponentModel.DescriptionAttribute("Device type")]
-        public string DeviceType
-        {
-            get
-            {
-                return _deviceType;
-            }
-            set
-            {
-                _deviceType = value;
-            }
-        }
-    
-        /// <summary>
-        /// Display index
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("displayIndex")]
-        [System.ComponentModel.DescriptionAttribute("Display index")]
-        public int DisplayIndex
-        {
-            get
-            {
-                return _displayIndex;
-            }
-            set
-            {
-                _displayIndex = value;
-            }
-        }
-    
-        /// <summary>
-        /// Target render frequency
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("targetRenderFrequency")]
-        [System.ComponentModel.DescriptionAttribute("Target render frequency")]
-        public double TargetRenderFrequency
-        {
-            get
-            {
-                return _targetRenderFrequency;
-            }
-            set
-            {
-                _targetRenderFrequency = value;
-            }
-        }
-    
-        /// <summary>
-        /// Target update frequency
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("targetUpdateFrequency")]
-        [System.ComponentModel.DescriptionAttribute("Target update frequency")]
-        public double TargetUpdateFrequency
-        {
-            get
-            {
-                return _targetUpdateFrequency;
-            }
-            set
-            {
-                _targetUpdateFrequency = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration directory
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("textureAssetsDirectory")]
-        [System.ComponentModel.DescriptionAttribute("Calibration directory")]
-        public string TextureAssetsDirectory
-        {
-            get
-            {
-                return _textureAssetsDirectory;
-            }
-            set
-            {
-                _textureAssetsDirectory = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration parameters for a set of named display monitors for visual stimuli
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Calibration parameters for a set of named display monitors for visual stimuli")]
-        public System.Collections.Generic.Dictionary<string, DisplayCalibration> Calibration
-        {
-            get
-            {
-                return _calibration;
-            }
-            set
-            {
-                _calibration = value;
-            }
-        }
-    
-        /// <summary>
-        /// Brightness
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
-        [System.ComponentModel.DescriptionAttribute("Brightness")]
-        public double Brightness
-        {
-            get
-            {
-                return _brightness;
-            }
-            set
-            {
-                _brightness = value;
-            }
-        }
-    
-        /// <summary>
-        /// Contrast
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
-        [System.ComponentModel.DescriptionAttribute("Contrast")]
-        public double Contrast
-        {
-            get
-            {
-                return _contrast;
-            }
-            set
-            {
-                _contrast = value;
-            }
-        }
-    
-        public System.IObservable<Screen> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Screen(this)));
-        }
-    
-        public System.IObservable<Screen> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Screen(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
-            stringBuilder.Append("DisplayIndex = " + _displayIndex + ", ");
-            stringBuilder.Append("TargetRenderFrequency = " + _targetRenderFrequency + ", ");
-            stringBuilder.Append("TargetUpdateFrequency = " + _targetUpdateFrequency + ", ");
-            stringBuilder.Append("TextureAssetsDirectory = " + _textureAssetsDirectory + ", ");
-            stringBuilder.Append("Calibration = " + _calibration + ", ");
-            stringBuilder.Append("Brightness = " + _brightness + ", ");
-            stringBuilder.Append("Contrast = " + _contrast);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    /// <summary>
-    /// Represents the SerialDevice workflow module.
-    ///
-    ///Mirrors all externalized properties of SerialDevice.bonsai, including
-    ///port configuration, framing, buffer settings, and parsing pattern.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Represents the SerialDevice workflow module.\n\nMirrors all externalized properties" +
-        " of SerialDevice.bonsai, including\nport configuration, framing, buffer settings," +
-        " and parsing pattern.")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class SerialDeviceModule
+    public partial class MatrixArduino
     {
     
         private string _deviceType;
@@ -672,8 +443,6 @@ namespace UclOpenHfVisualDataSchema
         private string _portName;
     
         private int _baudRate;
-    
-        private string _pattern;
     
         private string _encoding;
     
@@ -703,11 +472,10 @@ namespace UclOpenHfVisualDataSchema
     
         private string _serialMessageSubjectName;
     
-        public SerialDeviceModule()
+        public MatrixArduino()
         {
-            _deviceType = "SerialDevice";
+            _deviceType = "MatrixArduino";
             _baudRate = 9600;
-            _pattern = "";
             _newLine = "\r\n";
             _parity = "None";
             _parityReplace = 63;
@@ -723,12 +491,11 @@ namespace UclOpenHfVisualDataSchema
             _serialMessageSubjectName = "SerialMessages";
         }
     
-        protected SerialDeviceModule(SerialDeviceModule other)
+        protected MatrixArduino(MatrixArduino other)
         {
             _deviceType = other._deviceType;
             _portName = other._portName;
             _baudRate = other._baudRate;
-            _pattern = other._pattern;
             _encoding = other._encoding;
             _newLine = other._newLine;
             _parity = other._parity;
@@ -789,24 +556,6 @@ namespace UclOpenHfVisualDataSchema
             set
             {
                 _baudRate = value;
-            }
-        }
-    
-        /// <summary>
-        /// Pattern used to parse each incoming serial line (same syntax as Bonsai Parse/ScanPattern).
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("pattern")]
-        [System.ComponentModel.DescriptionAttribute("Pattern used to parse each incoming serial line (same syntax as Bonsai Parse/Scan" +
-            "Pattern).")]
-        public string Pattern
-        {
-            get
-            {
-                return _pattern;
-            }
-            set
-            {
-                _pattern = value;
             }
         }
     
@@ -1048,14 +797,14 @@ namespace UclOpenHfVisualDataSchema
             }
         }
     
-        public System.IObservable<SerialDeviceModule> Generate()
+        public System.IObservable<MatrixArduino> Generate()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new SerialDeviceModule(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new MatrixArduino(this)));
         }
     
-        public System.IObservable<SerialDeviceModule> Generate<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<MatrixArduino> Generate<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new SerialDeviceModule(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new MatrixArduino(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -1063,7 +812,6 @@ namespace UclOpenHfVisualDataSchema
             stringBuilder.Append("DeviceType = " + _deviceType + ", ");
             stringBuilder.Append("PortName = " + _portName + ", ");
             stringBuilder.Append("BaudRate = " + _baudRate + ", ");
-            stringBuilder.Append("Pattern = " + _pattern + ", ");
             stringBuilder.Append("Encoding = " + _encoding + ", ");
             stringBuilder.Append("NewLine = " + _newLine + ", ");
             stringBuilder.Append("Parity = " + _parity + ", ");
@@ -1099,6 +847,372 @@ namespace UclOpenHfVisualDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class MatrixArduinoData
+    {
+    
+        private int _encoderCount;
+    
+        private int _lickCountLeft;
+    
+        private int _lickCountRight;
+    
+        private int _lastSyncPulseTime;
+    
+        private int _photodiodeVal;
+    
+        private int _currentMs;
+    
+        public MatrixArduinoData()
+        {
+        }
+    
+        protected MatrixArduinoData(MatrixArduinoData other)
+        {
+            _encoderCount = other._encoderCount;
+            _lickCountLeft = other._lickCountLeft;
+            _lickCountRight = other._lickCountRight;
+            _lastSyncPulseTime = other._lastSyncPulseTime;
+            _photodiodeVal = other._photodiodeVal;
+            _currentMs = other._currentMs;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("encoderCount", Required=Newtonsoft.Json.Required.Always)]
+        public int EncoderCount
+        {
+            get
+            {
+                return _encoderCount;
+            }
+            set
+            {
+                _encoderCount = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("lickCountLeft", Required=Newtonsoft.Json.Required.Always)]
+        public int LickCountLeft
+        {
+            get
+            {
+                return _lickCountLeft;
+            }
+            set
+            {
+                _lickCountLeft = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("lickCountRight", Required=Newtonsoft.Json.Required.Always)]
+        public int LickCountRight
+        {
+            get
+            {
+                return _lickCountRight;
+            }
+            set
+            {
+                _lickCountRight = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("lastSyncPulseTime", Required=Newtonsoft.Json.Required.Always)]
+        public int LastSyncPulseTime
+        {
+            get
+            {
+                return _lastSyncPulseTime;
+            }
+            set
+            {
+                _lastSyncPulseTime = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("photodiodeVal", Required=Newtonsoft.Json.Required.Always)]
+        public int PhotodiodeVal
+        {
+            get
+            {
+                return _photodiodeVal;
+            }
+            set
+            {
+                _photodiodeVal = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("currentMs", Required=Newtonsoft.Json.Required.Always)]
+        public int CurrentMs
+        {
+            get
+            {
+                return _currentMs;
+            }
+            set
+            {
+                _currentMs = value;
+            }
+        }
+    
+        public System.IObservable<MatrixArduinoData> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new MatrixArduinoData(this)));
+        }
+    
+        public System.IObservable<MatrixArduinoData> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new MatrixArduinoData(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("EncoderCount = " + _encoderCount + ", ");
+            stringBuilder.Append("LickCountLeft = " + _lickCountLeft + ", ");
+            stringBuilder.Append("LickCountRight = " + _lickCountRight + ", ");
+            stringBuilder.Append("LastSyncPulseTime = " + _lastSyncPulseTime + ", ");
+            stringBuilder.Append("PhotodiodeVal = " + _photodiodeVal + ", ");
+            stringBuilder.Append("CurrentMs = " + _currentMs);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Screen
+    {
+    
+        private string _deviceType;
+    
+        private int _displayIndex;
+    
+        private double _targetRenderFrequency;
+    
+        private double _targetUpdateFrequency;
+    
+        private string _textureAssetsDirectory;
+    
+        private System.Collections.Generic.Dictionary<string, DisplayCalibration> _calibration;
+    
+        private double _brightness;
+    
+        private double _contrast;
+    
+        public Screen()
+        {
+            _deviceType = "Screen";
+            _displayIndex = 1;
+            _targetRenderFrequency = 60D;
+            _targetUpdateFrequency = 120D;
+            _textureAssetsDirectory = "Textures";
+            _brightness = 0D;
+            _contrast = 1D;
+        }
+    
+        protected Screen(Screen other)
+        {
+            _deviceType = other._deviceType;
+            _displayIndex = other._displayIndex;
+            _targetRenderFrequency = other._targetRenderFrequency;
+            _targetUpdateFrequency = other._targetUpdateFrequency;
+            _textureAssetsDirectory = other._textureAssetsDirectory;
+            _calibration = other._calibration;
+            _brightness = other._brightness;
+            _contrast = other._contrast;
+        }
+    
+        /// <summary>
+        /// Device type
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("deviceType")]
+        [System.ComponentModel.DescriptionAttribute("Device type")]
+        public string DeviceType
+        {
+            get
+            {
+                return _deviceType;
+            }
+            set
+            {
+                _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Display index
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("displayIndex")]
+        [System.ComponentModel.DescriptionAttribute("Display index")]
+        public int DisplayIndex
+        {
+            get
+            {
+                return _displayIndex;
+            }
+            set
+            {
+                _displayIndex = value;
+            }
+        }
+    
+        /// <summary>
+        /// Target render frequency
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("targetRenderFrequency")]
+        [System.ComponentModel.DescriptionAttribute("Target render frequency")]
+        public double TargetRenderFrequency
+        {
+            get
+            {
+                return _targetRenderFrequency;
+            }
+            set
+            {
+                _targetRenderFrequency = value;
+            }
+        }
+    
+        /// <summary>
+        /// Target update frequency
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("targetUpdateFrequency")]
+        [System.ComponentModel.DescriptionAttribute("Target update frequency")]
+        public double TargetUpdateFrequency
+        {
+            get
+            {
+                return _targetUpdateFrequency;
+            }
+            set
+            {
+                _targetUpdateFrequency = value;
+            }
+        }
+    
+        /// <summary>
+        /// Calibration directory
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("textureAssetsDirectory")]
+        [System.ComponentModel.DescriptionAttribute("Calibration directory")]
+        public string TextureAssetsDirectory
+        {
+            get
+            {
+                return _textureAssetsDirectory;
+            }
+            set
+            {
+                _textureAssetsDirectory = value;
+            }
+        }
+    
+        /// <summary>
+        /// Calibration parameters for a set of named display monitors for visual stimuli
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
+        [System.ComponentModel.DescriptionAttribute("Calibration parameters for a set of named display monitors for visual stimuli")]
+        public System.Collections.Generic.Dictionary<string, DisplayCalibration> Calibration
+        {
+            get
+            {
+                return _calibration;
+            }
+            set
+            {
+                _calibration = value;
+            }
+        }
+    
+        /// <summary>
+        /// Brightness
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
+        [System.ComponentModel.DescriptionAttribute("Brightness")]
+        public double Brightness
+        {
+            get
+            {
+                return _brightness;
+            }
+            set
+            {
+                _brightness = value;
+            }
+        }
+    
+        /// <summary>
+        /// Contrast
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
+        [System.ComponentModel.DescriptionAttribute("Contrast")]
+        public double Contrast
+        {
+            get
+            {
+                return _contrast;
+            }
+            set
+            {
+                _contrast = value;
+            }
+        }
+    
+        public System.IObservable<Screen> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Screen(this)));
+        }
+    
+        public System.IObservable<Screen> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Screen(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DisplayIndex = " + _displayIndex + ", ");
+            stringBuilder.Append("TargetRenderFrequency = " + _targetRenderFrequency + ", ");
+            stringBuilder.Append("TargetUpdateFrequency = " + _targetUpdateFrequency + ", ");
+            stringBuilder.Append("TextureAssetsDirectory = " + _textureAssetsDirectory + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("Brightness = " + _brightness + ", ");
+            stringBuilder.Append("Contrast = " + _contrast);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class UclOpenHfVisualRig
     {
     
@@ -1106,13 +1220,13 @@ namespace UclOpenHfVisualDataSchema
     
         private Screen _screen;
     
-        private SerialDeviceModule _arduino;
+        private MatrixArduino _arduino;
     
         public UclOpenHfVisualRig()
         {
             _version = "0.0.0-rc1";
             _screen = new Screen();
-            _arduino = new SerialDeviceModule();
+            _arduino = new MatrixArduino();
         }
     
         protected UclOpenHfVisualRig(UclOpenHfVisualRig other)
@@ -1151,7 +1265,7 @@ namespace UclOpenHfVisualDataSchema
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("arduino", Required=Newtonsoft.Json.Required.Always)]
-        public SerialDeviceModule Arduino
+        public MatrixArduino Arduino
         {
             get
             {
@@ -1463,10 +1577,10 @@ namespace UclOpenHfVisualDataSchema
         }
     
         /// <summary>
-        /// X coordinate of the point
+        /// X coordinate of the point.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("x", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("X coordinate of the point")]
+        [System.ComponentModel.DescriptionAttribute("X coordinate of the point.")]
         public double X
         {
             get
@@ -1480,10 +1594,10 @@ namespace UclOpenHfVisualDataSchema
         }
     
         /// <summary>
-        /// Y coordinate of the point
+        /// Y coordinate of the point.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("y", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Y coordinate of the point")]
+        [System.ComponentModel.DescriptionAttribute("Y coordinate of the point.")]
         public double Y
         {
             get
@@ -1497,10 +1611,10 @@ namespace UclOpenHfVisualDataSchema
         }
     
         /// <summary>
-        /// Z coordinate of the point
+        /// Z coordinate of the point.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("z", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Z coordinate of the point")]
+        [System.ComponentModel.DescriptionAttribute("Z coordinate of the point.")]
         public double Z
         {
             get
@@ -1584,14 +1698,19 @@ namespace UclOpenHfVisualDataSchema
             return Process<Experiment>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<MatrixArduino> source)
+        {
+            return Process<MatrixArduino>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<MatrixArduinoData> source)
+        {
+            return Process<MatrixArduinoData>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Screen> source)
         {
             return Process<Screen>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<SerialDeviceModule> source)
-        {
-            return Process<SerialDeviceModule>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<UclOpenHfVisualRig> source)
@@ -1627,8 +1746,9 @@ namespace UclOpenHfVisualDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayExtrinsics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayIntrinsics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Experiment>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MatrixArduino>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MatrixArduinoData>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SerialDeviceModule>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenHfVisualRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenHfVisualTaskLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenHfVisualTaskParameters>))]

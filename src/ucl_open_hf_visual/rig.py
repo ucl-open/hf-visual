@@ -8,9 +8,11 @@ from ucl_open.rigs.device import SerialDeviceModule
 
 from ucl_open_hf_visual import __semver__
 
+class MatrixArduino(SerialDeviceModule):
+    device_type: Literal["MatrixArduino"] = "MatrixArduino"
 
 class UclOpenHfVisualRig(BaseSchema):
     version: Literal[__semver__] = __semver__ # type: ignore
     screen: Screen
-    arduino: SerialDeviceModule
+    arduino: MatrixArduino
     ...

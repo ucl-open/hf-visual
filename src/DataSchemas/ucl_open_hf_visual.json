@@ -121,81 +121,11 @@
       "title": "Experiment",
       "type": "object"
     },
-    "Screen": {
+    "MatrixArduino": {
       "properties": {
         "deviceType": {
-          "const": "Screen",
-          "default": "Screen",
-          "description": "Device type",
-          "title": "DeviceType",
-          "type": "string"
-        },
-        "displayIndex": {
-          "default": 1,
-          "description": "Display index",
-          "title": "DisplayIndex",
-          "type": "integer"
-        },
-        "targetRenderFrequency": {
-          "default": 60,
-          "description": "Target render frequency",
-          "title": "TargetRenderFrequency",
-          "type": "number"
-        },
-        "targetUpdateFrequency": {
-          "default": 120,
-          "description": "Target update frequency",
-          "title": "TargetUpdateFrequency",
-          "type": "number"
-        },
-        "textureAssetsDirectory": {
-          "default": "Textures",
-          "description": "Calibration directory",
-          "title": "TextureAssetsDirectory",
-          "type": "string"
-        },
-        "calibration": {
-          "default": null,
-          "description": "Calibration parameters for a set of named display monitors for visual stimuli",
-          "oneOf": [
-            {
-              "additionalProperties": {
-                "$ref": "#/$defs/DisplayCalibration"
-              },
-              "type": "object"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Calibration"
-        },
-        "brightness": {
-          "default": 0,
-          "description": "Brightness",
-          "maximum": 1,
-          "minimum": -1,
-          "title": "Brightness",
-          "type": "number"
-        },
-        "contrast": {
-          "default": 1,
-          "description": "Contrast",
-          "maximum": 1,
-          "minimum": -1,
-          "title": "Contrast",
-          "type": "number"
-        }
-      },
-      "title": "Screen",
-      "type": "object"
-    },
-    "SerialDeviceModule": {
-      "description": "Represents the SerialDevice workflow module.\n\nMirrors all externalized properties of SerialDevice.bonsai, including\nport configuration, framing, buffer settings, and parsing pattern.",
-      "properties": {
-        "deviceType": {
-          "const": "SerialDevice",
-          "default": "SerialDevice",
+          "const": "MatrixArduino",
+          "default": "MatrixArduino",
           "title": "DeviceType",
           "type": "string"
         },
@@ -212,12 +142,6 @@
           "description": "Baud rate for serial communication.",
           "title": "BaudRate",
           "type": "integer"
-        },
-        "pattern": {
-          "default": "",
-          "description": "Pattern used to parse each incoming serial line (same syntax as Bonsai Parse/ScanPattern).",
-          "title": "Pattern",
-          "type": "string"
         },
         "encoding": {
           "default": null,
@@ -314,7 +238,114 @@
       "required": [
         "portName"
       ],
-      "title": "SerialDeviceModule",
+      "title": "MatrixArduino",
+      "type": "object"
+    },
+    "MatrixArduinoData": {
+      "properties": {
+        "encoderCount": {
+          "title": "EncoderCount",
+          "type": "integer"
+        },
+        "lickCountLeft": {
+          "title": "LickCountLeft",
+          "type": "integer"
+        },
+        "lickCountRight": {
+          "title": "LickCountRight",
+          "type": "integer"
+        },
+        "lastSyncPulseTime": {
+          "title": "LastSyncPulseTime",
+          "type": "integer"
+        },
+        "photodiodeVal": {
+          "title": "PhotodiodeVal",
+          "type": "integer"
+        },
+        "currentMs": {
+          "title": "CurrentMs",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "encoderCount",
+        "lickCountLeft",
+        "lickCountRight",
+        "lastSyncPulseTime",
+        "photodiodeVal",
+        "currentMs"
+      ],
+      "title": "MatrixArduinoData",
+      "type": "object"
+    },
+    "Screen": {
+      "properties": {
+        "deviceType": {
+          "const": "Screen",
+          "default": "Screen",
+          "description": "Device type",
+          "title": "DeviceType",
+          "type": "string"
+        },
+        "displayIndex": {
+          "default": 1,
+          "description": "Display index",
+          "title": "DisplayIndex",
+          "type": "integer"
+        },
+        "targetRenderFrequency": {
+          "default": 60,
+          "description": "Target render frequency",
+          "title": "TargetRenderFrequency",
+          "type": "number"
+        },
+        "targetUpdateFrequency": {
+          "default": 120,
+          "description": "Target update frequency",
+          "title": "TargetUpdateFrequency",
+          "type": "number"
+        },
+        "textureAssetsDirectory": {
+          "default": "Textures",
+          "description": "Calibration directory",
+          "title": "TextureAssetsDirectory",
+          "type": "string"
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration parameters for a set of named display monitors for visual stimuli",
+          "oneOf": [
+            {
+              "additionalProperties": {
+                "$ref": "#/$defs/DisplayCalibration"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Calibration"
+        },
+        "brightness": {
+          "default": 0,
+          "description": "Brightness",
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Brightness",
+          "type": "number"
+        },
+        "contrast": {
+          "default": 1,
+          "description": "Contrast",
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Contrast",
+          "type": "number"
+        }
+      },
+      "title": "Screen",
       "type": "object"
     },
     "UclOpenHfVisualRig": {
@@ -329,7 +360,7 @@
           "$ref": "#/$defs/Screen"
         },
         "arduino": {
-          "$ref": "#/$defs/SerialDeviceModule",
+          "$ref": "#/$defs/MatrixArduino",
           "title": "Arduino"
         }
       },
@@ -414,17 +445,17 @@
     "Vector3": {
       "properties": {
         "x": {
-          "description": "X coordinate of the point",
+          "description": "X coordinate of the point.",
           "title": "X",
           "type": "number"
         },
         "y": {
-          "description": "Y coordinate of the point",
+          "description": "Y coordinate of the point.",
           "title": "Y",
           "type": "number"
         },
         "z": {
-          "description": "Z coordinate of the point",
+          "description": "Z coordinate of the point.",
           "title": "Z",
           "type": "number"
         }

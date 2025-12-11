@@ -8,8 +8,8 @@
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
-                 xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
-                 xmlns:p2="clr-namespace:UclOpen.Core;assembly=UclOpen.Core"
+                 xmlns:p2="clr-namespace:;assembly=Extensions"
+                 xmlns:p3="clr-namespace:UclOpen.Core;assembly=UclOpen.Core"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -153,7 +153,6 @@
           <Property Name="PortName" Selector="PortName" />
           <Property Name="BaudRate" Selector="BaudRate" />
           <Property Name="NewLine" Selector="NewLine" />
-          <Property Name="Pattern" Selector="Pattern" />
         </PropertyMappings>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Devices:SerialDevice.bonsai">
@@ -174,8 +173,6 @@
         <WriteBufferSize>2048</WriteBufferSize>
         <ReceivedBytesThreshold>1</ReceivedBytesThreshold>
         <Name>Arduino</Name>
-        <Pattern>%d</Pattern>
-        <Separator>,</Separator>
         <SerialMessageSubjectName>SerialMessages</SerialMessageSubjectName>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
@@ -424,7 +421,7 @@
             </Expression>
             <Expression xsi:type="Index">
               <Operand xsi:type="StringProperty">
-                <Value>SN_1_1</Value>
+                <Value>SynthIm_1_1</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -557,33 +554,14 @@
       <Expression xsi:type="SubscribeSubject">
         <Name>SerialMessages</Name>
       </Expression>
-      <Expression xsi:type="scr:ExpressionTransform">
-        <scr:Expression>new(
-  it[0] as EncoderCount,
-  it[1] as LickCountLeft,
-  it[2] as LickCountRight,
-  it[3] as LastSyncPulseTime,
-  it[4] as PhotodiodeVal,
-  it[5] as ArduinoMilliseconds
-)</scr:Expression>
-      </Expression>
-      <Expression xsi:type="MemberSelector">
-        <Selector>ArduinoMilliseconds</Selector>
-      </Expression>
-      <Expression xsi:type="Divide">
-        <Operand xsi:type="FloatProperty">
-          <Value>1000</Value>
-        </Operand>
-      </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Zip" />
+        <Combinator xsi:type="p2:ParseMatrixSerialDevice" />
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="harp:CreateTimestamped" />
-      </Expression>
-      <Expression xsi:type="Annotation">
-        <Name>TODO</Name>
-        <Text><![CDATA[Should be part of package. Should also use GroupByTime]]></Text>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="Annotation">
+          <Name>TODO</Name>
+          <Text><![CDATA[Should be part of package. Should also use GroupByTime]]></Text>
+        </Builder>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>LogData</Name>
@@ -621,7 +599,7 @@
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p2:StripSubstring" />
+                    <Combinator xsi:type="p3:StripSubstring" />
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
                     <Property Name="Value" DisplayName="Extension" Description="The file extension" />
@@ -716,13 +694,8 @@
       <Edge From="29" To="30" Label="Source1" />
       <Edge From="30" To="31" Label="Source1" />
       <Edge From="33" To="34" Label="Source1" />
-      <Edge From="34" To="35" Label="Source1" />
-      <Edge From="34" To="37" Label="Source1" />
-      <Edge From="35" To="36" Label="Source1" />
-      <Edge From="36" To="37" Label="Source2" />
-      <Edge From="37" To="38" Label="Source1" />
-      <Edge From="38" To="40" Label="Source1" />
-      <Edge From="39" To="40" Label="Source2" />
+      <Edge From="34" To="36" Label="Source1" />
+      <Edge From="35" To="36" Label="Source2" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
