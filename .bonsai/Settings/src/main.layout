@@ -3,6 +3,7 @@
   <WindowSettings Index="6">
     <NestedLayout>
       <WindowSettings Index="4">
+        <Visible>false</Visible>
         <Location>
           <X>344</X>
           <Y>310</Y>
@@ -34,6 +35,7 @@
       <WindowSettings Index="6">
         <NestedLayout>
           <WindowSettings Index="3">
+            <Visible>false</Visible>
             <Location>
               <X>511</X>
               <Y>236</Y>
@@ -48,6 +50,7 @@
             </VisualizerSettings>
           </WindowSettings>
           <WindowSettings Index="6">
+            <Visible>false</Visible>
             <Location>
               <X>500</X>
               <Y>144</Y>
@@ -65,7 +68,7 @@
       </WindowSettings>
     </NestedLayout>
   </WindowSettings>
-  <WindowSettings Index="33">
+  <WindowSettings Index="35">
     <Visible>false</Visible>
     <Location>
       <X>640</X>
@@ -80,7 +83,8 @@
       <ObjectTextVisualizer />
     </VisualizerSettings>
   </WindowSettings>
-  <WindowSettings Index="34">
+  <WindowSettings Index="36">
+    <Visible>false</Visible>
     <Location>
       <X>174</X>
       <Y>146</Y>

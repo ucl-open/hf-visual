@@ -199,7 +199,7 @@
           <gl:CursorVisible>true</gl:CursorVisible>
           <gl:Location xsi:nil="true" />
           <gl:WindowBorder>Resizable</gl:WindowBorder>
-          <gl:WindowState>Fullscreen</gl:WindowState>
+          <gl:WindowState>Normal</gl:WindowState>
           <gl:DisplayDevice>Second</gl:DisplayDevice>
           <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
           <gl:TargetUpdateFrequency>120</gl:TargetUpdateFrequency>
@@ -376,6 +376,21 @@
         <ShiftY>0</ShiftY>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
+        <Name>DrawCall</Name>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawQuad.bonsai">
+        <ExtentX>0.1</ExtentX>
+        <ExtentY>0.1</ExtentY>
+        <LocationX>1</LocationX>
+        <LocationY>1</LocationY>
+        <Layer>0</Layer>
+        <Angle>0</Angle>
+        <ColorR>1</ColorR>
+        <ColorG>1</ColorG>
+        <ColorB>1</ColorB>
+        <ColorA>1</ColorA>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
         <Name>TaskLogicParameters</Name>
       </Expression>
       <Expression xsi:type="MemberSelector">
@@ -421,7 +436,7 @@
             </Expression>
             <Expression xsi:type="Index">
               <Operand xsi:type="StringProperty">
-                <Value>SynthIm_1_1</Value>
+                <Value>SN_1_1</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -473,7 +488,7 @@
             </Expression>
             <Expression xsi:type="Index">
               <Operand xsi:type="StringProperty">
-                <Value>SN_1_2</Value>
+                <Value>blankStim_1</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -557,11 +572,9 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="p2:ParseMatrixSerialDevice" />
       </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="Annotation">
-          <Name>TODO</Name>
-          <Text><![CDATA[Should be part of package. Should also use GroupByTime]]></Text>
-        </Builder>
+      <Expression xsi:type="Annotation">
+        <Name>TODO</Name>
+        <Text><![CDATA[Should be part of package. Should also use GroupByTime]]></Text>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>LogData</Name>
@@ -648,7 +661,7 @@
               <Property Name="Selector" />
             </Expression>
             <Expression xsi:type="io:CsvWriter">
-              <io:FileName>C:\Users\neurogears\source\repos\ucl-open\hf-visual\temp_data\sub-Algernon\ses-001_date-2025-12-10T17-50-17\Arduino\Arduino.csv</io:FileName>
+              <io:FileName>C:\Users\neurogears\source\repos\ucl-open\hf-visual\temp_data\sub-Algernon\ses-001_date-2025-12-11T13-36-07\Arduino\Arduino.csv</io:FileName>
               <io:Append>false</io:Append>
               <io:Overwrite>false</io:Overwrite>
               <io:Suffix>None</io:Suffix>
@@ -686,16 +699,17 @@
       <Edge From="19" To="20" Label="Source1" />
       <Edge From="21" To="22" Label="Source1" />
       <Edge From="23" To="24" Label="Source1" />
-      <Edge From="24" To="25" Label="Source1" />
       <Edge From="25" To="26" Label="Source1" />
-      <Edge From="26" To="28" Label="Source1" />
-      <Edge From="27" To="28" Label="Source2" />
-      <Edge From="28" To="29" Label="Source1" />
-      <Edge From="29" To="30" Label="Source1" />
+      <Edge From="26" To="27" Label="Source1" />
+      <Edge From="27" To="28" Label="Source1" />
+      <Edge From="28" To="30" Label="Source1" />
+      <Edge From="29" To="30" Label="Source2" />
       <Edge From="30" To="31" Label="Source1" />
-      <Edge From="33" To="34" Label="Source1" />
-      <Edge From="34" To="36" Label="Source1" />
-      <Edge From="35" To="36" Label="Source2" />
+      <Edge From="31" To="32" Label="Source1" />
+      <Edge From="32" To="33" Label="Source1" />
+      <Edge From="35" To="36" Label="Source1" />
+      <Edge From="36" To="38" Label="Source1" />
+      <Edge From="37" To="38" Label="Source2" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
