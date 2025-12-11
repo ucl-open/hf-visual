@@ -348,6 +348,34 @@
       "title": "Screen",
       "type": "object"
     },
+    "SyncQuad": {
+      "properties": {
+        "extentX": {
+          "title": "ExtentX",
+          "type": "number"
+        },
+        "extentY": {
+          "title": "ExtentY",
+          "type": "number"
+        },
+        "locationX": {
+          "title": "LocationX",
+          "type": "number"
+        },
+        "locationY": {
+          "title": "LocationY",
+          "type": "number"
+        }
+      },
+      "required": [
+        "extentX",
+        "extentY",
+        "locationX",
+        "locationY"
+      ],
+      "title": "SyncQuad",
+      "type": "object"
+    },
     "UclOpenHfVisualRig": {
       "properties": {
         "version": {
@@ -359,6 +387,9 @@
         "screen": {
           "$ref": "#/$defs/Screen"
         },
+        "syncQuad": {
+          "$ref": "#/$defs/SyncQuad"
+        },
         "arduino": {
           "$ref": "#/$defs/MatrixArduino",
           "title": "Arduino"
@@ -366,6 +397,7 @@
       },
       "required": [
         "screen",
+        "syncQuad",
         "arduino"
       ],
       "title": "UclOpenHfVisualRig",

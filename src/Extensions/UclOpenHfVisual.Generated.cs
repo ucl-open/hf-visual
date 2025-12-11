@@ -1213,6 +1213,118 @@ namespace UclOpenHfVisualDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class SyncQuad
+    {
+    
+        private double _extentX;
+    
+        private double _extentY;
+    
+        private double _locationX;
+    
+        private double _locationY;
+    
+        public SyncQuad()
+        {
+        }
+    
+        protected SyncQuad(SyncQuad other)
+        {
+            _extentX = other._extentX;
+            _extentY = other._extentY;
+            _locationX = other._locationX;
+            _locationY = other._locationY;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("extentX", Required=Newtonsoft.Json.Required.Always)]
+        public double ExtentX
+        {
+            get
+            {
+                return _extentX;
+            }
+            set
+            {
+                _extentX = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("extentY", Required=Newtonsoft.Json.Required.Always)]
+        public double ExtentY
+        {
+            get
+            {
+                return _extentY;
+            }
+            set
+            {
+                _extentY = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("locationX", Required=Newtonsoft.Json.Required.Always)]
+        public double LocationX
+        {
+            get
+            {
+                return _locationX;
+            }
+            set
+            {
+                _locationX = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("locationY", Required=Newtonsoft.Json.Required.Always)]
+        public double LocationY
+        {
+            get
+            {
+                return _locationY;
+            }
+            set
+            {
+                _locationY = value;
+            }
+        }
+    
+        public System.IObservable<SyncQuad> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new SyncQuad(this)));
+        }
+    
+        public System.IObservable<SyncQuad> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new SyncQuad(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("ExtentX = " + _extentX + ", ");
+            stringBuilder.Append("ExtentY = " + _extentY + ", ");
+            stringBuilder.Append("LocationX = " + _locationX + ", ");
+            stringBuilder.Append("LocationY = " + _locationY);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class UclOpenHfVisualRig
     {
     
@@ -1220,12 +1332,15 @@ namespace UclOpenHfVisualDataSchema
     
         private Screen _screen;
     
+        private SyncQuad _syncQuad;
+    
         private MatrixArduino _arduino;
     
         public UclOpenHfVisualRig()
         {
             _version = "0.0.0-rc1";
             _screen = new Screen();
+            _syncQuad = new SyncQuad();
             _arduino = new MatrixArduino();
         }
     
@@ -1233,6 +1348,7 @@ namespace UclOpenHfVisualDataSchema
         {
             _version = other._version;
             _screen = other._screen;
+            _syncQuad = other._syncQuad;
             _arduino = other._arduino;
         }
     
@@ -1264,6 +1380,20 @@ namespace UclOpenHfVisualDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("syncQuad", Required=Newtonsoft.Json.Required.Always)]
+        public SyncQuad SyncQuad
+        {
+            get
+            {
+                return _syncQuad;
+            }
+            set
+            {
+                _syncQuad = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("arduino", Required=Newtonsoft.Json.Required.Always)]
         public MatrixArduino Arduino
         {
@@ -1291,6 +1421,7 @@ namespace UclOpenHfVisualDataSchema
         {
             stringBuilder.Append("Version = " + _version + ", ");
             stringBuilder.Append("Screen = " + _screen + ", ");
+            stringBuilder.Append("SyncQuad = " + _syncQuad + ", ");
             stringBuilder.Append("Arduino = " + _arduino);
             return true;
         }
@@ -1713,6 +1844,11 @@ namespace UclOpenHfVisualDataSchema
             return Process<Screen>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<SyncQuad> source)
+        {
+            return Process<SyncQuad>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<UclOpenHfVisualRig> source)
         {
             return Process<UclOpenHfVisualRig>(source);
@@ -1749,6 +1885,7 @@ namespace UclOpenHfVisualDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MatrixArduino>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MatrixArduinoData>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SyncQuad>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenHfVisualRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenHfVisualTaskLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenHfVisualTaskParameters>))]

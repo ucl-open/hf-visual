@@ -4,7 +4,8 @@ from ucl_open_hf_visual.rig import (
     UclOpenHfVisualRig
 )
 from ucl_open_hf_visual.rig import (
-    MatrixArduino
+    MatrixArduino,
+    SyncQuad
 )
 from ucl_open.rigs.device import (
     Screen,
@@ -13,6 +14,12 @@ from ucl_open.rigs.device import (
 rig = UclOpenHfVisualRig(
     screen=Screen(
         texture_assets_directory="../textures"
+    ),
+    sync_quad=SyncQuad(
+        extent_x=0.1,
+        extent_y=0.1,
+        location_x=1,
+        location_y=1
     ),
     arduino=MatrixArduino(
         port_name="COM10",
