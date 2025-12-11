@@ -41,7 +41,7 @@ rig = UclOpenHfVisualRig(
         new_line="\n"
     ),
     arduino_photodiode=MatrixArduinoPhotodiode(
-        port_name="COM11",
+        port_name="COM10",
         baud_rate=250000,
         new_line="\n"
     )
