@@ -32,18 +32,18 @@ rig = UclOpenHfVisualRig(
     sync_quad=SyncQuad(
         extent_x=0.1,
         extent_y=0.1,
-        location_x=1,
-        location_y=1
+        location_x=-1,
+        location_y=-1
     ),
     arduino=MatrixArduino(
         port_name="COM4",
         baud_rate=1000000,
-        new_line="\n"
+        new_line=r"\n"
     ),
     arduino_photodiode=MatrixArduinoPhotodiode(
         port_name="COM5",
         baud_rate=250000,
-        new_line="\n"
+        new_line=r"\n"
     )
 )
 

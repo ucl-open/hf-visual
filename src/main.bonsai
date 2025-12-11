@@ -37,7 +37,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="io:ReadAllText">
-                <io:Path>C:\Users\neurogears\source\repos\ucl-open\hf-visual\local\UclOpenSession.json</io:Path>
+                <io:Path>C:\Users\saleem_lab\Documents\GitHub\hf-visual\local\UclOpenSession.json</io:Path>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:AsyncSubject">
@@ -48,7 +48,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="io:ReadAllText">
-                <io:Path>C:\Users\neurogears\source\repos\ucl-open\hf-visual\local\UclOpenHfVisualRig.json</io:Path>
+                <io:Path>C:\Users\saleem_lab\Documents\GitHub\hf-visual\local\UclOpenHfVisualRig.json</io:Path>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:AsyncSubject">
@@ -59,7 +59,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="io:ReadAllText">
-                <io:Path>C:\Users\neurogears\source\repos\ucl-open\hf-visual\local\UclOpenHfVisualTaskLogic.json</io:Path>
+                <io:Path>C:\Users\saleem_lab\Documents\GitHub\hf-visual\local\UclOpenHfVisualTaskLogic.json</io:Path>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:AsyncSubject">
@@ -187,17 +187,17 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Devices:SerialDevice.bonsai">
-              <PortName>COM10</PortName>
+              <PortName>COM4</PortName>
               <BaudRate>1000000</BaudRate>
-              <Encoding xsi:nil="true" />
-              <NewLine />
+              <Encoding>us-ascii</Encoding>
+              <NewLine>\n</NewLine>
               <Parity>None</Parity>
               <ParityReplace>63</ParityReplace>
               <DataBits>8</DataBits>
               <StopBits>One</StopBits>
               <Handshake>None</Handshake>
               <DiscardNull>false</DiscardNull>
-              <DtrEnable>false</DtrEnable>
+              <DtrEnable>true</DtrEnable>
               <RtsEnable>false</RtsEnable>
               <ReadBufferSize>4096</ReadBufferSize>
               <WriteBufferSize>2048</WriteBufferSize>
@@ -219,32 +219,23 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Devices:SerialDevice.bonsai">
-              <PortName>COM10</PortName>
-              <BaudRate>1000000</BaudRate>
-              <Encoding xsi:nil="true" />
-              <NewLine />
+              <PortName>COM5</PortName>
+              <BaudRate>250000</BaudRate>
+              <Encoding>us-ascii</Encoding>
+              <NewLine>\n</NewLine>
               <Parity>None</Parity>
               <ParityReplace>63</ParityReplace>
               <DataBits>8</DataBits>
               <StopBits>One</StopBits>
               <Handshake>None</Handshake>
               <DiscardNull>false</DiscardNull>
-              <DtrEnable>false</DtrEnable>
+              <DtrEnable>true</DtrEnable>
               <RtsEnable>false</RtsEnable>
               <ReadBufferSize>4096</ReadBufferSize>
               <WriteBufferSize>2048</WriteBufferSize>
               <ReceivedBytesThreshold>1</ReceivedBytesThreshold>
-              <Name>Arduino</Name>
+              <Name>ArduinoPhotodiode</Name>
               <SerialMessageSubjectName>SerialMessagesPhotodiode</SerialMessageSubjectName>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>SerialMessagesPhotodiode</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p3:ParseMatrixPhotodiodeSerialDevice" />
-            </Expression>
-            <Expression xsi:type="rx:PublishSubject">
-              <Name>MatrixPhotodiode</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>SerialMessagesMatrix</Name>
@@ -254,6 +245,15 @@
             </Expression>
             <Expression xsi:type="rx:PublishSubject">
               <Name>MatrixArduino</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SerialMessagesPhotodiode</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p3:ParseMatrixPhotodiodeSerialDevice" />
+            </Expression>
+            <Expression xsi:type="rx:PublishSubject">
+              <Name>MatrixPhotodiode</Name>
             </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>Display</Name>
@@ -321,7 +321,7 @@
                       <gl:CursorVisible>true</gl:CursorVisible>
                       <gl:Location xsi:nil="true" />
                       <gl:WindowBorder>Resizable</gl:WindowBorder>
-                      <gl:WindowState>Normal</gl:WindowState>
+                      <gl:WindowState>Fullscreen</gl:WindowState>
                       <gl:DisplayDevice>Second</gl:DisplayDevice>
                       <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
                       <gl:TargetUpdateFrequency>120</gl:TargetUpdateFrequency>
@@ -548,13 +548,13 @@
                   <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawQuad.bonsai">
                     <ExtentX>0.1</ExtentX>
                     <ExtentY>0.1</ExtentY>
-                    <LocationX>1</LocationX>
-                    <LocationY>1</LocationY>
+                    <LocationX>-1</LocationX>
+                    <LocationY>-1</LocationY>
                     <Layer>0</Layer>
                     <Angle>0</Angle>
-                    <ColorR>0</ColorR>
-                    <ColorG>0</ColorG>
-                    <ColorB>0</ColorB>
+                    <ColorR>1</ColorR>
+                    <ColorG>1</ColorG>
+                    <ColorB>1</ColorB>
                     <ColorA>1</ColorA>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -783,7 +783,7 @@
                   </Expression>
                   <Expression xsi:type="Index">
                     <Operand xsi:type="StringProperty">
-                      <Value>SN_1_1</Value>
+                      <Value>SynthIm_1_1</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -1102,10 +1102,10 @@
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="SubscribeSubject">
-              <Name>MatrixArduino</Name>
+              <Name>MatrixPhotodiode</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Value.PhotodiodeVal</Selector>
+              <Selector>PhotodiodeVal</Selector>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="gui:GroupBoxBuilder">
@@ -1211,7 +1211,7 @@
             <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Logging:LogController.bonsai">
               <SubjectId>Plimbo</SubjectId>
               <SessionId>001</SessionId>
-              <Path>C:/Users/neurogears/source/repos/ucl-open/hf-visual/temp_data</Path>
+              <Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data</Path>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>MatrixArduino</Name>
@@ -1305,7 +1305,7 @@
                     <Property Name="Selector" />
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>C:/Users/neurogears/source/repos/ucl-open/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T16-11-23\Arduino\Arduino.csv</io:FileName>
+                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-34-28\Arduino\Arduino.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1424,7 +1424,7 @@
                     <Property Name="Selector" />
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>C:/Users/neurogears/source/repos/ucl-open/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T16-11-23\Arduino\Arduino.csv</io:FileName>
+                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-27-51\ArduinoPhotodiode\ArduinoPhotodiode.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1543,7 +1543,7 @@
                     <Property Name="Selector" />
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>C:/Users/neurogears/source/repos/ucl-open/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T16-11-23\Texture\Texture.csv</io:FileName>
+                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-34-28\Texture\Texture.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1657,7 +1657,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p5:JsonWriter">
-                      <p5:Path>C:/Users/neurogears/source/repos/ucl-open/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T16-11-23\RigSchema\RigSchema.json</p5:Path>
+                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-34-28\RigSchema\RigSchema.json</p5:Path>
                       <p5:Suffix>None</p5:Suffix>
                       <p5:Overwrite>false</p5:Overwrite>
                     </Combinator>
@@ -1768,7 +1768,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p5:JsonWriter">
-                      <p5:Path>C:/Users/neurogears/source/repos/ucl-open/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T16-11-23\TaskLogicSchema\TaskLogicSchema.json</p5:Path>
+                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-34-28\TaskLogicSchema\TaskLogicSchema.json</p5:Path>
                       <p5:Suffix>None</p5:Suffix>
                       <p5:Overwrite>false</p5:Overwrite>
                     </Combinator>
@@ -1883,7 +1883,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p5:JsonWriter">
-                      <p5:Path>C:/Users/neurogears/source/repos/ucl-open/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T16-11-23\SessionSchema\SessionSchema.json</p5:Path>
+                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-34-28\SessionSchema\SessionSchema.json</p5:Path>
                       <p5:Suffix>None</p5:Suffix>
                       <p5:Overwrite>false</p5:Overwrite>
                     </Combinator>
