@@ -119,12 +119,12 @@
   </WindowSettings>
   <WindowSettings Index="11">
     <Location>
-      <X>119</X>
-      <Y>205</Y>
+      <X>451</X>
+      <Y>134</Y>
     </Location>
     <Size>
       <Width>418</Width>
-      <Height>377</Height>
+      <Height>606</Height>
     </Size>
     <VisualizerTypeName>Bonsai.Gui.TableLayoutPanelVisualizer</VisualizerTypeName>
     <VisualizerSettings>
@@ -177,8 +177,8 @@
                 <VisualizerSettings>
                   <RollingGraphVisualizer>
                     <Capacity>0</Capacity>
-                    <Min>-1</Min>
-                    <Max>1</Max>
+                    <Min>-10000</Min>
+                    <Max>100000</Max>
                     <AutoScale>true</AutoScale>
                   </RollingGraphVisualizer>
                 </VisualizerSettings>
@@ -226,8 +226,8 @@
                 <VisualizerSettings>
                   <TimeSeriesVisualizer>
                     <Capacity>640</Capacity>
-                    <Min>0</Min>
-                    <Max>160</Max>
+                    <Min>120</Min>
+                    <Max>150</Max>
                     <AutoScale>true</AutoScale>
                   </TimeSeriesVisualizer>
                 </VisualizerSettings>
@@ -235,12 +235,18 @@
             </GroupBoxVisualizer>
           </VisualizerSettings>
         </MashupSettings>
+        <MashupSettings>
+          <VisualizerTypeName>Bonsai.Vision.Design.IplImageVisualizer</VisualizerTypeName>
+          <VisualizerSettings>
+            <IplImageVisualizer />
+          </VisualizerSettings>
+        </MashupSettings>
       </TableLayoutPanelVisualizer>
     </VisualizerSettings>
   </WindowSettings>
   <WindowSettings Index="12">
     <NestedLayout>
-      <WindowSettings Index="37">
+      <WindowSettings Index="43">
         <Visible>false</Visible>
         <Location>
           <X>144</X>
