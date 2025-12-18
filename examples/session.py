@@ -9,8 +9,8 @@ session = UclOpenSession(
     workflow="main.bonsai",
     commit="",
     repository_url="https://github.com/ucl-open/hf-visual",
-    logging_root_path="C:/Users/neurogears/source/repos/ucl-open/hf-visual/temp_data",
-    animal_id="Plimbo",
+    logging_root_path="C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data",
+    animal_id="mouse-001",
     session_id="001"
 )
 
