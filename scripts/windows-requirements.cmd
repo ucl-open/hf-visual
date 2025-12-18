@@ -1,0 +1,1 @@
+powershell -ExecutionPolicy Bypass -File ..\scripts\windows-requirements.ps1

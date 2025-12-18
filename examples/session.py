@@ -1,13 +1,17 @@
 import datetime
 import os
 
-from ucl_open.rigs.experiment import Experiment
+from ucl_open_hf_visual.session import UclOpenSession
 
 # TODO - autofill experiment fields
-session = Experiment(
+# TODO - versions, repo configs etc.
+session = UclOpenSession(
     workflow="main.bonsai",
     commit="",
-    repository_url="https://github.com/ucl-open/hf-visual"
+    repository_url="https://github.com/ucl-open/hf-visual",
+    logging_root_path="C:/Users/neurogears/source/repos/ucl-open/hf-visual/temp_data",
+    animal_id="Plimbo",
+    session_id="001"
 )
 
 def main(path_seed: str = "./local/{schema}.json"):

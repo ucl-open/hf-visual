@@ -62,4 +62,4 @@ default-groups = ['dev']
 required-version = '>=0.8.4'
 
 [tool.uv.sources]
-ucl-open-rigs = {git = "https://github.com/ucl-open/ucl_open_rigs/", branch = "visual-displays"}
+ucl-open-rigs = {git = "https://github.com/ucl-open/ucl_open_rigs/", branch = "test_build"}

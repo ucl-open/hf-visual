@@ -4,7 +4,7 @@
 from typing import Literal
 from pydantic import Field
 
-from swc.aeon.schema import BaseSchema, Device
+from ucl_open.rigs.base import BaseSchema, Device
 
 class Vector3(BaseSchema):
     x: float = Field(default=0, description="X coordinate of the point")

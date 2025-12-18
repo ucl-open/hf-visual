@@ -321,350 +321,10 @@ namespace UclOpenHfVisualDataSchema
     }
 
 
-    /// <summary>
-    /// The base class for creating ucl-open experiment models.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("The base class for creating ucl-open experiment models.")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class Experiment
-    {
-    
-        private string _workflow;
-    
-        private string _commit;
-    
-        private string _repositoryUrl;
-    
-        public Experiment()
-        {
-        }
-    
-        protected Experiment(Experiment other)
-        {
-            _workflow = other._workflow;
-            _commit = other._commit;
-            _repositoryUrl = other._repositoryUrl;
-        }
-    
-        /// <summary>
-        /// Path to the workflow running the experiment.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("workflow", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Path to the workflow running the experiment.")]
-        public string Workflow
-        {
-            get
-            {
-                return _workflow;
-            }
-            set
-            {
-                _workflow = value;
-            }
-        }
-    
-        /// <summary>
-        /// Commit hash of the experiment/rig repo.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("commit", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Commit hash of the experiment/rig repo.")]
-        public string Commit
-        {
-            get
-            {
-                return _commit;
-            }
-            set
-            {
-                _commit = value;
-            }
-        }
-    
-        /// <summary>
-        /// The URL of the git repository used to version experiment source code.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("repositoryUrl", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("The URL of the git repository used to version experiment source code.")]
-        public string RepositoryUrl
-        {
-            get
-            {
-                return _repositoryUrl;
-            }
-            set
-            {
-                _repositoryUrl = value;
-            }
-        }
-    
-        public System.IObservable<Experiment> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Experiment(this)));
-        }
-    
-        public System.IObservable<Experiment> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Experiment(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Workflow = " + _workflow + ", ");
-            stringBuilder.Append("Commit = " + _commit + ", ");
-            stringBuilder.Append("RepositoryUrl = " + _repositoryUrl);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class Screen
-    {
-    
-        private string _deviceType;
-    
-        private int _displayIndex;
-    
-        private double _targetRenderFrequency;
-    
-        private double _targetUpdateFrequency;
-    
-        private string _textureAssetsDirectory;
-    
-        private System.Collections.Generic.Dictionary<string, DisplayCalibration> _calibration;
-    
-        private double _brightness;
-    
-        private double _contrast;
-    
-        public Screen()
-        {
-            _deviceType = "Screen";
-            _displayIndex = 1;
-            _targetRenderFrequency = 60D;
-            _targetUpdateFrequency = 120D;
-            _textureAssetsDirectory = "Textures";
-            _brightness = 0D;
-            _contrast = 1D;
-        }
-    
-        protected Screen(Screen other)
-        {
-            _deviceType = other._deviceType;
-            _displayIndex = other._displayIndex;
-            _targetRenderFrequency = other._targetRenderFrequency;
-            _targetUpdateFrequency = other._targetUpdateFrequency;
-            _textureAssetsDirectory = other._textureAssetsDirectory;
-            _calibration = other._calibration;
-            _brightness = other._brightness;
-            _contrast = other._contrast;
-        }
-    
-        /// <summary>
-        /// Device type
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("deviceType")]
-        [System.ComponentModel.DescriptionAttribute("Device type")]
-        public string DeviceType
-        {
-            get
-            {
-                return _deviceType;
-            }
-            set
-            {
-                _deviceType = value;
-            }
-        }
-    
-        /// <summary>
-        /// Display index
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("displayIndex")]
-        [System.ComponentModel.DescriptionAttribute("Display index")]
-        public int DisplayIndex
-        {
-            get
-            {
-                return _displayIndex;
-            }
-            set
-            {
-                _displayIndex = value;
-            }
-        }
-    
-        /// <summary>
-        /// Target render frequency
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("targetRenderFrequency")]
-        [System.ComponentModel.DescriptionAttribute("Target render frequency")]
-        public double TargetRenderFrequency
-        {
-            get
-            {
-                return _targetRenderFrequency;
-            }
-            set
-            {
-                _targetRenderFrequency = value;
-            }
-        }
-    
-        /// <summary>
-        /// Target update frequency
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("targetUpdateFrequency")]
-        [System.ComponentModel.DescriptionAttribute("Target update frequency")]
-        public double TargetUpdateFrequency
-        {
-            get
-            {
-                return _targetUpdateFrequency;
-            }
-            set
-            {
-                _targetUpdateFrequency = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration directory
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("textureAssetsDirectory")]
-        [System.ComponentModel.DescriptionAttribute("Calibration directory")]
-        public string TextureAssetsDirectory
-        {
-            get
-            {
-                return _textureAssetsDirectory;
-            }
-            set
-            {
-                _textureAssetsDirectory = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration parameters for a set of named display monitors for visual stimuli
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Calibration parameters for a set of named display monitors for visual stimuli")]
-        public System.Collections.Generic.Dictionary<string, DisplayCalibration> Calibration
-        {
-            get
-            {
-                return _calibration;
-            }
-            set
-            {
-                _calibration = value;
-            }
-        }
-    
-        /// <summary>
-        /// Brightness
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
-        [System.ComponentModel.DescriptionAttribute("Brightness")]
-        public double Brightness
-        {
-            get
-            {
-                return _brightness;
-            }
-            set
-            {
-                _brightness = value;
-            }
-        }
-    
-        /// <summary>
-        /// Contrast
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
-        [System.ComponentModel.DescriptionAttribute("Contrast")]
-        public double Contrast
-        {
-            get
-            {
-                return _contrast;
-            }
-            set
-            {
-                _contrast = value;
-            }
-        }
-    
-        public System.IObservable<Screen> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Screen(this)));
-        }
-    
-        public System.IObservable<Screen> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Screen(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
-            stringBuilder.Append("DisplayIndex = " + _displayIndex + ", ");
-            stringBuilder.Append("TargetRenderFrequency = " + _targetRenderFrequency + ", ");
-            stringBuilder.Append("TargetUpdateFrequency = " + _targetUpdateFrequency + ", ");
-            stringBuilder.Append("TextureAssetsDirectory = " + _textureAssetsDirectory + ", ");
-            stringBuilder.Append("Calibration = " + _calibration + ", ");
-            stringBuilder.Append("Brightness = " + _brightness + ", ");
-            stringBuilder.Append("Contrast = " + _contrast);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    /// <summary>
-    /// Represents the SerialDevice workflow module.
-    ///
-    ///Mirrors all externalized properties of SerialDevice.bonsai, including
-    ///port configuration, framing, buffer settings, and parsing pattern.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Represents the SerialDevice workflow module.\n\nMirrors all externalized properties" +
-        " of SerialDevice.bonsai, including\nport configuration, framing, buffer settings," +
-        " and parsing pattern.")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class SerialDeviceModule
+    public partial class MatrixArduino
     {
     
         private string _deviceType;
@@ -672,8 +332,6 @@ namespace UclOpenHfVisualDataSchema
         private string _portName;
     
         private int _baudRate;
-    
-        private string _pattern;
     
         private string _encoding;
     
@@ -703,11 +361,10 @@ namespace UclOpenHfVisualDataSchema
     
         private string _serialMessageSubjectName;
     
-        public SerialDeviceModule()
+        public MatrixArduino()
         {
-            _deviceType = "SerialDevice";
+            _deviceType = "MatrixArduino";
             _baudRate = 9600;
-            _pattern = "";
             _newLine = "\r\n";
             _parity = "None";
             _parityReplace = 63;
@@ -723,12 +380,11 @@ namespace UclOpenHfVisualDataSchema
             _serialMessageSubjectName = "SerialMessages";
         }
     
-        protected SerialDeviceModule(SerialDeviceModule other)
+        protected MatrixArduino(MatrixArduino other)
         {
             _deviceType = other._deviceType;
             _portName = other._portName;
             _baudRate = other._baudRate;
-            _pattern = other._pattern;
             _encoding = other._encoding;
             _newLine = other._newLine;
             _parity = other._parity;
@@ -789,24 +445,6 @@ namespace UclOpenHfVisualDataSchema
             set
             {
                 _baudRate = value;
-            }
-        }
-    
-        /// <summary>
-        /// Pattern used to parse each incoming serial line (same syntax as Bonsai Parse/ScanPattern).
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("pattern")]
-        [System.ComponentModel.DescriptionAttribute("Pattern used to parse each incoming serial line (same syntax as Bonsai Parse/Scan" +
-            "Pattern).")]
-        public string Pattern
-        {
-            get
-            {
-                return _pattern;
-            }
-            set
-            {
-                _pattern = value;
             }
         }
     
@@ -1048,14 +686,14 @@ namespace UclOpenHfVisualDataSchema
             }
         }
     
-        public System.IObservable<SerialDeviceModule> Generate()
+        public System.IObservable<MatrixArduino> Generate()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new SerialDeviceModule(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new MatrixArduino(this)));
         }
     
-        public System.IObservable<SerialDeviceModule> Generate<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<MatrixArduino> Generate<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new SerialDeviceModule(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new MatrixArduino(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -1063,7 +701,6 @@ namespace UclOpenHfVisualDataSchema
             stringBuilder.Append("DeviceType = " + _deviceType + ", ");
             stringBuilder.Append("PortName = " + _portName + ", ");
             stringBuilder.Append("BaudRate = " + _baudRate + ", ");
-            stringBuilder.Append("Pattern = " + _pattern + ", ");
             stringBuilder.Append("Encoding = " + _encoding + ", ");
             stringBuilder.Append("NewLine = " + _newLine + ", ");
             stringBuilder.Append("Parity = " + _parity + ", ");
@@ -1099,6 +736,974 @@ namespace UclOpenHfVisualDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class MatrixArduinoData
+    {
+    
+        private int _encoderCount;
+    
+        private int _lickCountLeft;
+    
+        private int _lickCountRight;
+    
+        private int _lastSyncPulseTime;
+    
+        private int _photodiodeVal;
+    
+        private int _currentMs;
+    
+        public MatrixArduinoData()
+        {
+        }
+    
+        protected MatrixArduinoData(MatrixArduinoData other)
+        {
+            _encoderCount = other._encoderCount;
+            _lickCountLeft = other._lickCountLeft;
+            _lickCountRight = other._lickCountRight;
+            _lastSyncPulseTime = other._lastSyncPulseTime;
+            _photodiodeVal = other._photodiodeVal;
+            _currentMs = other._currentMs;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("encoderCount", Required=Newtonsoft.Json.Required.Always)]
+        public int EncoderCount
+        {
+            get
+            {
+                return _encoderCount;
+            }
+            set
+            {
+                _encoderCount = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("lickCountLeft", Required=Newtonsoft.Json.Required.Always)]
+        public int LickCountLeft
+        {
+            get
+            {
+                return _lickCountLeft;
+            }
+            set
+            {
+                _lickCountLeft = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("lickCountRight", Required=Newtonsoft.Json.Required.Always)]
+        public int LickCountRight
+        {
+            get
+            {
+                return _lickCountRight;
+            }
+            set
+            {
+                _lickCountRight = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("lastSyncPulseTime", Required=Newtonsoft.Json.Required.Always)]
+        public int LastSyncPulseTime
+        {
+            get
+            {
+                return _lastSyncPulseTime;
+            }
+            set
+            {
+                _lastSyncPulseTime = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("photodiodeVal", Required=Newtonsoft.Json.Required.Always)]
+        public int PhotodiodeVal
+        {
+            get
+            {
+                return _photodiodeVal;
+            }
+            set
+            {
+                _photodiodeVal = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("currentMs", Required=Newtonsoft.Json.Required.Always)]
+        public int CurrentMs
+        {
+            get
+            {
+                return _currentMs;
+            }
+            set
+            {
+                _currentMs = value;
+            }
+        }
+    
+        public System.IObservable<MatrixArduinoData> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new MatrixArduinoData(this)));
+        }
+    
+        public System.IObservable<MatrixArduinoData> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new MatrixArduinoData(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("EncoderCount = " + _encoderCount + ", ");
+            stringBuilder.Append("LickCountLeft = " + _lickCountLeft + ", ");
+            stringBuilder.Append("LickCountRight = " + _lickCountRight + ", ");
+            stringBuilder.Append("LastSyncPulseTime = " + _lastSyncPulseTime + ", ");
+            stringBuilder.Append("PhotodiodeVal = " + _photodiodeVal + ", ");
+            stringBuilder.Append("CurrentMs = " + _currentMs);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class MatrixArduinoPhotodiode
+    {
+    
+        private string _deviceType;
+    
+        private string _portName;
+    
+        private int _baudRate;
+    
+        private string _encoding;
+    
+        private string _newLine;
+    
+        private string _parity;
+    
+        private int _parityReplace;
+    
+        private int _dataBits;
+    
+        private string _stopBits;
+    
+        private string _handshake;
+    
+        private bool _discardNull;
+    
+        private bool _dtrEnable;
+    
+        private bool _rtsEnable;
+    
+        private int _readBufferSize;
+    
+        private int _writeBufferSize;
+    
+        private int _receivedBytesThreshold;
+    
+        private string _serialMessageSubjectName;
+    
+        public MatrixArduinoPhotodiode()
+        {
+            _deviceType = "MatrixArduinoPhotodiode";
+            _baudRate = 9600;
+            _newLine = "\r\n";
+            _parity = "None";
+            _parityReplace = 63;
+            _dataBits = 8;
+            _stopBits = "One";
+            _handshake = "None";
+            _discardNull = false;
+            _dtrEnable = false;
+            _rtsEnable = false;
+            _readBufferSize = 4096;
+            _writeBufferSize = 2048;
+            _receivedBytesThreshold = 1;
+            _serialMessageSubjectName = "SerialMessages";
+        }
+    
+        protected MatrixArduinoPhotodiode(MatrixArduinoPhotodiode other)
+        {
+            _deviceType = other._deviceType;
+            _portName = other._portName;
+            _baudRate = other._baudRate;
+            _encoding = other._encoding;
+            _newLine = other._newLine;
+            _parity = other._parity;
+            _parityReplace = other._parityReplace;
+            _dataBits = other._dataBits;
+            _stopBits = other._stopBits;
+            _handshake = other._handshake;
+            _discardNull = other._discardNull;
+            _dtrEnable = other._dtrEnable;
+            _rtsEnable = other._rtsEnable;
+            _readBufferSize = other._readBufferSize;
+            _writeBufferSize = other._writeBufferSize;
+            _receivedBytesThreshold = other._receivedBytesThreshold;
+            _serialMessageSubjectName = other._serialMessageSubjectName;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("deviceType")]
+        public string DeviceType
+        {
+            get
+            {
+                return _deviceType;
+            }
+            set
+            {
+                _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// The name of the device serial port.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("portName", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The name of the device serial port.")]
+        public string PortName
+        {
+            get
+            {
+                return _portName;
+            }
+            set
+            {
+                _portName = value;
+            }
+        }
+    
+        /// <summary>
+        /// Baud rate for serial communication.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("baudRate")]
+        [System.ComponentModel.DescriptionAttribute("Baud rate for serial communication.")]
+        public int BaudRate
+        {
+            get
+            {
+                return _baudRate;
+            }
+            set
+            {
+                _baudRate = value;
+            }
+        }
+    
+        /// <summary>
+        /// Optional text encoding for interpreting incoming bytes.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("encoding")]
+        [System.ComponentModel.DescriptionAttribute("Optional text encoding for interpreting incoming bytes.")]
+        public string Encoding
+        {
+            get
+            {
+                return _encoding;
+            }
+            set
+            {
+                _encoding = value;
+            }
+        }
+    
+        /// <summary>
+        /// Line termination sequence used to delimit incoming messages.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("newLine")]
+        [System.ComponentModel.DescriptionAttribute("Line termination sequence used to delimit incoming messages.")]
+        public string NewLine
+        {
+            get
+            {
+                return _newLine;
+            }
+            set
+            {
+                _newLine = value;
+            }
+        }
+    
+        /// <summary>
+        /// Parity checking mode for the serial port.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("parity")]
+        [System.ComponentModel.DescriptionAttribute("Parity checking mode for the serial port.")]
+        public string Parity
+        {
+            get
+            {
+                return _parity;
+            }
+            set
+            {
+                _parity = value;
+            }
+        }
+    
+        /// <summary>
+        /// Byte used to replace invalid bytes detected by a parity error.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("parityReplace")]
+        [System.ComponentModel.DescriptionAttribute("Byte used to replace invalid bytes detected by a parity error.")]
+        public int ParityReplace
+        {
+            get
+            {
+                return _parityReplace;
+            }
+            set
+            {
+                _parityReplace = value;
+            }
+        }
+    
+        /// <summary>
+        /// Number of data bits per serial frame.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("dataBits")]
+        [System.ComponentModel.DescriptionAttribute("Number of data bits per serial frame.")]
+        public int DataBits
+        {
+            get
+            {
+                return _dataBits;
+            }
+            set
+            {
+                _dataBits = value;
+            }
+        }
+    
+        /// <summary>
+        /// Number of stop bits per serial frame.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("stopBits")]
+        [System.ComponentModel.DescriptionAttribute("Number of stop bits per serial frame.")]
+        public string StopBits
+        {
+            get
+            {
+                return _stopBits;
+            }
+            set
+            {
+                _stopBits = value;
+            }
+        }
+    
+        /// <summary>
+        /// Hardware or software handshaking mode.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("handshake")]
+        [System.ComponentModel.DescriptionAttribute("Hardware or software handshaking mode.")]
+        public string Handshake
+        {
+            get
+            {
+                return _handshake;
+            }
+            set
+            {
+                _handshake = value;
+            }
+        }
+    
+        /// <summary>
+        /// Whether to discard null bytes appearing in the serial stream.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("discardNull")]
+        [System.ComponentModel.DescriptionAttribute("Whether to discard null bytes appearing in the serial stream.")]
+        public bool DiscardNull
+        {
+            get
+            {
+                return _discardNull;
+            }
+            set
+            {
+                _discardNull = value;
+            }
+        }
+    
+        /// <summary>
+        /// Whether to enable Data Terminal Ready (DTR) control line.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("dtrEnable")]
+        [System.ComponentModel.DescriptionAttribute("Whether to enable Data Terminal Ready (DTR) control line.")]
+        public bool DtrEnable
+        {
+            get
+            {
+                return _dtrEnable;
+            }
+            set
+            {
+                _dtrEnable = value;
+            }
+        }
+    
+        /// <summary>
+        /// Whether to enable Request To Send (RTS) control line.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("rtsEnable")]
+        [System.ComponentModel.DescriptionAttribute("Whether to enable Request To Send (RTS) control line.")]
+        public bool RtsEnable
+        {
+            get
+            {
+                return _rtsEnable;
+            }
+            set
+            {
+                _rtsEnable = value;
+            }
+        }
+    
+        /// <summary>
+        /// Size, in bytes, of the read buffer.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("readBufferSize")]
+        [System.ComponentModel.DescriptionAttribute("Size, in bytes, of the read buffer.")]
+        public int ReadBufferSize
+        {
+            get
+            {
+                return _readBufferSize;
+            }
+            set
+            {
+                _readBufferSize = value;
+            }
+        }
+    
+        /// <summary>
+        /// Size, in bytes, of the write buffer.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("writeBufferSize")]
+        [System.ComponentModel.DescriptionAttribute("Size, in bytes, of the write buffer.")]
+        public int WriteBufferSize
+        {
+            get
+            {
+                return _writeBufferSize;
+            }
+            set
+            {
+                _writeBufferSize = value;
+            }
+        }
+    
+        /// <summary>
+        /// Minimum number of bytes in the buffer that triggers a read event.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("receivedBytesThreshold")]
+        [System.ComponentModel.DescriptionAttribute("Minimum number of bytes in the buffer that triggers a read event.")]
+        public int ReceivedBytesThreshold
+        {
+            get
+            {
+                return _receivedBytesThreshold;
+            }
+            set
+            {
+                _receivedBytesThreshold = value;
+            }
+        }
+    
+        /// <summary>
+        /// Name of the subject to which parsed serial messages are published.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("serialMessageSubjectName")]
+        [System.ComponentModel.DescriptionAttribute("Name of the subject to which parsed serial messages are published.")]
+        public string SerialMessageSubjectName
+        {
+            get
+            {
+                return _serialMessageSubjectName;
+            }
+            set
+            {
+                _serialMessageSubjectName = value;
+            }
+        }
+    
+        public System.IObservable<MatrixArduinoPhotodiode> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new MatrixArduinoPhotodiode(this)));
+        }
+    
+        public System.IObservable<MatrixArduinoPhotodiode> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new MatrixArduinoPhotodiode(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("PortName = " + _portName + ", ");
+            stringBuilder.Append("BaudRate = " + _baudRate + ", ");
+            stringBuilder.Append("Encoding = " + _encoding + ", ");
+            stringBuilder.Append("NewLine = " + _newLine + ", ");
+            stringBuilder.Append("Parity = " + _parity + ", ");
+            stringBuilder.Append("ParityReplace = " + _parityReplace + ", ");
+            stringBuilder.Append("DataBits = " + _dataBits + ", ");
+            stringBuilder.Append("StopBits = " + _stopBits + ", ");
+            stringBuilder.Append("Handshake = " + _handshake + ", ");
+            stringBuilder.Append("DiscardNull = " + _discardNull + ", ");
+            stringBuilder.Append("DtrEnable = " + _dtrEnable + ", ");
+            stringBuilder.Append("RtsEnable = " + _rtsEnable + ", ");
+            stringBuilder.Append("ReadBufferSize = " + _readBufferSize + ", ");
+            stringBuilder.Append("WriteBufferSize = " + _writeBufferSize + ", ");
+            stringBuilder.Append("ReceivedBytesThreshold = " + _receivedBytesThreshold + ", ");
+            stringBuilder.Append("SerialMessageSubjectName = " + _serialMessageSubjectName);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class MatrixArduinoPhotodiodeData
+    {
+    
+        private int _photodiodeVal;
+    
+        private int _syncVal;
+    
+        public MatrixArduinoPhotodiodeData()
+        {
+        }
+    
+        protected MatrixArduinoPhotodiodeData(MatrixArduinoPhotodiodeData other)
+        {
+            _photodiodeVal = other._photodiodeVal;
+            _syncVal = other._syncVal;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("photodiodeVal", Required=Newtonsoft.Json.Required.Always)]
+        public int PhotodiodeVal
+        {
+            get
+            {
+                return _photodiodeVal;
+            }
+            set
+            {
+                _photodiodeVal = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("syncVal", Required=Newtonsoft.Json.Required.Always)]
+        public int SyncVal
+        {
+            get
+            {
+                return _syncVal;
+            }
+            set
+            {
+                _syncVal = value;
+            }
+        }
+    
+        public System.IObservable<MatrixArduinoPhotodiodeData> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new MatrixArduinoPhotodiodeData(this)));
+        }
+    
+        public System.IObservable<MatrixArduinoPhotodiodeData> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new MatrixArduinoPhotodiodeData(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("PhotodiodeVal = " + _photodiodeVal + ", ");
+            stringBuilder.Append("SyncVal = " + _syncVal);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Screen
+    {
+    
+        private string _deviceType;
+    
+        private int _displayIndex;
+    
+        private double _targetRenderFrequency;
+    
+        private double _targetUpdateFrequency;
+    
+        private string _textureAssetsDirectory;
+    
+        private System.Collections.Generic.Dictionary<string, DisplayCalibration> _calibration;
+    
+        private double _brightness;
+    
+        private double _contrast;
+    
+        public Screen()
+        {
+            _deviceType = "Screen";
+            _displayIndex = 1;
+            _targetRenderFrequency = 60D;
+            _targetUpdateFrequency = 120D;
+            _textureAssetsDirectory = "Textures";
+            _brightness = 0D;
+            _contrast = 1D;
+        }
+    
+        protected Screen(Screen other)
+        {
+            _deviceType = other._deviceType;
+            _displayIndex = other._displayIndex;
+            _targetRenderFrequency = other._targetRenderFrequency;
+            _targetUpdateFrequency = other._targetUpdateFrequency;
+            _textureAssetsDirectory = other._textureAssetsDirectory;
+            _calibration = other._calibration;
+            _brightness = other._brightness;
+            _contrast = other._contrast;
+        }
+    
+        /// <summary>
+        /// Device type
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("deviceType")]
+        [System.ComponentModel.DescriptionAttribute("Device type")]
+        public string DeviceType
+        {
+            get
+            {
+                return _deviceType;
+            }
+            set
+            {
+                _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Display index
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("displayIndex")]
+        [System.ComponentModel.DescriptionAttribute("Display index")]
+        public int DisplayIndex
+        {
+            get
+            {
+                return _displayIndex;
+            }
+            set
+            {
+                _displayIndex = value;
+            }
+        }
+    
+        /// <summary>
+        /// Target render frequency
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("targetRenderFrequency")]
+        [System.ComponentModel.DescriptionAttribute("Target render frequency")]
+        public double TargetRenderFrequency
+        {
+            get
+            {
+                return _targetRenderFrequency;
+            }
+            set
+            {
+                _targetRenderFrequency = value;
+            }
+        }
+    
+        /// <summary>
+        /// Target update frequency
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("targetUpdateFrequency")]
+        [System.ComponentModel.DescriptionAttribute("Target update frequency")]
+        public double TargetUpdateFrequency
+        {
+            get
+            {
+                return _targetUpdateFrequency;
+            }
+            set
+            {
+                _targetUpdateFrequency = value;
+            }
+        }
+    
+        /// <summary>
+        /// Calibration directory
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("textureAssetsDirectory")]
+        [System.ComponentModel.DescriptionAttribute("Calibration directory")]
+        public string TextureAssetsDirectory
+        {
+            get
+            {
+                return _textureAssetsDirectory;
+            }
+            set
+            {
+                _textureAssetsDirectory = value;
+            }
+        }
+    
+        /// <summary>
+        /// Calibration parameters for a set of named display monitors for visual stimuli
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
+        [System.ComponentModel.DescriptionAttribute("Calibration parameters for a set of named display monitors for visual stimuli")]
+        public System.Collections.Generic.Dictionary<string, DisplayCalibration> Calibration
+        {
+            get
+            {
+                return _calibration;
+            }
+            set
+            {
+                _calibration = value;
+            }
+        }
+    
+        /// <summary>
+        /// Brightness
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
+        [System.ComponentModel.DescriptionAttribute("Brightness")]
+        public double Brightness
+        {
+            get
+            {
+                return _brightness;
+            }
+            set
+            {
+                _brightness = value;
+            }
+        }
+    
+        /// <summary>
+        /// Contrast
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
+        [System.ComponentModel.DescriptionAttribute("Contrast")]
+        public double Contrast
+        {
+            get
+            {
+                return _contrast;
+            }
+            set
+            {
+                _contrast = value;
+            }
+        }
+    
+        public System.IObservable<Screen> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Screen(this)));
+        }
+    
+        public System.IObservable<Screen> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Screen(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("DeviceType = " + _deviceType + ", ");
+            stringBuilder.Append("DisplayIndex = " + _displayIndex + ", ");
+            stringBuilder.Append("TargetRenderFrequency = " + _targetRenderFrequency + ", ");
+            stringBuilder.Append("TargetUpdateFrequency = " + _targetUpdateFrequency + ", ");
+            stringBuilder.Append("TextureAssetsDirectory = " + _textureAssetsDirectory + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("Brightness = " + _brightness + ", ");
+            stringBuilder.Append("Contrast = " + _contrast);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class SyncQuad
+    {
+    
+        private double _extentX;
+    
+        private double _extentY;
+    
+        private double _locationX;
+    
+        private double _locationY;
+    
+        public SyncQuad()
+        {
+        }
+    
+        protected SyncQuad(SyncQuad other)
+        {
+            _extentX = other._extentX;
+            _extentY = other._extentY;
+            _locationX = other._locationX;
+            _locationY = other._locationY;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("extentX", Required=Newtonsoft.Json.Required.Always)]
+        public double ExtentX
+        {
+            get
+            {
+                return _extentX;
+            }
+            set
+            {
+                _extentX = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("extentY", Required=Newtonsoft.Json.Required.Always)]
+        public double ExtentY
+        {
+            get
+            {
+                return _extentY;
+            }
+            set
+            {
+                _extentY = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("locationX", Required=Newtonsoft.Json.Required.Always)]
+        public double LocationX
+        {
+            get
+            {
+                return _locationX;
+            }
+            set
+            {
+                _locationX = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("locationY", Required=Newtonsoft.Json.Required.Always)]
+        public double LocationY
+        {
+            get
+            {
+                return _locationY;
+            }
+            set
+            {
+                _locationY = value;
+            }
+        }
+    
+        public System.IObservable<SyncQuad> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new SyncQuad(this)));
+        }
+    
+        public System.IObservable<SyncQuad> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new SyncQuad(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("ExtentX = " + _extentX + ", ");
+            stringBuilder.Append("ExtentY = " + _extentY + ", ");
+            stringBuilder.Append("LocationX = " + _locationX + ", ");
+            stringBuilder.Append("LocationY = " + _locationY);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class UclOpenHfVisualRig
     {
     
@@ -1106,20 +1711,28 @@ namespace UclOpenHfVisualDataSchema
     
         private Screen _screen;
     
-        private SerialDeviceModule _arduino;
+        private SyncQuad _syncQuad;
+    
+        private MatrixArduino _arduino;
+    
+        private MatrixArduinoPhotodiode _arduinoPhotodiode;
     
         public UclOpenHfVisualRig()
         {
             _version = "0.0.0-rc1";
             _screen = new Screen();
-            _arduino = new SerialDeviceModule();
+            _syncQuad = new SyncQuad();
+            _arduino = new MatrixArduino();
+            _arduinoPhotodiode = new MatrixArduinoPhotodiode();
         }
     
         protected UclOpenHfVisualRig(UclOpenHfVisualRig other)
         {
             _version = other._version;
             _screen = other._screen;
+            _syncQuad = other._syncQuad;
             _arduino = other._arduino;
+            _arduinoPhotodiode = other._arduinoPhotodiode;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("version")]
@@ -1150,8 +1763,22 @@ namespace UclOpenHfVisualDataSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("syncQuad", Required=Newtonsoft.Json.Required.Always)]
+        public SyncQuad SyncQuad
+        {
+            get
+            {
+                return _syncQuad;
+            }
+            set
+            {
+                _syncQuad = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("arduino", Required=Newtonsoft.Json.Required.Always)]
-        public SerialDeviceModule Arduino
+        public MatrixArduino Arduino
         {
             get
             {
@@ -1160,6 +1787,20 @@ namespace UclOpenHfVisualDataSchema
             set
             {
                 _arduino = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("arduinoPhotodiode", Required=Newtonsoft.Json.Required.Always)]
+        public MatrixArduinoPhotodiode ArduinoPhotodiode
+        {
+            get
+            {
+                return _arduinoPhotodiode;
+            }
+            set
+            {
+                _arduinoPhotodiode = value;
             }
         }
     
@@ -1177,7 +1818,9 @@ namespace UclOpenHfVisualDataSchema
         {
             stringBuilder.Append("Version = " + _version + ", ");
             stringBuilder.Append("Screen = " + _screen + ", ");
-            stringBuilder.Append("Arduino = " + _arduino);
+            stringBuilder.Append("SyncQuad = " + _syncQuad + ", ");
+            stringBuilder.Append("Arduino = " + _arduino + ", ");
+            stringBuilder.Append("ArduinoPhotodiode = " + _arduinoPhotodiode);
             return true;
         }
     
@@ -1442,6 +2085,164 @@ namespace UclOpenHfVisualDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class UclOpenSession
+    {
+    
+        private string _workflow;
+    
+        private string _commit;
+    
+        private string _repositoryUrl;
+    
+        private string _loggingRootPath;
+    
+        private string _animalId;
+    
+        private string _sessionId;
+    
+        public UclOpenSession()
+        {
+        }
+    
+        protected UclOpenSession(UclOpenSession other)
+        {
+            _workflow = other._workflow;
+            _commit = other._commit;
+            _repositoryUrl = other._repositoryUrl;
+            _loggingRootPath = other._loggingRootPath;
+            _animalId = other._animalId;
+            _sessionId = other._sessionId;
+        }
+    
+        /// <summary>
+        /// Path to the workflow running the experiment.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("workflow", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Path to the workflow running the experiment.")]
+        public string Workflow
+        {
+            get
+            {
+                return _workflow;
+            }
+            set
+            {
+                _workflow = value;
+            }
+        }
+    
+        /// <summary>
+        /// Commit hash of the experiment/rig repo.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commit", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Commit hash of the experiment/rig repo.")]
+        public string Commit
+        {
+            get
+            {
+                return _commit;
+            }
+            set
+            {
+                _commit = value;
+            }
+        }
+    
+        /// <summary>
+        /// The URL of the git repository used to version experiment source code.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("repositoryUrl", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The URL of the git repository used to version experiment source code.")]
+        public string RepositoryUrl
+        {
+            get
+            {
+                return _repositoryUrl;
+            }
+            set
+            {
+                _repositoryUrl = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("loggingRootPath", Required=Newtonsoft.Json.Required.Always)]
+        public string LoggingRootPath
+        {
+            get
+            {
+                return _loggingRootPath;
+            }
+            set
+            {
+                _loggingRootPath = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("animalId", Required=Newtonsoft.Json.Required.Always)]
+        public string AnimalId
+        {
+            get
+            {
+                return _animalId;
+            }
+            set
+            {
+                _animalId = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("sessionId", Required=Newtonsoft.Json.Required.Always)]
+        public string SessionId
+        {
+            get
+            {
+                return _sessionId;
+            }
+            set
+            {
+                _sessionId = value;
+            }
+        }
+    
+        public System.IObservable<UclOpenSession> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new UclOpenSession(this)));
+        }
+    
+        public System.IObservable<UclOpenSession> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new UclOpenSession(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Workflow = " + _workflow + ", ");
+            stringBuilder.Append("Commit = " + _commit + ", ");
+            stringBuilder.Append("RepositoryUrl = " + _repositoryUrl + ", ");
+            stringBuilder.Append("LoggingRootPath = " + _loggingRootPath + ", ");
+            stringBuilder.Append("AnimalId = " + _animalId + ", ");
+            stringBuilder.Append("SessionId = " + _sessionId);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Vector3
     {
     
@@ -1463,10 +2264,10 @@ namespace UclOpenHfVisualDataSchema
         }
     
         /// <summary>
-        /// X coordinate of the point
+        /// X coordinate of the point.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("x", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("X coordinate of the point")]
+        [System.ComponentModel.DescriptionAttribute("X coordinate of the point.")]
         public double X
         {
             get
@@ -1480,10 +2281,10 @@ namespace UclOpenHfVisualDataSchema
         }
     
         /// <summary>
-        /// Y coordinate of the point
+        /// Y coordinate of the point.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("y", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Y coordinate of the point")]
+        [System.ComponentModel.DescriptionAttribute("Y coordinate of the point.")]
         public double Y
         {
             get
@@ -1497,10 +2298,10 @@ namespace UclOpenHfVisualDataSchema
         }
     
         /// <summary>
-        /// Z coordinate of the point
+        /// Z coordinate of the point.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("z", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Z coordinate of the point")]
+        [System.ComponentModel.DescriptionAttribute("Z coordinate of the point.")]
         public double Z
         {
             get
@@ -1579,9 +2380,24 @@ namespace UclOpenHfVisualDataSchema
             return Process<DisplayIntrinsics>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Experiment> source)
+        public System.IObservable<string> Process(System.IObservable<MatrixArduino> source)
         {
-            return Process<Experiment>(source);
+            return Process<MatrixArduino>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<MatrixArduinoData> source)
+        {
+            return Process<MatrixArduinoData>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<MatrixArduinoPhotodiode> source)
+        {
+            return Process<MatrixArduinoPhotodiode>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<MatrixArduinoPhotodiodeData> source)
+        {
+            return Process<MatrixArduinoPhotodiodeData>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Screen> source)
@@ -1589,9 +2405,9 @@ namespace UclOpenHfVisualDataSchema
             return Process<Screen>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<SerialDeviceModule> source)
+        public System.IObservable<string> Process(System.IObservable<SyncQuad> source)
         {
-            return Process<SerialDeviceModule>(source);
+            return Process<SyncQuad>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<UclOpenHfVisualRig> source)
@@ -1607,6 +2423,11 @@ namespace UclOpenHfVisualDataSchema
         public System.IObservable<string> Process(System.IObservable<UclOpenHfVisualTaskParameters> source)
         {
             return Process<UclOpenHfVisualTaskParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<UclOpenSession> source)
+        {
+            return Process<UclOpenSession>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Vector3> source)
@@ -1626,12 +2447,16 @@ namespace UclOpenHfVisualDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayExtrinsics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayIntrinsics>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Experiment>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MatrixArduino>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MatrixArduinoData>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MatrixArduinoPhotodiode>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MatrixArduinoPhotodiodeData>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SerialDeviceModule>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SyncQuad>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenHfVisualRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenHfVisualTaskLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenHfVisualTaskParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UclOpenSession>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
