@@ -187,7 +187,6 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Devices:SerialDevice.bonsai">
-              <PortName>COM10</PortName>
               <BaudRate>1000000</BaudRate>
               <Encoding xsi:nil="true" />
               <NewLine />
@@ -203,7 +202,9 @@
               <WriteBufferSize>2048</WriteBufferSize>
               <ReceivedBytesThreshold>1</ReceivedBytesThreshold>
               <Name>Arduino</Name>
-              <SerialMessageSubjectName>SerialMessagesMatrix</SerialMessageSubjectName>
+              <PortName>COM10</PortName>
+              <SerialMessagesSubjectName>SerialMessagesMatrix</SerialMessagesSubjectName>
+              <SerialCommandsSubjectName>SerialCommandsMatrix</SerialCommandsSubjectName>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>RigSchema</Name>
@@ -219,7 +220,6 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Devices:SerialDevice.bonsai">
-              <PortName>COM10</PortName>
               <BaudRate>1000000</BaudRate>
               <Encoding xsi:nil="true" />
               <NewLine />
@@ -235,7 +235,9 @@
               <WriteBufferSize>2048</WriteBufferSize>
               <ReceivedBytesThreshold>1</ReceivedBytesThreshold>
               <Name>Arduino</Name>
-              <SerialMessageSubjectName>SerialMessagesPhotodiode</SerialMessageSubjectName>
+              <PortName>COM10</PortName>
+              <SerialMessagesSubjectName>SerialMessagesPhotodiode</SerialMessagesSubjectName>
+              <SerialCommandsSubjectName>SerialCommandsPhotodiode</SerialCommandsSubjectName>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>SerialMessagesPhotodiode</Name>
@@ -944,6 +946,9 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:TakeUntil" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="p3:LoadSchemas" />
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Visualizer</Name>
