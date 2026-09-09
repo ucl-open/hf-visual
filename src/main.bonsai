@@ -220,7 +220,7 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Devices:SerialDevice.bonsai">
-              <PortName>COM5</PortName>
+              <PortName>COM6</PortName>
               <BaudRate>250000</BaudRate>
               <Encoding>us-ascii</Encoding>
               <NewLine>\n</NewLine>
@@ -423,7 +423,7 @@
                                   <gl:WrapT>Repeat</gl:WrapT>
                                   <gl:MinFilter>Linear</gl:MinFilter>
                                   <gl:MagFilter>Linear</gl:MagFilter>
-                                  <gl:FileName>../textures\SynthIm_42_5.tif</gl:FileName>
+                                  <gl:FileName>../textures\SN_85_5.tif</gl:FileName>
                                   <gl:ColorType>Unchanged</gl:ColorType>
                                   <gl:FlipMode>Vertical</gl:FlipMode>
                                 </Combinator>
@@ -691,7 +691,7 @@
                   </Expression>
                   <Expression xsi:type="Index">
                     <Operand xsi:type="StringProperty">
-                      <Value>blankStim_1</Value>
+                      <Value>blank1</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -780,7 +780,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:Delay">
-                      <gl:DueTime>PT0.5S</gl:DueTime>
+                      <gl:DueTime>PT0.75S</gl:DueTime>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -802,7 +802,7 @@
                   </Expression>
                   <Expression xsi:type="Index">
                     <Operand xsi:type="StringProperty">
-                      <Value>SN_1_1</Value>
+                      <Value>SImg_42_4</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -887,7 +887,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:Delay">
-                      <gl:DueTime>PT1S</gl:DueTime>
+                      <gl:DueTime>PT0.25S</gl:DueTime>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -1242,8 +1242,8 @@
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="UclOpen.Logging:LogController.bonsai">
-              <SubjectId>Plimbo</SubjectId>
-              <SessionId>001</SessionId>
+              <SubjectId>M26030</SubjectId>
+              <SessionId>20260606_1</SessionId>
               <Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data</Path>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
@@ -1338,7 +1338,7 @@
                     <Property Name="Selector" />
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\Arduino\Arduino.csv</io:FileName>
+                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-M26030\ses-20260606_1_date-2026-09-06T15-09-02\Arduino\Arduino.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1457,7 +1457,7 @@
                     <Property Name="Selector" />
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\ArduinoPhotodiode\ArduinoPhotodiode.csv</io:FileName>
+                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-M26030\ses-20260606_1_date-2026-09-06T15-09-02\ArduinoPhotodiode\ArduinoPhotodiode.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1576,7 +1576,7 @@
                     <Property Name="Selector" />
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\Texture\Texture.csv</io:FileName>
+                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-M26030\ses-20260606_1_date-2026-09-06T15-09-02\Texture\Texture.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1685,7 +1685,7 @@
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\VideoData\VideoData.csv</io:FileName>
+                    <io:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-M26030\ses-20260606_1_date-2026-09-06T15-09-02\VideoData\VideoData.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1764,7 +1764,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="cv:VideoWriter">
-                      <cv:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\VideoData\VideoData.avi</cv:FileName>
+                      <cv:FileName>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-M26030\ses-20260606_1_date-2026-09-06T15-09-02\VideoData\VideoData.avi</cv:FileName>
                       <cv:Suffix>None</cv:Suffix>
                       <cv:Buffered>true</cv:Buffered>
                       <cv:Overwrite>false</cv:Overwrite>
@@ -1889,7 +1889,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p5:JsonWriter">
-                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\RigSchema\RigSchema.json</p5:Path>
+                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-M26030\ses-20260606_1_date-2026-09-06T15-09-02\RigSchema\RigSchema.json</p5:Path>
                       <p5:Suffix>None</p5:Suffix>
                       <p5:Overwrite>false</p5:Overwrite>
                     </Combinator>
@@ -2000,7 +2000,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p5:JsonWriter">
-                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\TaskLogicSchema\TaskLogicSchema.json</p5:Path>
+                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-M26030\ses-20260606_1_date-2026-09-06T15-09-02\TaskLogicSchema\TaskLogicSchema.json</p5:Path>
                       <p5:Suffix>None</p5:Suffix>
                       <p5:Overwrite>false</p5:Overwrite>
                     </Combinator>
@@ -2115,7 +2115,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p5:JsonWriter">
-                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-Plimbo\ses-001_date-2025-12-11T17-45-39\SessionSchema\SessionSchema.json</p5:Path>
+                      <p5:Path>C:/Users/saleem_lab/Documents/GitHub/hf-visual/temp_data\sub-M26030\ses-20260606_1_date-2026-09-06T15-09-02\SessionSchema\SessionSchema.json</p5:Path>
                       <p5:Suffix>None</p5:Suffix>
                       <p5:Overwrite>false</p5:Overwrite>
                     </Combinator>
