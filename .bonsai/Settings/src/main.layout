@@ -1,85 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VisualizerLayout Version="2.9.0">
-  <WindowSettings Index="5">
+  <WindowSettings Index="2">
     <NestedLayout>
-      <WindowSettings Index="3">
-        <NestedLayout>
-          <WindowSettings Index="4">
-            <Visible>false</Visible>
-            <Location>
-              <X>344</X>
-              <Y>310</Y>
-            </Location>
-            <Size>
-              <Width>334</Width>
-              <Height>64</Height>
-            </Size>
-            <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
-            <VisualizerSettings>
-              <ObjectTextVisualizer />
-            </VisualizerSettings>
-          </WindowSettings>
-          <WindowSettings Index="5">
-            <Visible>false</Visible>
-            <Location>
-              <X>361</X>
-              <Y>396</Y>
-            </Location>
-            <Size>
-              <Width>334</Width>
-              <Height>64</Height>
-            </Size>
-            <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
-            <VisualizerSettings>
-              <ObjectTextVisualizer />
-            </VisualizerSettings>
-          </WindowSettings>
-          <WindowSettings Index="6">
-            <NestedLayout>
-              <WindowSettings Index="3">
-                <Visible>false</Visible>
-                <Location>
-                  <X>511</X>
-                  <Y>236</Y>
-                </Location>
-                <Size>
-                  <Width>334</Width>
-                  <Height>64</Height>
-                </Size>
-                <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
-                <VisualizerSettings>
-                  <ObjectTextVisualizer />
-                </VisualizerSettings>
-              </WindowSettings>
-              <WindowSettings Index="6">
-                <Visible>false</Visible>
-                <Location>
-                  <X>500</X>
-                  <Y>144</Y>
-                </Location>
-                <Size>
-                  <Width>334</Width>
-                  <Height>64</Height>
-                </Size>
-                <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
-                <VisualizerSettings>
-                  <ObjectTextVisualizer />
-                </VisualizerSettings>
-              </WindowSettings>
-            </NestedLayout>
-          </WindowSettings>
-        </NestedLayout>
+      <WindowSettings Index="10">
+        <Visible>false</Visible>
+        <Location>
+          <X>26</X>
+          <Y>26</Y>
+        </Location>
+        <Size>
+          <Width>589</Width>
+          <Height>731</Height>
+        </Size>
+        <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
+        <VisualizerSettings>
+          <ObjectTextVisualizer />
+        </VisualizerSettings>
       </WindowSettings>
     </NestedLayout>
   </WindowSettings>
   <WindowSettings Index="11">
+    <Visible>false</Visible>
     <Location>
-      <X>120</X>
-      <Y>130</Y>
+      <X>463</X>
+      <Y>143</Y>
     </Location>
     <Size>
-      <Width>418</Width>
-      <Height>377</Height>
+      <Width>666</Width>
+      <Height>755</Height>
     </Size>
     <VisualizerTypeName>Bonsai.Gui.TableLayoutPanelVisualizer</VisualizerTypeName>
     <VisualizerSettings>
@@ -132,8 +80,8 @@
                 <VisualizerSettings>
                   <RollingGraphVisualizer>
                     <Capacity>0</Capacity>
-                    <Min>-1</Min>
-                    <Max>1</Max>
+                    <Min>0</Min>
+                    <Max>9000</Max>
                     <AutoScale>true</AutoScale>
                   </RollingGraphVisualizer>
                 </VisualizerSettings>
@@ -181,8 +129,8 @@
                 <VisualizerSettings>
                   <TimeSeriesVisualizer>
                     <Capacity>640</Capacity>
-                    <Min>934</Min>
-                    <Max>948</Max>
+                    <Min>7</Min>
+                    <Max>10.5</Max>
                     <AutoScale>true</AutoScale>
                   </TimeSeriesVisualizer>
                 </VisualizerSettings>
@@ -190,24 +138,170 @@
             </GroupBoxVisualizer>
           </VisualizerSettings>
         </MashupSettings>
+        <MashupSettings>
+          <VisualizerTypeName>Bonsai.Vision.Design.IplImageVisualizer</VisualizerTypeName>
+          <VisualizerSettings>
+            <IplImageVisualizer />
+          </VisualizerSettings>
+        </MashupSettings>
       </TableLayoutPanelVisualizer>
     </VisualizerSettings>
-  </WindowSettings>
-  <WindowSettings Index="12">
     <NestedLayout>
-      <WindowSettings Index="37">
+      <WindowSettings Index="0">
         <Visible>false</Visible>
         <Location>
-          <X>144</X>
-          <Y>156</Y>
+          <X>208</X>
+          <Y>208</Y>
         </Location>
         <Size>
-          <Width>994</Width>
-          <Height>196</Height>
+          <Width>316</Width>
+          <Height>189</Height>
         </Size>
-        <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
+        <VisualizerTypeName>Bonsai.Gui.ButtonVisualizer</VisualizerTypeName>
         <VisualizerSettings>
-          <ObjectTextVisualizer />
+          <ButtonVisualizer />
+        </VisualizerSettings>
+      </WindowSettings>
+      <WindowSettings Index="42">
+        <Location>
+          <X>632</X>
+          <Y>0</Y>
+        </Location>
+        <Size>
+          <Width>518</Width>
+          <Height>983</Height>
+        </Size>
+        <VisualizerTypeName>Bonsai.Gui.TableLayoutPanelVisualizer</VisualizerTypeName>
+        <VisualizerSettings>
+          <TableLayoutPanelVisualizer>
+            <MashupSettings>
+              <Source>8</Source>
+              <VisualizerTypeName>Bonsai.Gui.GroupBoxVisualizer</VisualizerTypeName>
+              <VisualizerSettings>
+                <GroupBoxVisualizer>
+                  <MashupSettings>
+                    <Source>6</Source>
+                    <VisualizerTypeName>Bonsai.Gui.TableLayoutPanelVisualizer</VisualizerTypeName>
+                    <VisualizerSettings>
+                      <TableLayoutPanelVisualizer>
+                        <MashupSettings>
+                          <Source>0</Source>
+                          <VisualizerTypeName>Bonsai.Gui.ButtonVisualizer</VisualizerTypeName>
+                          <VisualizerSettings>
+                            <ButtonVisualizer />
+                          </VisualizerSettings>
+                        </MashupSettings>
+                        <MashupSettings>
+                          <Source>3</Source>
+                          <VisualizerTypeName>Bonsai.Gui.ButtonVisualizer</VisualizerTypeName>
+                          <VisualizerSettings>
+                            <ButtonVisualizer />
+                          </VisualizerSettings>
+                        </MashupSettings>
+                      </TableLayoutPanelVisualizer>
+                    </VisualizerSettings>
+                  </MashupSettings>
+                </GroupBoxVisualizer>
+              </VisualizerSettings>
+            </MashupSettings>
+            <MashupSettings>
+              <Source>12</Source>
+              <VisualizerTypeName>Bonsai.Gui.GroupBoxVisualizer</VisualizerTypeName>
+              <VisualizerSettings>
+                <GroupBoxVisualizer>
+                  <MashupSettings>
+                    <Source>10</Source>
+                    <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
+                    <VisualizerSettings>
+                      <ObjectTextVisualizer />
+                    </VisualizerSettings>
+                  </MashupSettings>
+                </GroupBoxVisualizer>
+              </VisualizerSettings>
+            </MashupSettings>
+            <MashupSettings>
+              <Source>18</Source>
+              <VisualizerTypeName>Bonsai.Gui.GroupBoxVisualizer</VisualizerTypeName>
+              <VisualizerSettings>
+                <GroupBoxVisualizer>
+                  <MashupSettings>
+                    <Source>16</Source>
+                    <VisualizerTypeName>Bonsai.Gui.ZedGraph.RollingGraphVisualizer</VisualizerTypeName>
+                    <VisualizerSettings>
+                      <RollingGraphVisualizer>
+                        <Capacity>0</Capacity>
+                        <Min>-0.055000000000000049</Min>
+                        <Max>1.1550000000000002</Max>
+                        <AutoScale>false</AutoScale>
+                      </RollingGraphVisualizer>
+                    </VisualizerSettings>
+                  </MashupSettings>
+                </GroupBoxVisualizer>
+              </VisualizerSettings>
+            </MashupSettings>
+            <MashupSettings>
+              <Source>28</Source>
+              <VisualizerTypeName>Bonsai.Gui.GroupBoxVisualizer</VisualizerTypeName>
+              <VisualizerSettings>
+                <GroupBoxVisualizer>
+                  <MashupSettings>
+                    <Source>26</Source>
+                    <VisualizerTypeName>Bonsai.Gui.ZedGraph.RollingGraphVisualizer</VisualizerTypeName>
+                    <VisualizerSettings>
+                      <RollingGraphVisualizer>
+                        <Capacity>0</Capacity>
+                        <Min>0.3501380612059467</Min>
+                        <Max>0.70736792193477982</Max>
+                        <AutoScale>false</AutoScale>
+                      </RollingGraphVisualizer>
+                    </VisualizerSettings>
+                  </MashupSettings>
+                </GroupBoxVisualizer>
+              </VisualizerSettings>
+            </MashupSettings>
+            <MashupSettings>
+              <Source>32</Source>
+              <VisualizerTypeName>Bonsai.Gui.GroupBoxVisualizer</VisualizerTypeName>
+              <VisualizerSettings>
+                <GroupBoxVisualizer>
+                  <MashupSettings>
+                    <Source>30</Source>
+                    <VisualizerTypeName>Bonsai.Vision.Design.IplImageVisualizer</VisualizerTypeName>
+                    <VisualizerSettings>
+                      <IplImageVisualizer />
+                    </VisualizerSettings>
+                  </MashupSettings>
+                </GroupBoxVisualizer>
+              </VisualizerSettings>
+            </MashupSettings>
+            <MashupSettings>
+              <Source>37</Source>
+              <VisualizerTypeName>Bonsai.Gui.GroupBoxVisualizer</VisualizerTypeName>
+              <VisualizerSettings>
+                <GroupBoxVisualizer>
+                  <MashupSettings>
+                    <Source>35</Source>
+                    <VisualizerTypeName>Bonsai.Design.Visualizers.TimeSeriesVisualizer</VisualizerTypeName>
+                    <VisualizerSettings>
+                      <TimeSeriesVisualizer>
+                        <Capacity>640</Capacity>
+                        <Min>8</Min>
+                        <Max>13</Max>
+                        <AutoScale>true</AutoScale>
+                      </TimeSeriesVisualizer>
+                    </VisualizerSettings>
+                  </MashupSettings>
+                </GroupBoxVisualizer>
+              </VisualizerSettings>
+            </MashupSettings>
+            <MashupSettings>
+              <Source>39</Source>
+              <VisualizerTypeName>Bonsai.Vision.Design.IplImageVisualizer</VisualizerTypeName>
+              <VisualizerSettings>
+                <IplImageVisualizer />
+              </VisualizerSettings>
+            </MashupSettings>
+          </TableLayoutPanelVisualizer>
         </VisualizerSettings>
       </WindowSettings>
     </NestedLayout>

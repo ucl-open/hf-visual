@@ -7,10 +7,14 @@ from ucl_open_hf_visual.task import (
 
 task_logic = UclOpenHfVisualTaskLogic(
     task_parameters=UclOpenHfVisualTaskParameters(
-        available_textures=["SN_1_1", "SynthIm_1_1"],
-        inter_presentation_texture="blankStim_1",
-        presentation_time=1,
-        inter_presentation_time=0.5
+        available_textures=["SN_605_1","SN_605_2","SN_605_3","SN_605_4","SN_605_5",
+                            "SN_1_1","SN_1_2","SN_1_3","SN_1_4","SN_1_5",
+                            "SImg_605_1","SImg_605_2","SImg_605_3","SImg_605_4","SImg_605_5",
+                            "SImg_1_1","SImg_1_2","SImg_1_3","SImg_1_4","SImg_1_5",
+                            "blank1","blank2"],
+        inter_presentation_texture="blank1",
+        presentation_time=0.25,
+        inter_presentation_time=0.75
     ),
 )
 
