@@ -2,7 +2,7 @@ using System;
 using System.Reactive.Linq;
 using Bonsai;
 using Bonsai.Harp;
-using UclOpenHfVisualDataSchema;
+using OpenRigsHfVisual;
 
 public class ParseMatrixPhotodiodeSerialDevice : Transform<string, MatrixArduinoPhotodiodeData>
 {

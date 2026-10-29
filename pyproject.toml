@@ -3,8 +3,8 @@ requires = ["uv_build>=0.8.22"]
 build-backend = "uv_build"
 
 [project]
-name = "ucl-open-hf-visual"
-description = "A library that defines a ucl-open data schema for the hf-visual experiment."
+name = "open-rigs-hf-visual"
+description = "A library that defines a open-rigs data schema for the hf-visual experiment."
 authors = [ {name = "RoboDoig", email = "a.erskine@neurogears.org"}]
 license = "MIT"
 requires-python = ">=3.11, <3.12"
@@ -16,16 +16,16 @@ version = "0.0.0-rc1"
 readme = {file = "README.md", content-type = "text/markdown"}
 
 dependencies = [
-  "swc-aeon>=0.1.0",
-  "ucl-open-rigs",
+  "swc-aeon>=0.2.0",
+  "open-rigs",
   "pydantic-settings"
 ]
 
 # [project.urls]
-# Documentation = "https://ucl-open.github.io/Ucl.Open.HfVisual/"
-# Repository = "https://github.com/UclOpen/Ucl.Open.HfVisual/"
-# Issues = "https://github.com/UclOpen/Ucl.Open.HfVisual/issues"
-# Changelog = "https://github.com/UclOpen/Ucl.Open.HfVisual/releases"
+# Documentation = "https://open-rigs.github.io/Open.Rigs.HfVisual/"
+# Repository = "https://github.com/OpenRigs/Open.Rigs.HfVisual/"
+# Issues = "https://github.com/OpenRigs/Open.Rigs.HfVisual/issues"
+# Changelog = "https://github.com/OpenRigs/Open.Rigs.HfVisual/releases"
 
 [project.optional-dependencies]
 
@@ -34,14 +34,14 @@ data = ["contraqctor<0.5.0"]
 [dependency-groups]
 
 dev = [
-    "ucl-open-hf-visual[launcher]",
-    "ucl-open-hf-visual[data]",
+    "open-rigs-hf-visual[data]",
     "ruff",
     "codespell"
 ]
 
 [project.scripts]
-hf-visual = "ucl_open_hf_visual.cli:main"
+hf-visual = "open_rigs_hf_visual.cli:main"
+regenerate-schemas = "open_rigs_hf_visual.regenerate:main"
 
 [tool.ruff]
 line-length = 120
@@ -62,4 +62,5 @@ default-groups = ['dev']
 required-version = '>=0.8.4'
 
 [tool.uv.sources]
-ucl-open-rigs = {git = "https://github.com/ucl-open/ucl_open_rigs/", branch = "test_build"}
+open-rigs = {git = "https://github.com/open-rigs/open-rigs", branch = "main"}
+swc-aeon = { git = "https://github.com/SainsburyWellcomeCentre/aeon_api.git", branch = "main" }

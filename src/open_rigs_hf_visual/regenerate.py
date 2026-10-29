@@ -1,38 +1,37 @@
+import json
+import os
 from pathlib import Path
 from typing import Union
 
 import pydantic
-from ucl_open.rigs.experiment import Experiment
-from aind_behavior_services.utils import BonsaiSgenSerializers, convert_pydantic_to_bonsai
+from open_rigs.core import ExperimentSession
 
-import ucl_open_hf_visual.rig
-import ucl_open_hf_visual.task
-import ucl_open_hf_visual.data_types
-import ucl_open_hf_visual.session
+import open_rigs_hf_visual.data_types
+import open_rigs_hf_visual.rig
+import open_rigs_hf_visual.task
 
 SCHEMA_ROOT = Path("./src/DataSchemas/")
+SCHEMA_FILE = SCHEMA_ROOT / "open_rigs_hf_visual.json"
 EXTENSIONS_ROOT = Path("./src/Extensions/")
-NAMESPACE_PREFIX = "UclOpenHfVisualDataSchema"
+NAMESPACE = "OpenRigsHfVisual"
 
 
 def main():
     models = [
-        ucl_open_hf_visual.task.UclOpenHfVisualTaskLogic,
-        ucl_open_hf_visual.rig.UclOpenHfVisualRig,
-        ucl_open_hf_visual.session.UclOpenSession,
-        ucl_open_hf_visual.data_types.MatrixArduinoData,
-        ucl_open_hf_visual.data_types.MatrixArduinoPhotodiodeData
+        open_rigs_hf_visual.task.OpenRigsHfVisualTaskLogic,
+        open_rigs_hf_visual.rig.OpenRigsHfVisualRig,
+        ExperimentSession,
+        open_rigs_hf_visual.data_types.MatrixArduinoData,
+        open_rigs_hf_visual.data_types.MatrixArduinoPhotodiodeData,
     ]
     model = pydantic.RootModel[Union[tuple(models)]]
-
-    convert_pydantic_to_bonsai(
-        model, # type: ignore
-        model_name="ucl_open_hf_visual",
-        root_element="Root",
-        cs_namespace=NAMESPACE_PREFIX,
-        json_schema_output_dir=SCHEMA_ROOT,
-        cs_output_dir=EXTENSIONS_ROOT,
-        cs_serializer=[BonsaiSgenSerializers.JSON],
+    schema = model.model_json_schema(by_alias=True, mode="serialization", union_format="primitive_type_array")
+    SCHEMA_ROOT.mkdir(parents=True, exist_ok=True)
+    SCHEMA_FILE.write_text(json.dumps(schema, indent=2))
+    print(f"Schema written to {SCHEMA_FILE}")
+    os.system(
+        f"dotnet bonsai.sgen {SCHEMA_FILE} --namespace {NAMESPACE} --output {EXTENSIONS_ROOT} "
+        "--serializer json --serializer yaml"
     )
 
 

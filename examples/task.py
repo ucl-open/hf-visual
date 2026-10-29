@@ -1,18 +1,19 @@
 import os
 
-from ucl_open_hf_visual.task import (
-    UclOpenHfVisualTaskLogic,
-    UclOpenHfVisualTaskParameters,
+from open_rigs_hf_visual.task import (
+    OpenRigsHfVisualTaskLogic,
+    OpenRigsHfVisualTaskParameters,
 )
 
-task_logic = UclOpenHfVisualTaskLogic(
-    task_parameters=UclOpenHfVisualTaskParameters(
+task_logic = OpenRigsHfVisualTaskLogic(
+    task_parameters=OpenRigsHfVisualTaskParameters(
         available_textures=["SN_1_1", "SynthIm_1_1"],
         inter_presentation_texture="blankStim_1",
         presentation_time=1,
-        inter_presentation_time=0.5
+        inter_presentation_time=0.5,
     ),
 )
+
 
 def main(path_seed: str = "./local/{schema}.json"):
     example_task_logic = task_logic

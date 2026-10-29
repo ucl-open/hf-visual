@@ -1,4 +1,5 @@
-from ucl_open.rigs.base import BaseSchema
+from swc.aeon.schema import BaseSchema
+
 
 class MatrixArduinoData(BaseSchema):
     encoder_count: int
@@ -7,7 +8,8 @@ class MatrixArduinoData(BaseSchema):
     last_sync_pulse_time: int
     photodiode_val: int
     current_ms: int
-    
+
+
 class MatrixArduinoPhotodiodeData(BaseSchema):
     photodiode_val: int
     sync_val: int

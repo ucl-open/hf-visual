@@ -1,6 +1,7 @@
-_commit: 78eb45e
-_src_path: rig-template
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v0.1.0-304-g77094a4
+_src_path: gh:open-rigs/open-rigs
 author_email: a.erskine@neurogears.org
 author_name: RoboDoig
-prefix: ucl-open
+prefix: open-rigs
 project_name: hf-visual

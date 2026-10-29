@@ -344,6 +344,54 @@ wheels = [
 ]
 
 [[package]]
+name = "open-rigs"
+version = "0.0.0"
+source = { git = "https://github.com/open-rigs/open-rigs?branch=main#77094a4b13f21a5d92e8bf30644e76e344055bec" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "pydantic-yaml" },
+    { name = "swc-aeon" },
+]
+
+[[package]]
+name = "open-rigs-hf-visual"
+version = "0.0.0rc1"
+source = { editable = "." }
+dependencies = [
+    { name = "open-rigs" },
+    { name = "pydantic-settings" },
+    { name = "swc-aeon" },
+]
+
+[package.optional-dependencies]
+data = [
+    { name = "contraqctor" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "codespell" },
+    { name = "open-rigs-hf-visual", extra = ["data"] },
+    { name = "ruff" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "contraqctor", marker = "extra == 'data'", specifier = "<0.5.0" },
+    { name = "open-rigs", git = "https://github.com/open-rigs/open-rigs?branch=main" },
+    { name = "pydantic-settings" },
+    { name = "swc-aeon", git = "https://github.com/SainsburyWellcomeCentre/aeon_api.git?branch=main" },
+]
+provides-extras = ["data"]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "codespell" },
+    { name = "open-rigs-hf-visual", extras = ["data"] },
+    { name = "ruff" },
+]
+
+[[package]]
 name = "opencv-python"
 version = "4.11.0.86"
 source = { registry = "https://pypi.org/simple" }
@@ -695,25 +743,15 @@ wheels = [
 
 [[package]]
 name = "swc-aeon"
-version = "0.1.0"
-source = { registry = "https://pypi.org/simple" }
+version = "0.2.1.dev7+g7cd561d38"
+source = { git = "https://github.com/SainsburyWellcomeCentre/aeon_api.git?branch=main#7cd561d382011b9fbdcafe827cd92a2804b6799f" }
 dependencies = [
     { name = "dotmap" },
+    { name = "harp-python" },
     { name = "matplotlib" },
     { name = "numpy" },
     { name = "opencv-python" },
     { name = "pandas" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/3a/e8/7069289d251f8354e3e9dc61436267121901ba942a0252d6ede590959674/swc_aeon-0.1.0.tar.gz", hash = "sha256:f34ebca16ed617ce94ff5a318bd5c13533211f344c40bb125907c9277d8ac5bf", size = 21285, upload-time = "2025-01-24T16:48:22.742Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/2e/34/81fd0f6f51cb78888efe7a7d310ace791f5fbd837ccb72b93a99e89eaa38/swc_aeon-0.1.0-py3-none-any.whl", hash = "sha256:08c3c96203bd374f16dd40b7b0cd25ce8723248adb7ff5681439cfbb0ef28724", size = 22644, upload-time = "2025-01-24T16:48:21.426Z" },
-]
-
-[[package]]
-name = "swc-aeon-rigs"
-version = "0.1.0"
-source = { git = "https://github.com/SainsburyWellcomeCentre/aeon_swc_rigs.git#fa6f4cf83aac773c947989869ed530058640a0a8" }
-dependencies = [
     { name = "pydantic" },
     { name = "pydantic-yaml" },
 ]
@@ -746,55 +784,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/95/32/1a225d6164441be760d75c2c42e2780dc0873fe382da3e98a2e1e48361e5/tzdata-2025.2.tar.gz", hash = "sha256:b60a638fcc0daffadf82fe0f57e53d06bdec2f36c4df66280ae79bce6bd6f2b9", size = 196380, upload-time = "2025-03-23T13:54:43.652Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/5c/23/c7abc0ca0a1526a0774eca151daeb8de62ec457e77262b66b359c3c7679e/tzdata-2025.2-py2.py3-none-any.whl", hash = "sha256:1a403fada01ff9221ca8044d701868fa132215d84beb92242d9acd2147f667a8", size = 347839, upload-time = "2025-03-23T13:54:41.845Z" },
-]
-
-[[package]]
-name = "ucl-open-hf-visual"
-version = "0.0.0rc1"
-source = { editable = "." }
-dependencies = [
-    { name = "pydantic-settings" },
-    { name = "swc-aeon" },
-    { name = "ucl-open-rigs" },
-]
-
-[package.optional-dependencies]
-data = [
-    { name = "contraqctor" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "codespell" },
-    { name = "ruff" },
-    { name = "ucl-open-hf-visual", extra = ["data"] },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "contraqctor", marker = "extra == 'data'", specifier = "<0.5.0" },
-    { name = "pydantic-settings" },
-    { name = "swc-aeon", specifier = ">=0.1.0" },
-    { name = "ucl-open-rigs", git = "https://github.com/ucl-open/ucl_open_rigs/?branch=test_build" },
-]
-provides-extras = ["data"]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "codespell" },
-    { name = "ruff" },
-    { name = "ucl-open-hf-visual", extras = ["data"] },
-    { name = "ucl-open-hf-visual", extras = ["launcher"] },
-]
-
-[[package]]
-name = "ucl-open-rigs"
-version = "0.1.0"
-source = { git = "https://github.com/ucl-open/ucl_open_rigs/?branch=test_build#5cabc5b4d596747a60cf74431f5b76c4bdbfe019" }
-dependencies = [
-    { name = "pydantic" },
-    { name = "pydantic-yaml" },
-    { name = "swc-aeon-rigs" },
 ]
 
 [[package]]

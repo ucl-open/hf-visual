@@ -1,0 +1,587 @@
+{
+  "$defs": {
+    "DisplayCalibration": {
+      "properties": {
+        "intrinsics": {
+          "$ref": "#/$defs/DisplayIntrinsics",
+          "default": {
+            "viewportConfiguration": {
+              "height": 1.0,
+              "width": 1.0,
+              "x": 0.0,
+              "y": 0.0
+            },
+            "displayWidth": 20.0,
+            "displayHeight": 15.0
+          },
+          "description": "Intrinsics",
+          "title": "Intrinsics"
+        },
+        "extrinsics": {
+          "$ref": "#/$defs/DisplayExtrinsics",
+          "default": {
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "translation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            }
+          },
+          "description": "Extrinsics",
+          "title": "Extrinsics"
+        }
+      },
+      "title": "DisplayCalibration",
+      "type": "object"
+    },
+    "DisplayExtrinsics": {
+      "properties": {
+        "rotation": {
+          "$ref": "#/$defs/Vector3",
+          "default": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "description": "Euler rotation vector (radians)",
+          "title": "Rotation"
+        },
+        "translation": {
+          "$ref": "#/$defs/Vector3",
+          "default": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "description": "Translation vector",
+          "title": "Translation"
+        }
+      },
+      "title": "DisplayExtrinsics",
+      "type": "object"
+    },
+    "DisplayIntrinsics": {
+      "properties": {
+        "viewportConfiguration": {
+          "$ref": "#/$defs/ViewportConfiguration",
+          "default": {
+            "width": 1.0,
+            "height": 1.0,
+            "x": 0.0,
+            "y": 0.0
+          },
+          "description": "The viewport configuration for this display intrinsic"
+        },
+        "displayWidth": {
+          "default": 20,
+          "description": "Physical display width",
+          "minimum": 0,
+          "title": "DisplayWidth",
+          "type": "number"
+        },
+        "displayHeight": {
+          "default": 15,
+          "description": "Physical display height",
+          "minimum": 0,
+          "title": "DisplayHeight",
+          "type": "number"
+        }
+      },
+      "title": "DisplayIntrinsics",
+      "type": "object"
+    },
+    "ExperimentSession": {
+      "description": "The base class for creating open-rigs experiment models.",
+      "properties": {
+        "workflow": {
+          "description": "Path to the workflow running the experiment.",
+          "title": "Workflow",
+          "type": "string"
+        },
+        "commit": {
+          "description": "Commit hash of the experiment repo.",
+          "title": "Commit",
+          "type": "string"
+        },
+        "repositoryUrl": {
+          "description": "The URL of the git repository used to version experiment source code.",
+          "title": "RepositoryUrl",
+          "type": "string"
+        },
+        "subjectId": {
+          "description": "The subject id for this session.",
+          "title": "SubjectId",
+          "type": "string"
+        },
+        "sessionId": {
+          "description": "The session identifier.",
+          "title": "SessionId",
+          "type": "string"
+        }
+      },
+      "required": [
+        "workflow",
+        "commit",
+        "repositoryUrl",
+        "subjectId",
+        "sessionId"
+      ],
+      "title": "ExperimentSession",
+      "type": "object"
+    },
+    "MatrixArduino": {
+      "description": "Arduino streaming encoder, lick, sync and photodiode values.",
+      "properties": {
+        "portName": {
+          "description": "The name of the device serial port.",
+          "examples": [
+            "COMx"
+          ],
+          "title": "PortName",
+          "type": "string"
+        },
+        "baudRate": {
+          "default": 9600,
+          "description": "Baud rate for serial communication.",
+          "title": "BaudRate",
+          "type": "integer"
+        },
+        "newLine": {
+          "default": "\r\n",
+          "description": "Line termination sequence used to delimit incoming messages.",
+          "title": "NewLine",
+          "type": "string"
+        },
+        "readBufferSize": {
+          "default": 4096,
+          "description": "Size, in bytes, of the read buffer.",
+          "title": "ReadBufferSize",
+          "type": "integer"
+        },
+        "writeBufferSize": {
+          "default": 2048,
+          "description": "Size, in bytes, of the write buffer.",
+          "title": "WriteBufferSize",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "portName"
+      ],
+      "title": "MatrixArduino",
+      "type": "object"
+    },
+    "MatrixArduinoData": {
+      "properties": {
+        "encoderCount": {
+          "title": "EncoderCount",
+          "type": "integer"
+        },
+        "lickCountLeft": {
+          "title": "LickCountLeft",
+          "type": "integer"
+        },
+        "lickCountRight": {
+          "title": "LickCountRight",
+          "type": "integer"
+        },
+        "lastSyncPulseTime": {
+          "title": "LastSyncPulseTime",
+          "type": "integer"
+        },
+        "photodiodeVal": {
+          "title": "PhotodiodeVal",
+          "type": "integer"
+        },
+        "currentMs": {
+          "title": "CurrentMs",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "encoderCount",
+        "lickCountLeft",
+        "lickCountRight",
+        "lastSyncPulseTime",
+        "photodiodeVal",
+        "currentMs"
+      ],
+      "title": "MatrixArduinoData",
+      "type": "object"
+    },
+    "MatrixArduinoPhotodiode": {
+      "description": "Arduino streaming photodiode and sync values.",
+      "properties": {
+        "portName": {
+          "description": "The name of the device serial port.",
+          "examples": [
+            "COMx"
+          ],
+          "title": "PortName",
+          "type": "string"
+        },
+        "baudRate": {
+          "default": 9600,
+          "description": "Baud rate for serial communication.",
+          "title": "BaudRate",
+          "type": "integer"
+        },
+        "newLine": {
+          "default": "\r\n",
+          "description": "Line termination sequence used to delimit incoming messages.",
+          "title": "NewLine",
+          "type": "string"
+        },
+        "readBufferSize": {
+          "default": 4096,
+          "description": "Size, in bytes, of the read buffer.",
+          "title": "ReadBufferSize",
+          "type": "integer"
+        },
+        "writeBufferSize": {
+          "default": 2048,
+          "description": "Size, in bytes, of the write buffer.",
+          "title": "WriteBufferSize",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "portName"
+      ],
+      "title": "MatrixArduinoPhotodiode",
+      "type": "object"
+    },
+    "MatrixArduinoPhotodiodeData": {
+      "properties": {
+        "photodiodeVal": {
+          "title": "PhotodiodeVal",
+          "type": "integer"
+        },
+        "syncVal": {
+          "title": "SyncVal",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "photodiodeVal",
+        "syncVal"
+      ],
+      "title": "MatrixArduinoPhotodiodeData",
+      "type": "object"
+    },
+    "OpenRigsHfVisualRig": {
+      "properties": {
+        "rootPath": {
+          "description": "The root path on which to log all data.",
+          "title": "RootPath",
+          "type": "string"
+        },
+        "version": {
+          "const": "0.0.0-rc1",
+          "default": "0.0.0-rc1",
+          "title": "Version",
+          "type": "string"
+        },
+        "screen": {
+          "$ref": "#/$defs/Screen",
+          "description": "The main display for visual stimuli"
+        },
+        "syncQuad": {
+          "$ref": "#/$defs/SyncQuad",
+          "description": "Synchronisation quad drawn on the display"
+        },
+        "arduino": {
+          "$ref": "#/$defs/MatrixArduino",
+          "description": "Matrix Arduino serial device",
+          "title": "Arduino"
+        },
+        "arduinoPhotodiode": {
+          "$ref": "#/$defs/MatrixArduinoPhotodiode",
+          "description": "Photodiode Arduino serial device",
+          "title": "ArduinoPhotodiode"
+        }
+      },
+      "required": [
+        "rootPath",
+        "screen",
+        "syncQuad",
+        "arduino",
+        "arduinoPhotodiode"
+      ],
+      "title": "OpenRigsHfVisualRig",
+      "type": "object"
+    },
+    "OpenRigsHfVisualTaskLogic": {
+      "properties": {
+        "version": {
+          "const": "0.0.0-rc1",
+          "default": "0.0.0-rc1",
+          "title": "Version",
+          "type": "string"
+        },
+        "name": {
+          "const": "OpenRigsHfVisual",
+          "default": "OpenRigsHfVisual",
+          "description": "Name of the task logic",
+          "title": "Name",
+          "type": "string"
+        },
+        "taskParameters": {
+          "$ref": "#/$defs/OpenRigsHfVisualTaskParameters",
+          "description": "Parameters of the task logic",
+          "title": "TaskParameters"
+        }
+      },
+      "required": [
+        "taskParameters"
+      ],
+      "title": "OpenRigsHfVisualTaskLogic",
+      "type": "object"
+    },
+    "OpenRigsHfVisualTaskParameters": {
+      "properties": {
+        "rngSeed": {
+          "default": null,
+          "description": "Seed of the random number generator for these task parameters",
+          "title": "RngSeed",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "availableTextures": {
+          "description": "Names of the textures that can be presented",
+          "items": {
+            "type": "string"
+          },
+          "title": "AvailableTextures",
+          "type": "array"
+        },
+        "interPresentationTexture": {
+          "description": "Name of the texture shown between presentations",
+          "title": "InterPresentationTexture",
+          "type": "string"
+        },
+        "presentationTime": {
+          "description": "Duration (seconds) of each texture presentation",
+          "title": "PresentationTime",
+          "type": "number"
+        },
+        "interPresentationTime": {
+          "description": "Duration (seconds) between texture presentations",
+          "title": "InterPresentationTime",
+          "type": "number"
+        }
+      },
+      "required": [
+        "availableTextures",
+        "interPresentationTexture",
+        "presentationTime",
+        "interPresentationTime"
+      ],
+      "title": "OpenRigsHfVisualTaskParameters",
+      "type": "object"
+    },
+    "Screen": {
+      "properties": {
+        "displayIndex": {
+          "default": 1,
+          "description": "Display index",
+          "title": "DisplayIndex",
+          "type": "integer"
+        },
+        "windowWidth": {
+          "default": 1920,
+          "description": "Width of the screen in pixels",
+          "minimum": 0,
+          "title": "WindowWidth",
+          "type": "integer"
+        },
+        "windowHeight": {
+          "default": 1080,
+          "description": "Height of the screen in pixels",
+          "minimum": 0,
+          "title": "WindowHeight",
+          "type": "integer"
+        },
+        "targetRenderFrequency": {
+          "default": 60,
+          "description": "Target render frequency",
+          "title": "TargetRenderFrequency",
+          "type": "number"
+        },
+        "targetUpdateFrequency": {
+          "default": 120,
+          "description": "Target update frequency",
+          "title": "TargetUpdateFrequency",
+          "type": "number"
+        },
+        "textureAssetsDirectory": {
+          "default": "Textures",
+          "description": "Calibration directory",
+          "title": "TextureAssetsDirectory",
+          "type": "string"
+        },
+        "calibration": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "$ref": "#/$defs/DisplayCalibration"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Calibration parameters for a set of named display monitors for visual stimuli",
+          "title": "Calibration"
+        },
+        "brightness": {
+          "default": 0,
+          "description": "Brightness",
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Brightness",
+          "type": "number"
+        },
+        "contrast": {
+          "default": 1,
+          "description": "Contrast",
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Contrast",
+          "type": "number"
+        }
+      },
+      "title": "Screen",
+      "type": "object"
+    },
+    "SyncQuad": {
+      "description": "Configuration for the synchronisation quad visual stimulus.",
+      "properties": {
+        "extentX": {
+          "default": 0.1,
+          "description": "Horizontal extent of the quad stimulus as a fraction of the total display width.",
+          "maximum": 1,
+          "minimum": 0,
+          "title": "ExtentX",
+          "type": "number"
+        },
+        "extentY": {
+          "default": 0.1,
+          "description": "Vertical extent of the quad stimulus as a fraction of the total display height.",
+          "maximum": 1,
+          "minimum": 0,
+          "title": "ExtentY",
+          "type": "number"
+        },
+        "locationX": {
+          "default": -1.0,
+          "description": "Horizontal position of the quad stimulus as a fraction the total display width.",
+          "maximum": 1,
+          "minimum": 0,
+          "title": "LocationX",
+          "type": "number"
+        },
+        "locationY": {
+          "default": -1.0,
+          "description": "Vertical position of the quad stimulus as a fraction of the total display height.",
+          "maximum": 1,
+          "minimum": 0,
+          "title": "LocationY",
+          "type": "number"
+        }
+      },
+      "title": "SyncQuad",
+      "type": "object"
+    },
+    "Vector3": {
+      "properties": {
+        "x": {
+          "description": "X coordinate of the point.",
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "description": "Y coordinate of the point.",
+          "title": "Y",
+          "type": "number"
+        },
+        "z": {
+          "description": "Z coordinate of the point.",
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "z"
+      ],
+      "title": "Vector3",
+      "type": "object"
+    },
+    "ViewportConfiguration": {
+      "properties": {
+        "width": {
+          "default": 1,
+          "description": "The width of the viewport as a fraction of total screen width",
+          "maximum": 0,
+          "minimum": 0,
+          "title": "Width",
+          "type": "number"
+        },
+        "height": {
+          "default": 1,
+          "description": "The height of the viewport as a fraction of total screen width",
+          "maximum": 0,
+          "minimum": 0,
+          "title": "Height",
+          "type": "number"
+        },
+        "x": {
+          "default": 0,
+          "description": "The x-coordinate of the lower left corner of the viewport as a fraction of total screen width",
+          "maximum": 0,
+          "minimum": 0,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "default": 0,
+          "description": "The y-coordinate of the lower left corner of the viewport as a fraction of total screen height",
+          "maximum": 0,
+          "minimum": 0,
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "title": "ViewportConfiguration",
+      "type": "object"
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/$defs/OpenRigsHfVisualTaskLogic"
+    },
+    {
+      "$ref": "#/$defs/OpenRigsHfVisualRig"
+    },
+    {
+      "$ref": "#/$defs/ExperimentSession"
+    },
+    {
+      "$ref": "#/$defs/MatrixArduinoData"
+    },
+    {
+      "$ref": "#/$defs/MatrixArduinoPhotodiodeData"
+    }
+  ],
+  "title": "RootModel[Union[OpenRigsHfVisualTaskLogic, OpenRigsHfVisualRig, ExperimentSession, MatrixArduinoData, MatrixArduinoPhotodiodeData]]"
+}
