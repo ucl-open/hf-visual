@@ -346,8 +346,10 @@ wheels = [
 [[package]]
 name = "open-rigs"
 version = "0.0.0"
-source = { git = "https://github.com/open-rigs/open-rigs?branch=main#77094a4b13f21a5d92e8bf30644e76e344055bec" }
+source = { git = "https://github.com/open-rigs/open-rigs?branch=aeon-api#dc49083ef675a209d9487e53c201b5a05f0fdcf7" }
 dependencies = [
+    { name = "harp-python" },
+    { name = "pandas" },
     { name = "pydantic" },
     { name = "pydantic-yaml" },
     { name = "swc-aeon" },
@@ -378,7 +380,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "contraqctor", marker = "extra == 'data'", specifier = "<0.5.0" },
-    { name = "open-rigs", git = "https://github.com/open-rigs/open-rigs?branch=main" },
+    { name = "open-rigs", git = "https://github.com/open-rigs/open-rigs?branch=aeon-api" },
     { name = "pydantic-settings" },
     { name = "swc-aeon", git = "https://github.com/SainsburyWellcomeCentre/aeon_api.git?branch=main" },
 ]

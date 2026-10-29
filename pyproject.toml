@@ -62,5 +62,5 @@ default-groups = ['dev']
 required-version = '>=0.8.4'
 
 [tool.uv.sources]
-open-rigs = {git = "https://github.com/open-rigs/open-rigs", branch = "main"}
+open-rigs = {git = "https://github.com/open-rigs/open-rigs", branch = "aeon-api"}
 swc-aeon = { git = "https://github.com/SainsburyWellcomeCentre/aeon_api.git", branch = "main" }
