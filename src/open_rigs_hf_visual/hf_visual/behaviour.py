@@ -17,21 +17,23 @@ def running_speed(
     cm_per_count: float | None = None,
     smooth: float = 0.05,
     signed: bool = False,
+    column: str = "encoder_count",
 ) -> pd.Series:
     """Running speed from the wheel encoder count.
 
     Args:
-        arduino: The ``Arduino`` stream (e.g. ``session.arduino``), with ``encoder_count``.
+        arduino: The ``Arduino`` stream (e.g. ``session.arduino``), or a flat CSV wheel log.
         cm_per_count: Wheel circumference divided by encoder counts per revolution. If ``None``,
             speed is in counts per second.
         smooth: Standard deviation, in seconds, of a Gaussian smoothing of the speed. ``0`` for none.
         signed: Keep the direction of rotation (backwards is negative); otherwise absolute speed.
+        column: Column holding the cumulative encoder count (``"wheel"`` in flat CSV sessions).
 
     Returns:
         Speed indexed like ``arduino``, in cm/s (or counts/s), named ``"speed"``.
     """
     seconds = np.asarray(aeon.to_seconds(arduino.index), dtype=np.float64)
-    counts = arduino["encoder_count"].to_numpy(dtype=np.float64)
+    counts = arduino[column].to_numpy(dtype=np.float64)
     if cm_per_count is not None:
         counts = counts * cm_per_count
     # Centred differences; repeated timestamps get the speed of their neighbours

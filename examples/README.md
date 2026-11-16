@@ -80,7 +80,7 @@ few minutes.
 
    ```python
    root = Path(r"Z:\ibn-vision\DATA\SUBJECTS\M26031\stimuli\20261008\M26031_20261008_1\ses-20261008_1_date-2026-10-08T15-12-29")
-   ephys_root = Path(r"Z:\ibn-vision\DATA\SUBJECTS\M26031\ephys\20261008\M26031_20261008_1\M26031_20261008_1_g2")
+   ephys_root = Path(r"Z:\ibn-vision\DATA\SUBJECTS\M26031\ephys\20261008\20261008_1\M26031_20261008_1_g2")
    kilosort_dir = None
    ```
 
@@ -110,6 +110,20 @@ Settings worth changing:
 - `window`: the time range around each stimulus.
 - `photodiode_channel`: the NI-DAQ channel with the screen photodiode (`XA3` on this rig).
 
+## Other runs: flat CSV files (`psth_oldBonsai.ipynb`)
+
+Older workflows (`DotMotion_SpeedTuning`, `DriftingGratings_Direction`, ...) save each stream as its own CSV file in
+one folder, for example `M26031_DriftingGratings_Direction_WheelLog2026-10-08T16_00_40.csv`. For these, open
+**examples → psth_oldBonsai.ipynb** instead and set, in its first cells:
+
+- `folder`: the folder holding the CSV files (e.g. `...\stimuli61008\M26031_20261008_1`).
+- `protocol`: part of the protocol name (e.g. `"DriftingGratings"`), and `start` if it was run more than once.
+- `ephys_root`: the SpikeGLX `_gN` folder recorded **during that run**. The `fileCreateTime` line in its
+  `.nidq.meta` file is its start time; on 2026-10-08, `_g0` is DotMotion (15:36), `_g1` is DriftingGratings (16:00)
+  and `_g2` is the texture session.
+
+If the wrong `_gN` folder is given, loading stops with "does not seem to be the recording of this run".
+
 ## When the code is updated
 
 ```
@@ -127,6 +141,7 @@ Then click **Restart** at the top of the notebook and **Run All** again.
 | `.venv` is not in the kernel list | Run `uv sync` again, then in VS Code: **Ctrl+Shift+P → Developer: Reload Window** |
 | `FileNotFoundError` or "no Arduino CSV file found" | The `root` path is wrong, or the Z: drive is not connected |
 | "no NI-DAQ stream found" | `ephys_root` must be the `_gN` folder containing the `.nidq.bin` file |
+| "does not seem to be the recording of this run" | Wrong `_gN` folder for this run: compare `fileCreateTime` in the `.nidq.meta` files with the run's start time |
 | "no consistent pulse offset found" | The stimulus and ephys folders are from different recordings: check dates and run numbers |
 | Few onsets matched to the photodiode | Try another `photodiode_channel` (`XA2`, `XA4`, `XA5`) |
 | Very slow | Normal over the network for the first cells. Keep `align_probe=False` and `check_probe_range = False` |
