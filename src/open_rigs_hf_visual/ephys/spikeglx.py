@@ -199,6 +199,29 @@ class SpikeGLXStream:
             bit: For digital word channels, the bit to extract before edge detection.
             chunk_seconds: Length of each chunk read from disk.
         """
+        return self.edges(channel, threshold, bit, "rising", chunk_seconds)
+
+    def falling_edges(
+        self,
+        channel: int | str,
+        threshold: float | None = None,
+        bit: int | None = None,
+        chunk_seconds: float = 60.0,
+    ) -> pd.DatetimeIndex:
+        """Returns the aeon timestamps of falling edges on a channel; see ``rising_edges``."""
+        return self.edges(channel, threshold, bit, "falling", chunk_seconds)
+
+    def edges(
+        self,
+        channel: int | str,
+        threshold: float | None = None,
+        bit: int | None = None,
+        direction: str = "rising",
+        chunk_seconds: float = 60.0,
+    ) -> pd.DatetimeIndex:
+        """Returns the aeon timestamps of ``"rising"`` or ``"falling"`` edges on a channel."""
+        if direction not in ("rising", "falling"):
+            raise ValueError(f"direction must be 'rising' or 'falling', not {direction!r}")
         column = self.channel_index(channel)
         chunk = int(chunk_seconds * self.sample_rate)
         if threshold is None and bit is None:
@@ -214,7 +237,8 @@ class SpikeGLXStream:
             if previous is not None:
                 state = np.concatenate(([previous], state))
                 offset = first - 1
-            edges.append(np.flatnonzero(~state[:-1] & state[1:]) + offset + 1)
+            changed = (~state[:-1] & state[1:]) if direction == "rising" else (state[:-1] & ~state[1:])
+            edges.append(np.flatnonzero(changed) + offset + 1)
             previous = state[-1]
         seconds = np.concatenate(edges) / self.sample_rate
         return pd.DatetimeIndex(aeon.to_datetime(pd.Index(seconds)), name="time")

@@ -30,11 +30,12 @@ dependencies = [
 [project.optional-dependencies]
 
 data = ["contraqctor<0.5.0"]
+analysis = ["matplotlib", "ipykernel"]
 
 [dependency-groups]
 
 dev = [
-    "open-rigs-hf-visual[data]",
+    "open-rigs-hf-visual[data,analysis]",
     "ruff",
     "codespell"
 ]
