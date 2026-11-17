@@ -24,7 +24,8 @@ from dotmap import DotMap
 from open_rigs.io.streams import csv
 from swc.aeon.schema.streams import Device
 
-from open_rigs_hf_visual.ephys.kilosort import KilosortResult, load_kilosort
+from open_rigs_hf_visual.ephys.catgt import load_run_spikes
+from open_rigs_hf_visual.ephys.kilosort import KilosortResult
 from open_rigs_hf_visual.ephys.spikeglx import SpikeGLXStream, find_streams
 from open_rigs_hf_visual.ephys.sync import ClockMap, imec_to_nidq, match_pulse_trains
 
@@ -140,8 +141,9 @@ def load_session(
         root: The Bonsai session folder (``.../sub-XXX/ses-...``).
         ephys_root: The SpikeGLX run folder (``..._g0``). Defaults to the only ``*_g*`` folder
             next to the subject folder.
-        kilosort_dir: Kilosort output folder. Defaults to a ``kilosort4`` folder anywhere
-            under ``ephys_root``, if there is one.
+        kilosort_dir: Spike sorting: a CatGT processed folder (e.g. ``.../Processed_1``, the
+            gate is taken from the ``ephys_root`` name), or a Kilosort output folder of this run.
+            Defaults to a ``kilosort4`` folder anywhere under ``ephys_root``, if there is one.
         sync_channel: NI-DAQ channel recording the Arduino sync pulses.
         align_probe: Fit the probe-to-NI-DAQ clock map from the 1 Hz sync. This scans the
             probe file (tens of seconds for a long recording). If ``False``, probe and NI-DAQ
@@ -180,15 +182,8 @@ def load_session(
 
     probe_map = imec_to_nidq(imec, nidq) if (imec is not None and align_probe) else None
 
-    spikes = None
-    if kilosort_dir is None:
-        found = sorted(ephys_root.rglob("kilosort4/spike_times.npy"))
-        kilosort_dir = found[0].parent if found else None
-    if kilosort_dir is not None:
-        rate = imec.sample_rate if (imec is not None and imec.meta) else None
-        spikes = load_kilosort(kilosort_dir, sample_rate=rate)
-        if probe_map is not None:
-            spikes = spikes.map_times(probe_map)
+    rate = imec.sample_rate if (imec is not None and imec.meta) else None
+    spikes = load_run_spikes(kilosort_dir, ephys_root, probe_map, sample_rate=rate)
 
     return Session(
         root=root,

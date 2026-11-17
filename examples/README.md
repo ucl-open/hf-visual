@@ -86,7 +86,10 @@ few minutes.
 
    - `root` is the **stimuli** session folder, the one containing `Arduino`, `Texture` and so on.
    - `ephys_root` is the **SpikeGLX** folder, the one ending in `_g0`, `_g1`, `_g2` …
-   - `kilosort_dir` stays `None` until there is spike sorting for that recording.
+   - `kilosort_dir` is the spike sorting. It can be the day's CatGT **Processed** folder (e.g.
+     `...\ephys61008\Processed_1`): the spikes of the `_gN` run in `ephys_root` are picked out and put on its
+     clock automatically. Leave it `None` when there is no sorting for that run. On 2026-10-08 the probe data of
+     `_g2` (the texture session) is missing from `Processed_1`, so keep `None` there.
    - Keep the `r` in front of each path's quotes; it stops Windows backslashes from causing errors.
 
 ## Part 6: Run it
@@ -118,11 +121,15 @@ one folder, for example `M26031_DriftingGratings_Direction_WheelLog2026-10-08T16
 
 - `folder`: the folder holding the CSV files (e.g. `...\stimuli61008\M26031_20261008_1`).
 - `protocol`: part of the protocol name (e.g. `"DriftingGratings"`), and `start` if it was run more than once.
+- `kilosort_dir`: the day's CatGT **Processed** folder (`...\ephys61008\Processed_1`), or `None`.
 - `ephys_root`: the SpikeGLX `_gN` folder recorded **during that run**. The `fileCreateTime` line in its
   `.nidq.meta` file is its start time; on 2026-10-08, `_g0` is DotMotion (15:36), `_g1` is DriftingGratings (16:00)
   and `_g2` is the texture session.
 
 If the wrong `_gN` folder is given, loading stops with "does not seem to be the recording of this run".
+
+With spike sorting, the notebook ends with a table of units ranked by how strongly their firing differs between
+conditions, rasters and PSTHs of the most selective units, and a population heatmap.
 
 ## When the code is updated
 
@@ -140,6 +147,7 @@ Then click **Restart** at the top of the notebook and **Run All** again.
 | `ModuleNotFoundError` (e.g. matplotlib) | Wrong kernel. Redo Part 4, step 3, and pick `.venv` |
 | `.venv` is not in the kernel list | Run `uv sync` again, then in VS Code: **Ctrl+Shift+P → Developer: Reload Window** |
 | `FileNotFoundError` or "no Arduino CSV file found" | The `root` path is wrong, or the Z: drive is not connected |
+| "gate N has no probe data" | The probe files of that `_gN` run were missing when it was sorted; set `kilosort_dir = None` |
 | "no NI-DAQ stream found" | `ephys_root` must be the `_gN` folder containing the `.nidq.bin` file |
 | "does not seem to be the recording of this run" | Wrong `_gN` folder for this run: compare `fileCreateTime` in the `.nidq.meta` files with the run's start time |
 | "no consistent pulse offset found" | The stimulus and ephys folders are from different recordings: check dates and run numbers |

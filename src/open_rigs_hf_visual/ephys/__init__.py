@@ -4,6 +4,7 @@ Nothing in this package knows about a particular task or rig: it works on SpikeG
 Kilosort files and on arrays of event times in seconds.
 """
 
+from open_rigs_hf_visual.ephys.catgt import load_catgt, load_gate_spikes, load_run_spikes
 from open_rigs_hf_visual.ephys.kilosort import KilosortResult, load_kilosort
 from open_rigs_hf_visual.ephys.spikeglx import SpikeGLXStream, find_streams, read_meta
 from open_rigs_hf_visual.ephys.sync import ClockMap, imec_to_nidq, match_pulse_trains, pair_nearest
@@ -14,7 +15,10 @@ __all__ = [
     "SpikeGLXStream",
     "find_streams",
     "imec_to_nidq",
+    "load_catgt",
+    "load_gate_spikes",
     "load_kilosort",
+    "load_run_spikes",
     "match_pulse_trains",
     "pair_nearest",
     "read_meta",

@@ -34,7 +34,8 @@ import numpy as np
 import pandas as pd
 import swc.aeon.io.api as aeon
 
-from open_rigs_hf_visual.ephys.kilosort import KilosortResult, load_kilosort
+from open_rigs_hf_visual.ephys.catgt import load_run_spikes
+from open_rigs_hf_visual.ephys.kilosort import KilosortResult
 from open_rigs_hf_visual.ephys.spikeglx import SpikeGLXStream, find_streams
 from open_rigs_hf_visual.ephys.sync import ClockMap, imec_to_nidq, match_pulse_trains
 
@@ -228,8 +229,9 @@ def load_csv_session(
         protocol: Protocol name or part of it (e.g. ``"DriftingGratings"``), when the folder
             holds several protocols.
         start: Which run, when the protocol was run more than once (see ``select_run``).
-        kilosort_dir: Kilosort output folder. Defaults to a ``kilosort4`` folder anywhere
-            under ``ephys_root``, if there is one.
+        kilosort_dir: Spike sorting: a CatGT processed folder (e.g. ``.../Processed_1``, the
+            gate is taken from the ``ephys_root`` name), or a Kilosort output folder of this run.
+            Defaults to a ``kilosort4`` folder anywhere under ``ephys_root``, if there is one.
         sync_channel: NI-DAQ channel recording the Arduino sync pulses.
         align_probe: Fit the probe-to-NI-DAQ clock map from the 1 Hz sync (slow: scans the
             probe file). If ``False``, probe and NI-DAQ seconds are treated as equal.
@@ -266,15 +268,8 @@ def load_csv_session(
         )
     probe_map = imec_to_nidq(imec, nidq) if (imec is not None and align_probe) else None
 
-    spikes = None
-    if kilosort_dir is None:
-        candidates = sorted(ephys_root.rglob("kilosort4/spike_times.npy"))
-        kilosort_dir = candidates[0].parent if candidates else None
-    if kilosort_dir is not None:
-        rate = imec.sample_rate if (imec is not None and imec.meta) else None
-        spikes = load_kilosort(kilosort_dir, sample_rate=rate)
-        if probe_map is not None:
-            spikes = spikes.map_times(probe_map)
+    rate = imec.sample_rate if (imec is not None and imec.meta) else None
+    spikes = load_run_spikes(kilosort_dir, ephys_root, probe_map, sample_rate=rate)
 
     return CsvSession(
         protocol=run["protocol"].iloc[0],
