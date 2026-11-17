@@ -131,6 +131,20 @@ If the wrong `_gN` folder is given, loading stops with "does not seem to be the 
 With spike sorting, the notebook ends with a table of units ranked by how strongly their firing differs between
 conditions, rasters and PSTHs of the most selective units, and a population heatmap.
 
+## Exploring units across runs (`explore_units.ipynb`)
+
+Open **examples → explore_units.ipynb**, check the paths in the **Settings** cell (one entry per stimulus run with
+spike sorting) and click **Run All**. Loading takes about a minute per run. At the bottom there are controls to:
+
+- pick the **recording** used to filter and sort units, and the unit **label** (good / mua / all);
+- set a **minimum selectivity** (how much a unit's firing differs between stimulus conditions; about 1 = no effect);
+- **ignore blank** trials, to rank units by their tuning among stimuli (direction, speed) rather than by
+  stimulus-versus-blank;
+- **sort** by selectivity, response, depth or unit number, and step through units with **previous / next**.
+
+Each unit is shown in every run side by side (raster, PSTH, tuning curve) with its position on the probe. If the
+controls don't appear, run `uv sync` again and reload VS Code (they need the `ipywidgets` package).
+
 ## When the code is updated
 
 ```

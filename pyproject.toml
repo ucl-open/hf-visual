@@ -30,7 +30,7 @@ dependencies = [
 [project.optional-dependencies]
 
 data = ["contraqctor<0.5.0"]
-analysis = ["matplotlib", "ipykernel"]
+analysis = ["matplotlib", "ipykernel", "ipywidgets"]
 
 [dependency-groups]
 

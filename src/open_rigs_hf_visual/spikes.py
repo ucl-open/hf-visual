@@ -187,6 +187,81 @@ def population_psth(
     return pd.DataFrame.from_dict(rows, orient="index", columns=pd.Index(time, name="time"))
 
 
+def trial_counts(spike_times, event_times, window: tuple[float, float]) -> np.ndarray:
+    """Number of spikes in ``window`` (seconds relative to each event), one count per event."""
+    spike_times = np.asarray(spike_times, dtype=np.float64)
+    event_times = np.asarray(event_times, dtype=np.float64)
+    # As in align_spikes, but only the number of spikes between the two positions is needed.
+    first = np.searchsorted(spike_times, event_times + window[0], side="left")
+    last = np.searchsorted(spike_times, event_times + window[1], side="left")
+    return (last - first).astype(np.float64)
+
+
+def condition_rates(spike_times, event_times, conditions: Sequence, window: tuple[float, float]) -> pd.DataFrame:
+    """Mean firing rate in ``window`` for each condition (a tuning curve).
+
+    Returns:
+        A DataFrame indexed by condition (sorted) with the ``mean`` rate in Hz, its ``sem``
+        across trials and the number of trials ``n``.
+    """
+    rates = trial_counts(spike_times, event_times, window) / (window[1] - window[0])
+    table = pd.DataFrame({"rate": rates, "condition": np.asarray(conditions)})
+    grouped = table.groupby("condition")["rate"]
+    return pd.DataFrame({"mean": grouped.mean(), "sem": grouped.sem(), "n": grouped.size()})
+
+
+def unit_selectivity(
+    spike_trains: dict[object, np.ndarray],
+    event_times,
+    conditions: Sequence,
+    window: tuple[float, float],
+    baseline: tuple[float, float] = (-0.5, 0.0),
+) -> pd.DataFrame:
+    """How strongly each unit responds to the events, and how much the response depends on condition.
+
+    Args:
+        spike_trains: Spike times per unit, e.g. ``{cluster_id: times}``.
+        event_times: Event times in seconds (e.g. stimulus onsets).
+        conditions: One label per event.
+        window: Response window relative to each event, e.g. ``(0, stimulus_duration)``.
+        baseline: Window relative to each event used as the baseline rate.
+
+    Returns:
+        One row per unit with:
+
+        - ``baseline_rate`` and ``stim_rate``: mean rates (Hz) in the two windows, over all trials;
+        - ``response``: ``stim_rate - baseline_rate``;
+        - ``selectivity``: the one-way ANOVA F statistic of the trial rates across conditions.
+          It is about 1 when the condition makes no difference and grows with the size and
+          reliability of the differences;
+        - ``preferred``: the condition with the highest mean rate in the response window.
+    """
+    event_times = np.asarray(event_times, dtype=np.float64)
+    labels = np.asarray(conditions)
+    groups = sorted(pd.unique(labels))
+    rows = {}
+    for unit, times in spike_trains.items():
+        stim = trial_counts(times, event_times, window) / (window[1] - window[0])
+        base = trial_counts(times, event_times, baseline) / (baseline[1] - baseline[0])
+        per_condition = [stim[labels == g] for g in groups]
+        means = np.array([r.mean() for r in per_condition])
+        sizes = np.array([len(r) for r in per_condition])
+        # One-way ANOVA: variance of the condition means (weighted by trials), divided by the
+        # trial-to-trial variance within conditions, each over its degrees of freedom.
+        between = np.sum(sizes * (means - stim.mean()) ** 2) / max(len(groups) - 1, 1)
+        within = np.sum([((r - r.mean()) ** 2).sum() for r in per_condition]) / max(len(stim) - len(groups), 1)
+        rows[unit] = {
+            "baseline_rate": base.mean(),
+            "stim_rate": stim.mean(),
+            "response": stim.mean() - base.mean(),
+            "selectivity": between / within if within > 0 else np.nan,
+            "preferred": groups[int(np.argmax(means))] if len(groups) else None,
+        }
+    table = pd.DataFrame.from_dict(rows, orient="index")
+    table.index.name = "unit"
+    return table
+
+
 # --- Plotting -----------------------------------------------------------------------------
 
 
@@ -285,3 +360,21 @@ def plot_unit(
     if title:
         raster_ax.set_title(title)
     return raster_ax, psth_ax
+
+
+def plot_tuning(ax, rates: pd.DataFrame, baseline: float | None = None, color=None, label=None):
+    """Draws a tuning curve from ``condition_rates``: mean rate ± SEM per condition.
+
+    Args:
+        ax: Matplotlib axes.
+        rates: Output of ``condition_rates``.
+        baseline: Optional baseline rate drawn as a horizontal line.
+        color, label: Line colour and legend label.
+    """
+    x = np.arange(len(rates))
+    line = ax.errorbar(x, rates["mean"], yerr=rates["sem"], marker="o", ms=4, capsize=2, color=color, label=label)
+    if baseline is not None:
+        ax.axhline(baseline, color="0.5", lw=0.8, ls="--")
+    ax.set_xticks(x, [str(c) for c in rates.index], rotation=45, fontsize="small")
+    ax.set_ylabel("firing rate (Hz)")
+    return line

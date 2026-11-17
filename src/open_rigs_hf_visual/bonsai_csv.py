@@ -349,3 +349,22 @@ def trial_table(
     table["matched"] = matched
     table["trial"] = np.arange(len(table))
     return table
+
+
+def trial_conditions(trials: pd.DataFrame) -> pd.Series:
+    """A condition label per trial for the known protocols, with blank trials labelled ``"blank"``.
+
+    - Drifting gratings: the direction, zero-padded (``"000"``, ``"045"`` ... ``"315"``); blank
+      when ``contrast_g1`` is 0.
+    - Dot motion: the signed dot velocity, zero-padded (``"+000"``, ``"-016"`` ... ``"-256"``);
+      blank when there are no dots (``num_dots1`` is 0).
+    - Anything else: ``"all"``.
+
+    Labels are strings padded to equal width so that they sort in stimulus order, with
+    ``"blank"`` last.
+    """
+    if "angle_g1" in trials:
+        return trials["angle_g1"].map("{:03d}".format).where(trials["contrast_g1"] > 0, "blank")
+    if "vel_x1" in trials:
+        return trials["vel_x1"].map("{:+04d}".format).where(trials["num_dots1"] > 0, "blank")
+    return pd.Series("all", index=trials.index)

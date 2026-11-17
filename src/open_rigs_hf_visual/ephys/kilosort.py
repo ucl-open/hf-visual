@@ -92,7 +92,9 @@ def load_kilosort(path: str | Path, sample_rate: float | None = None) -> Kilosor
             if Kilosort was run with a nominal 30 kHz.
 
     Returns:
-        A ``KilosortResult`` with spike times in seconds on the probe stream clock.
+        A ``KilosortResult`` with spike times in seconds on the probe stream clock. Its ``units``
+        table includes ``x`` and ``y`` (position on the probe, µm) when Kilosort saved
+        ``spike_positions.npy``.
     """
     path = Path(path)
     if not (path / "spike_times.npy").exists() and (path / "sorter_output" / "spike_times.npy").exists():
@@ -132,4 +134,16 @@ def load_kilosort(path: str | Path, sample_rate: float | None = None) -> Kilosor
         if column in units:
             label = units[column].where(units[column].notna(), label)
     units["label"] = label
+
+    # Where each unit sits on the probe: the median of Kilosort's per-spike position estimates
+    # (x across the shank, y = distance along the shank from the tip, in µm).
+    positions_path = path / "spike_positions.npy"
+    if positions_path.exists():
+        positions = np.load(positions_path)
+        median = (
+            pd.DataFrame(positions[:, :2], columns=["x", "y"])
+            .groupby(np.load(path / "spike_clusters.npy").ravel())
+            .median()
+        )
+        units = units.join(median.rename_axis("cluster_id"), how="left")
     return KilosortResult(spike_times, spike_clusters, units, sample_rate, path)
