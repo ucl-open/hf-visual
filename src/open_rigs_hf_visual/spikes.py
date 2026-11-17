@@ -31,8 +31,12 @@ def align_spikes(spike_times, event_times, window: tuple[float, float]) -> list[
     """
     spike_times = np.asarray(spike_times, dtype=np.float64)
     event_times = np.asarray(event_times, dtype=np.float64)
+    # Because spike times are sorted, the spikes in [event + start, event + end) form one
+    # contiguous run. searchsorted finds where each window would start and end by binary
+    # search, so this is fast even for millions of spikes and thousands of events.
     first = np.searchsorted(spike_times, event_times + window[0], side="left")
     last = np.searchsorted(spike_times, event_times + window[1], side="left")
+    # Slice out each run and subtract its event time, so 0 = the event.
     return [spike_times[i:j] - t for i, j, t in zip(first, last, event_times)]
 
 
@@ -79,11 +83,16 @@ class PSTH:
 
 
 def _gaussian_smooth(rates: np.ndarray, sigma_bins: float) -> np.ndarray:
+    # Gaussian kernel, cut off at ±4 standard deviations (beyond that it is negligible), and
+    # scaled to sum to 1 so smoothing doesn't change the overall rate.
     half_width = int(np.ceil(4 * sigma_bins))
     x = np.arange(-half_width, half_width + 1)
     kernel = np.exp(-0.5 * (x / sigma_bins) ** 2)
     kernel /= kernel.sum()
-    # Normalise by the kernel mass inside the window so edges are not pulled towards zero
+    # Near the ends of the window part of the kernel hangs off the edge, where there is no
+    # data; plain convolution treats that as zero rate and drags the ends down. Convolving a
+    # row of ones gives, for each bin, the fraction of the kernel that is inside the window;
+    # dividing by it turns the result into a proper weighted average of the bins available.
     ones = np.ones(rates.shape[1])
     norm = np.convolve(ones, kernel, mode="same")
     return np.apply_along_axis(lambda r: np.convolve(r, kernel, mode="same") / norm, 1, rates)
@@ -109,13 +118,21 @@ def psth(
     Returns:
         A ``PSTH`` with per-trial rates and their mean and SEM.
     """
+    # Bin edges built from integer steps (not np.arange with a float step), so the number of
+    # bins is exact and the same for every call with the same window and bin size.
     n_bins = int(round((window[1] - window[0]) / bin_size))
     edges = window[0] + np.arange(n_bins + 1) * bin_size
     trials = align_spikes(spike_times, event_times, (edges[0], edges[-1]))
+    # Count spikes per bin for each trial -> array (n_trials, n_bins). The reshape keeps that
+    # shape even when there are no events.
     counts = np.array([np.histogram(t, bins=edges)[0] for t in trials], dtype=np.float64).reshape(-1, n_bins)
+    # Spikes per bin / bin width = firing rate in spikes per second (Hz).
     rates = counts / bin_size
     if smooth > 0 and len(rates):
+        # Smooth each trial separately (the smoothing width is converted from seconds to bins),
+        # so trial-by-trial values stay available as well as the mean.
         rates = _gaussian_smooth(rates, smooth / bin_size)
+    # Report each bin at its centre time.
     return PSTH(time=edges[:-1] + bin_size / 2, rates=rates, bin_size=bin_size, smooth=smooth)
 
 

@@ -105,10 +105,16 @@ def load_kilosort(path: str | Path, sample_rate: float | None = None) -> Kilosor
 
     spike_samples = np.load(path / "spike_times.npy").ravel()
     spike_clusters = np.load(path / "spike_clusters.npy").ravel().astype(np.int64)
+    # Kilosort stores spike times as sample numbers. Sort them (the PSTH code relies on
+    # sorted times; "stable" keeps simultaneous spikes in their original order) and divide
+    # by the sample rate to get seconds from the start of the probe recording.
     order = np.argsort(spike_samples, kind="stable")
     spike_times = spike_samples[order].astype(np.float64) / sample_rate
     spike_clusters = spike_clusters[order]
 
+    # One row per unit. Start from the spike counts, then join every cluster_*.tsv table
+    # (Kilosort's KSLabel, Phy's group, amplitudes ...) by cluster id. Columns already
+    # present are dropped from later tables so the join doesn't create duplicates.
     ids, counts = np.unique(spike_clusters, return_counts=True)
     units = pd.DataFrame({"n_spikes": counts}, index=pd.Index(ids, name="cluster_id"))
     for table in sorted(path.glob("cluster_*.tsv")):
@@ -119,7 +125,8 @@ def load_kilosort(path: str | Path, sample_rate: float | None = None) -> Kilosor
         frame = frame.drop(columns=[c for c in frame.columns if c in units.columns], errors="ignore")
         units = units.join(frame, how="left")
 
-    # Prefer manual curation (Phy "group") over Kilosort's automatic label
+    # Prefer manual curation (Phy "group") over Kilosort's automatic label: start from
+    # KSLabel, then overwrite with group wherever a unit has been curated.
     label = pd.Series(np.nan, index=units.index, dtype=object)
     for column in ("KSLabel", "group"):
         if column in units:

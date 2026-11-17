@@ -141,6 +141,8 @@ def select_run(runs: pd.DataFrame, protocol: str | None = None, start=None) -> p
 
 def arduino_sync_pulses(wheel: pd.DataFrame) -> np.ndarray:
     """Times of the sync pulses logged by the Arduino (``last_sync_pulse_time``), in Arduino seconds."""
+    # Every row repeats the time (Arduino ms) of the most recent pulse, so the distinct
+    # values are the pulse times. 0 means "no pulse sent yet".
     pulses = np.unique(wheel["last_sync_pulse_time"].to_numpy())
     return pulses[pulses > 0] / 1000.0
 
@@ -158,6 +160,10 @@ def wall_clock_offset(wheel: pd.DataFrame, arduino_map: ClockMap, nidq: SpikeGLX
     created = nidq.meta.get("fileCreateTime")
     if not created or "bonsai_time" not in wheel:
         return float("nan")
+    # Both sides are expressed as seconds since midnight on the computer clock:
+    #   SpikeGLX: time the NI-DAQ file started + the sample's NI-DAQ time (from the clock map)
+    #   Bonsai:   bonsai_time logged with the same sample
+    # If the right recording was given these describe the same moment, so they agree.
     created = pd.Timestamp(created)
     nidq_start = (created - created.normalize()).total_seconds()
     arduino_seconds = float(aeon.to_seconds(wheel.index[:1])[0])
@@ -325,14 +331,21 @@ def trial_table(
     else:
 
         def seconds(edges):
+            """Edge times (aeon datetimes) as float seconds."""
             return np.asarray(aeon.to_seconds(pd.DatetimeIndex(edges)), dtype=np.float64)
 
+        # The photodiode patch turns bright when a trial's stimulus starts (rising edge) and
+        # dark when it ends (falling edge), measured on the NI-DAQ itself, so these are the
+        # true screen times. Logged trial times are ~50-65 ms earlier (rendering delay).
         rising = seconds(session.nidq.rising_edges(photodiode_channel, threshold=threshold))
         falling = seconds(session.nidq.falling_edges(photodiode_channel, threshold=threshold))
         onsets, matched = snap_to_edges(logged, rising, max_shift=max_shift, lead=lead)
+        # Offset = the first falling edge after each onset (searchsorted gives its index; past
+        # the last edge there is none, so NaN).
         k = np.searchsorted(falling, onsets)
         offsets = np.where(k < len(falling), falling[np.minimum(k, len(falling) - 1)], np.nan)
-        # An offset beyond the next onset belongs to a later trial
+        # If that falling edge comes after the next trial's onset, this trial's own offset was
+        # missed and the edge belongs to a later trial, so leave the offset unknown.
         next_onset = np.append(onsets[1:], np.inf)
         offsets = np.where(offsets < next_onset, offsets, np.nan)
     table.insert(0, "onset", onsets)

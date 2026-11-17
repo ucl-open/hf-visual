@@ -90,11 +90,20 @@ def align_trace(
     """
     times = _seconds(signal.index)
     values = signal.to_numpy(dtype=np.float64)
+    # Drop missing samples; interpolation then bridges short gaps between valid ones.
     keep = np.isfinite(values)
     times, values = times[keep], values[keep]
+    # The relative time points shared by all trials, e.g. -0.5, -0.49, ... 1.5 for dt=0.01.
+    # Built from integer steps so both window ends are included exactly.
     grid = window[0] + np.arange(int(round((window[1] - window[0]) / dt)) + 1) * dt
     event_times = _seconds(event_times)
+    # Absolute times to sample: one row per event (event time + every grid point). The
+    # [:, None] / [None, :] broadcasting makes the (n_events, n_grid) table in one step.
     sample_times = event_times[:, None] + grid[None, :]
+    # Read the signal at those times by linear interpolation between the neighbouring samples.
+    # This puts every trial on the same grid however the signal was sampled, and puts NaN
+    # where a window runs past the start or end of the recording (instead of repeating the
+    # first or last value).
     resampled = np.interp(sample_times, times, values, left=np.nan, right=np.nan)
     return AlignedTrace(grid, resampled.reshape(len(event_times), len(grid)))
 

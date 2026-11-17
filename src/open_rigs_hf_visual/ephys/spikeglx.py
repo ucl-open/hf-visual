@@ -169,6 +169,10 @@ class SpikeGLXStream:
         column = self.channel_index(channel)
         chunk = int(chunk_seconds * self.sample_rate)
         first = last = None
+        # Read the file in chunks (it can be larger than memory) and note the first and last
+        # sample at which the value changes. A live channel changes almost every sample from
+        # noise alone; a dead one is perfectly flat. Changes across a chunk boundary are
+        # missed, which shifts the result by at most one sample.
         for start in range(0, self.n_samples, chunk):
             block = np.asarray(self.samples[start : start + chunk, column])
             changes = np.flatnonzero(np.diff(block) != 0)
@@ -225,20 +229,33 @@ class SpikeGLXStream:
         column = self.channel_index(channel)
         chunk = int(chunk_seconds * self.sample_rate)
         if threshold is None and bit is None:
+            # No threshold given: assume the signal swings between ~0 and its maximum, and use
+            # half of the maximum seen in the first chunk.
             threshold = float(np.max(self.samples[: min(chunk, self.n_samples), column])) / 2
         edges, previous = [], None
+        # Read the channel a chunk at a time so long recordings don't have to fit in memory.
         for first in range(0, self.n_samples, chunk):
             block = np.asarray(self.samples[first : first + chunk, column])
+            # Turn each sample into a high/low state.
             if bit is not None:
+                # Digital channels pack up to 16 lines into one int16 word. Reinterpret as
+                # unsigned (so bit 15 isn't a sign bit), shift the wanted line down to bit 0
+                # and mask off the rest: e.g. bit 3 of 0b1000 -> 1.
                 state = ((block.astype(np.uint16) >> bit) & 1).astype(bool)
             else:
                 state = block >= threshold
             offset = first
             if previous is not None:
+                # Prepend the last state of the previous chunk so an edge falling exactly on
+                # the chunk boundary is still seen; indices then start one sample earlier.
                 state = np.concatenate(([previous], state))
                 offset = first - 1
+            # A rising edge is a low sample followed by a high one (falling: high then low).
+            # changed[i] refers to the transition from state[i] to state[i + 1], so the edge
+            # time is the first sample of the new state, i + 1.
             changed = (~state[:-1] & state[1:]) if direction == "rising" else (state[:-1] & ~state[1:])
             edges.append(np.flatnonzero(changed) + offset + 1)
             previous = state[-1]
+        # Sample index / sample rate = seconds from the start of this stream's file.
         seconds = np.concatenate(edges) / self.sample_rate
         return pd.DatetimeIndex(aeon.to_datetime(pd.Index(seconds)), name="time")

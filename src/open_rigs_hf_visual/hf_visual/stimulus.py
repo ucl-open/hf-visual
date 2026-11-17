@@ -52,13 +52,19 @@ def stimulus_table(
         ``repeat`` (how many times this texture had been shown before).
     """
     names = texture["texture"] if isinstance(texture, pd.DataFrame) else texture
-    names = names[names != names.shift()]  # keep changes only
+    # The stream can repeat the current texture name; keep only rows where the name differs
+    # from the row before, so each row is the moment the screen switched to a new texture.
+    names = names[names != names.shift()]
     times = _seconds(names.index)
     values = names.to_numpy()
 
+    # The sequence alternates texture, blank, texture, blank ... Each non-blank row is one
+    # presentation.
     is_stimulus = values != blank
     stimulus_index = np.flatnonzero(is_stimulus)
-    # A presentation ends at the next change; the last one may still be running at the end
+    # A presentation ends at the next change (normally the switch back to blank), i.e. the
+    # time of the following row. The last one may still be running at the end of the
+    # recording, so it gets NaN.
     offset = np.append(times[1:], np.nan)[stimulus_index]
     table = pd.DataFrame(
         {
@@ -68,8 +74,12 @@ def stimulus_table(
         }
     )
     table["trial"] = np.arange(len(table))
+    # Textures are shown in blocks, each a shuffled order of all textures, so with N textures
+    # presentations 0..N-1 are block 0, N..2N-1 block 1, and so on.
     n_textures = len(available_textures) if available_textures else table["texture"].nunique()
     table["block"] = table["trial"] // max(n_textures, 1)
+    # cumcount numbers the rows within each texture 0, 1, 2 ... in time order: the number of
+    # earlier presentations of the same texture (useful for adaptation).
     table["repeat"] = table.groupby("texture").cumcount()
 
     columns = ["onset", "offset"]
@@ -101,8 +111,12 @@ def photodiode_edges(
     values = photodiode.to_numpy(dtype=np.float64)
     times = _seconds(photodiode.index)
     if threshold is None:
+        # Halfway between the typical dark and bright levels. Percentiles rather than min/max
+        # so single glitches don't move the threshold.
         low, high = np.nanpercentile(values, [5, 95])
         threshold = (low + high) / 2
+    # Rising: below threshold then above it on the next sample (falling: the reverse). +1
+    # gives the first sample after the crossing.
     above = values >= threshold
     rising = np.flatnonzero(~above[:-1] & above[1:]) + 1
     falling = np.flatnonzero(above[:-1] & ~above[1:]) + 1
@@ -129,7 +143,14 @@ def snap_to_edges(times, edges, max_shift: float = 0.1, lead: float = 0.0) -> tu
     """
     times = _seconds(pd.Index(times) if isinstance(times, pd.Series) else times)
     edges = np.sort(_seconds(edges))
+    # For each logged time, the first edge at or after (time - lead). Starting the search a
+    # little early allows for logged times that are themselves late by up to ``lead`` (they
+    # are rounded to the Arduino's ~10 ms sample clock).
     index = np.searchsorted(edges, times - lead, side="left")
+    # index == len(edges) means no edge after this time; clip so indexing stays valid and
+    # mark it unmatched below.
     candidate = edges[np.clip(index, 0, len(edges) - 1)] if len(edges) else np.full_like(times, np.nan)
+    # Accept the edge only if it comes soon enough; otherwise the screen change was missed
+    # (or the photodiode didn't see it) and the logged time is kept.
     matched = (index < len(edges)) & (candidate - times <= max_shift)
     return np.where(matched, candidate, times), matched

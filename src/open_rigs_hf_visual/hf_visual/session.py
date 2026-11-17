@@ -119,6 +119,8 @@ def load_task_parameters(root: str | Path) -> dict:
 
 def arduino_sync_pulses(arduino: pd.DataFrame) -> np.ndarray:
     """Times of the sync pulses logged by the Arduino, in Arduino seconds."""
+    # Every row repeats the time (Arduino ms) of the most recent pulse, so the distinct
+    # values are the pulse times. 0 means "no pulse sent yet".
     pulses = np.unique(arduino["last_sync_pulse_time"].to_numpy())
     return pulses[pulses > 0] / 1000.0
 
@@ -170,6 +172,8 @@ def load_session(
     photodiode = load_stream(root, "ArduinoPhotodiode")
     texture = load_stream(root, "Texture")
 
+    # The same pulses seen by the Arduino (as logged times) and by the NI-DAQ (as rising
+    # edges on the sync channel); match_pulse_trains works out which is which.
     arduino_pulses, nidq_pulses = match_pulse_trains(arduino_sync_pulses(arduino), nidq.rising_edges(sync_channel))
     # The Arduino clock rate wanders by tens of ms over a session, so interpolate between pulses
     arduino_map = ClockMap.fit(arduino_pulses, nidq_pulses, piecewise=True)
