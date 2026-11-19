@@ -133,8 +133,19 @@ conditions, rasters and PSTHs of the most selective units, and a population heat
 
 ## Exploring units across runs (`explore_units.ipynb`)
 
-Open **examples → explore_units.ipynb**, check the paths in the **Settings** cell (one entry per stimulus run with
-spike sorting) and click **Run All**. Loading takes about a minute per run. At the bottom there are controls to:
+Open **examples → explore_units.ipynb**, set `day` in the **Settings** cell and click **Run All**. Loading takes
+about a minute per run. Each day lists its runs, one per SpikeGLX gate, with the kind of stimulus:
+
+| Day | `_g0` | `_g1` | `_g2` | `_g3` |
+|---|---|---|---|---|
+| 2026-10-08 (`Processed_1`) | dot motion | drifting gratings | textures (no spikes: probe meta file missing) | |
+| 2026-10-18 (`Processed_0`) | drifting gratings | checkerboard | sparse noise | textures & noise |
+
+To add a day, copy one of the entries in `days` and set its folders, `kilosort_dir` and the `kind` of each run:
+`trials` (gratings, dot motion), `reversals` (checkerboard), `sparse_noise` or `textures` (open-rigs `ses-...`
+sessions). The day's `Processed_N\..._gkey.csv` lists which stimulus was run in each gate.
+
+At the bottom there are controls to:
 
 - pick the **recording** used to filter and sort units, and the unit **label** (good / mua / all);
 - set a **minimum selectivity** (how much a unit's firing differs between stimulus conditions; about 1 = no effect);
@@ -142,7 +153,8 @@ spike sorting) and click **Run All**. Loading takes about a minute per run. At t
   stimulus-versus-blank;
 - **sort** by selectivity, response, depth or unit number, and step through units with **previous / next**.
 
-Each unit is shown in every run side by side (raster, PSTH, tuning curve) with its position on the probe. If the
+Each unit is shown in every run side by side (raster, PSTH, tuning curve; for sparse noise, its ON/OFF receptive
+field maps and response time course) with its position on the probe. If the
 controls don't appear, run `uv sync` again and reload VS Code (they need the `ipywidgets` package).
 
 ## When the code is updated

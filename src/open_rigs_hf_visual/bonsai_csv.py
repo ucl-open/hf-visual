@@ -55,25 +55,45 @@ def _snake_case(name: str) -> str:
     return re.sub(r"(?<=[A-Z])(?=[A-Z][a-z])", "_", name).lower()
 
 
+_SUBJECT = re.compile(r"^[A-Z]+\d{3,}$")
+"""A subject ID token in a file name, e.g. ``M26031``."""
+
+
 def _split_prefix(prefix: str) -> tuple[str, str, str]:
-    """``M26031_DriftingGratings_Direction_WheelLog`` -> subject, protocol, stream."""
+    """Splits a file name prefix into subject, protocol and stream.
+
+    The stream is the last ``_``-separated token, the subject is the first token that looks
+    like a subject ID (``M26031``), and the protocol is everything else, in order. This works
+    whether the subject comes first (``M26031_DriftingGratings_Direction_WheelLog``) or after
+    the protocol (``Checkerboard_sh3_half_M26031_WheelLog``).
+    """
     parts = prefix.split("_")
-    if len(parts) < 3:
-        return parts[0], "", parts[-1]
-    return parts[0], "_".join(parts[1:-1]), parts[-1]
+    stream, rest = parts[-1], parts[:-1]
+    subject_index = next((i for i, part in enumerate(rest) if _SUBJECT.match(part)), 0 if rest else None)
+    if subject_index is None:
+        return "", "", stream
+    subject = rest[subject_index]
+    protocol = "_".join(rest[:subject_index] + rest[subject_index + 1 :])
+    return subject, protocol, stream
 
 
-def find_runs(folder: str | Path) -> pd.DataFrame:
-    """Lists the CSV files in a folder, one row per file.
+def find_runs(folder: str | Path, max_gap: float = 10.0) -> pd.DataFrame:
+    """Lists the logged files in a folder (``.csv`` streams and ``.bin`` logs), one row per file.
+
+    The files of one run are started by Bonsai within a few seconds of each other, so their
+    time stamps can differ slightly. Files of the same protocol starting within ``max_gap``
+    seconds of each other are grouped into one run, whose ``start`` is the earliest of them.
 
     Returns:
-        A DataFrame with columns ``subject``, ``protocol``, ``start`` (datetime), ``stream``
-        (the name in the file), ``name`` (the common name from ``STREAM_ALIASES``, or the file
-        stream name in snake_case) and ``path``, sorted by start time.
+        A DataFrame with columns ``subject``, ``protocol``, ``start`` (run start, datetime),
+        ``file_start`` (this file's time stamp), ``stream`` (the name in the file), ``name`` (the
+        common name from ``STREAM_ALIASES``, or the file stream name in snake_case) and
+        ``path``, sorted by start time.
     """
     alias = {s: common for common, names in STREAM_ALIASES.items() for s in names}
     rows = []
-    for path in sorted(Path(folder).glob("*.csv")):
+    paths = sorted([*Path(folder).glob("*.csv"), *Path(folder).glob("*.bin")])
+    for path in paths:
         match = _FILE_NAME.match(path.stem)
         if not match:
             continue
@@ -82,14 +102,23 @@ def find_runs(folder: str | Path) -> pd.DataFrame:
             {
                 "subject": subject,
                 "protocol": protocol,
-                "start": pd.to_datetime(match["start"], format="%Y-%m-%dT%H_%M_%S"),
+                "file_start": pd.to_datetime(match["start"], format="%Y-%m-%dT%H_%M_%S"),
                 "stream": stream,
                 "name": alias.get(stream, _snake_case(stream)),
                 "path": path,
             }
         )
-    columns = ["subject", "protocol", "start", "stream", "name", "path"]
-    return pd.DataFrame(rows, columns=columns).sort_values(["start", "name"], ignore_index=True)
+    columns = ["subject", "protocol", "start", "file_start", "stream", "name", "path"]
+    runs = pd.DataFrame(rows, columns=[c for c in columns if c != "start"])
+    if runs.empty:
+        return pd.DataFrame(columns=columns)
+    # Within each protocol, sort the files by time and start a new run wherever the gap to
+    # the previous file is longer than max_gap; every file then gets its run's first time.
+    runs = runs.sort_values(["protocol", "file_start"], ignore_index=True)
+    gap = runs.groupby("protocol")["file_start"].diff() > pd.Timedelta(seconds=max_gap)
+    run_id = (gap | runs["protocol"].ne(runs["protocol"].shift())).cumsum()
+    runs.insert(2, "start", runs.groupby(run_id)["file_start"].transform("min"))
+    return runs.sort_values(["start", "name"], ignore_index=True)
 
 
 def _bonsai_seconds(values: pd.Series) -> np.ndarray:
@@ -242,7 +271,7 @@ def load_csv_session(
             ``.meta`` file is missing.
     """
     run = select_run(find_runs(folder), protocol, start)
-    streams = {row.name: read_stream(row.path) for row in run.itertuples()}
+    streams = {row.name: read_stream(row.path) for row in run.itertuples() if row.path.suffix == ".csv"}
     if "wheel" not in streams:
         raise ValueError(f"the run has no wheel log (with LastSyncPulseTime): {list(run['stream'])}")
 
@@ -368,3 +397,70 @@ def trial_conditions(trials: pd.DataFrame) -> pd.Series:
     if "vel_x1" in trials:
         return trials["vel_x1"].map("{:+04d}".format).where(trials["num_dots1"] > 0, "blank")
     return pd.Series("all", index=trials.index)
+
+
+def edge_table(session: CsvSession, photodiode_channel: str = "XA3", threshold: float | None = 2400) -> pd.DataFrame:
+    """One row per photodiode transition, for runs that log no trial table.
+
+    Some workflows (e.g. checkerboard reversals, sparse noise) flip the photodiode patch at every
+    stimulus change but don't log what was shown in a CSV file. Every transition, rising or
+    falling, is then one stimulus event.
+
+    Returns:
+        A DataFrame with ``onset`` (edge time, NI-DAQ seconds), ``offset`` (the next edge),
+        ``duration``, ``polarity`` (``"rising"`` / ``"falling"``, e.g. the two phases of a
+        reversing checkerboard) and ``event`` (number, in time order).
+    """
+
+    def seconds(edges):
+        return np.asarray(aeon.to_seconds(pd.DatetimeIndex(edges)), dtype=np.float64)
+
+    rising = seconds(session.nidq.rising_edges(photodiode_channel, threshold=threshold))
+    falling = seconds(session.nidq.falling_edges(photodiode_channel, threshold=threshold))
+    onsets = np.concatenate([rising, falling])
+    polarity = np.array(["rising"] * len(rising) + ["falling"] * len(falling))
+    order = np.argsort(onsets, kind="stable")
+    onsets, polarity = onsets[order], polarity[order]
+    # Each event lasts until the next transition; the last one's end is unknown.
+    offsets = np.append(onsets[1:], np.nan)
+    return pd.DataFrame(
+        {
+            "onset": onsets,
+            "offset": offsets,
+            "duration": offsets - onsets,
+            "polarity": polarity,
+            "event": np.arange(len(onsets)),
+        }
+    )
+
+
+def read_sparse_noise(
+    path: str | Path, shape: tuple[int, int] = (8, 16), grey: int = 128, order: str = "F"
+) -> np.ndarray:
+    """Reads the frames of a sparse noise stimulus from its ``*_Log*.bin`` file.
+
+    The file holds every frame as unsigned bytes, one per grid square: ``grey`` (128) for
+    background, 0 for black and 255 for white squares.
+
+    Args:
+        path: The ``.bin`` log file, e.g. ``session.files`` row with ``name == "log"``.
+        shape: Grid size ``(rows, columns)``.
+        grey: Background value.
+        order: Order of the squares within a frame: ``"F"`` (column by column) or ``"C"`` (row
+            by row). For M26031 (2026-10-18), receptive fields are twice as smooth across
+            neighbouring squares with ``"F"``, so the default reads the file column by column.
+            Whether the map is also mirrored relative to the screen cannot be told from the data.
+
+    Returns:
+        Frames as ``int8``, shape ``(n_frames, rows, columns)``: ``+1`` white, ``-1`` black,
+        ``0`` background.
+    """
+    raw = np.fromfile(path, dtype=np.uint8)
+    size = shape[0] * shape[1]
+    if raw.size % size:
+        raise ValueError(f"{raw.size} bytes is not a whole number of {shape[0]}x{shape[1]} frames")
+    frames = np.sign(raw.astype(np.int16) - grey).astype(np.int8).reshape(-1, size)
+    if order == "F":
+        # Column by column: the first ``rows`` bytes are the first column.
+        return frames.reshape(-1, shape[1], shape[0]).transpose(0, 2, 1)
+    return frames.reshape(-1, *shape)
