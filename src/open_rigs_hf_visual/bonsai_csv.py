@@ -47,7 +47,29 @@ STREAM_ALIASES = {
 }
 """Common stream name -> the file stream names used by different workflows."""
 
-_FILE_NAME = re.compile(r"^(?P<prefix>.+?)(?P<start>\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2})$")
+_FILE_NAME = re.compile(r"^(?P<prefix>.+?)(?P<start>\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2})(?P<copy> \(\d+\))?$")
+"""``<prefix><start>``, optionally followed by a copy number such as `` (2)``."""
+
+_HEADER_STREAMS = {
+    "WheelLog": ("Wheel", "LastSyncPulseTime"),
+    "PDAsync": ("Photodiode", "AsyncPulse"),
+    "Video": ("VideoFrameCount",),
+    "Trial": ("BonsaiTime", "ArduinoTime"),
+}
+"""Stream name -> columns its CSV header must have, checked in this order (every stream has
+``BonsaiTime`` and ``ArduinoTime``, so ``Trial`` is whatever is left)."""
+
+
+def _stream_from_header(path: Path) -> str | None:
+    """The stream of a CSV file from its column header, or ``None`` if not recognised.
+
+    Used for numbered copies (``... (1).csv``, ``... (2).csv``): when Bonsai is given the
+    same file name for every stream, the name no longer says which stream a file holds
+    (e.g. M26031 2026-10-09 DriftingGratings_TF, all named ``..._WheelLog...``).
+    """
+    with open(path, encoding="utf-8", errors="replace") as file:
+        header = set(file.readline().strip().split(","))
+    return next((stream for stream, needed in _HEADER_STREAMS.items() if header.issuperset(needed)), None)
 
 
 def _snake_case(name: str) -> str:
@@ -98,6 +120,8 @@ def find_runs(folder: str | Path, max_gap: float = 10.0) -> pd.DataFrame:
         if not match:
             continue
         subject, protocol, stream = _split_prefix(match["prefix"])
+        if match["copy"] and path.suffix == ".csv":
+            stream = _stream_from_header(path) or stream
         rows.append(
             {
                 "subject": subject,
@@ -383,8 +407,10 @@ def trial_table(
 def trial_conditions(trials: pd.DataFrame) -> pd.Series:
     """A condition label per trial for the known protocols, with blank trials labelled ``"blank"``.
 
-    - Drifting gratings: the direction, zero-padded (``"000"``, ``"045"`` ... ``"315"``); blank
-      when ``contrast_g1`` is 0.
+    - Drifting gratings: the parameters that vary between (non-blank) trials, each zero-padded:
+      direction (``"000"`` ... ``"315"``), spatial frequency (``"sf0.020"``) and temporal
+      frequency (``"tf01.0"``). A direction run gives ``"045"``, a spatial frequency run at two
+      directions ``"sf0.020 180"``. Blank when ``contrast_g1`` is 0.
     - Dot motion: the signed dot velocity, zero-padded (``"+000"``, ``"-016"`` ... ``"-256"``);
       blank when there are no dots (``num_dots1`` is 0).
     - Anything else: ``"all"``.
@@ -393,7 +419,18 @@ def trial_conditions(trials: pd.DataFrame) -> pd.Series:
     ``"blank"`` last.
     """
     if "angle_g1" in trials:
-        return trials["angle_g1"].map("{:03d}".format).where(trials["contrast_g1"] > 0, "blank")
+        shown = trials["contrast_g1"] > 0
+        formats = {
+            "spatial_frequency": "sf{:05.3f}".format,
+            "temporal_frequency": "tf{:04.1f}".format,
+            "angle_g1": lambda angle: f"{int(angle):03d}",
+        }
+        # Only the parameters that change between the shown trials go into the label.
+        varying = [c for c in formats if c in trials and trials.loc[shown, c].nunique() > 1] or ["angle_g1"]
+        labels = trials[varying[0]].map(formats[varying[0]])
+        for column in varying[1:]:
+            labels = labels + " " + trials[column].map(formats[column])
+        return labels.where(shown, "blank")
     if "vel_x1" in trials:
         return trials["vel_x1"].map("{:+04d}".format).where(trials["num_dots1"] > 0, "blank")
     return pd.Series("all", index=trials.index)

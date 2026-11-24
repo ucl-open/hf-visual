@@ -16,7 +16,7 @@ Kinds of run:
 - ``"sparse_noise"``: flat CSV run plus the ``.bin`` frame log. One event per frame, with the
   frames kept for receptive field mapping.
 - ``"textures"``: open-rigs (aeon) texture sessions. One event per presentation; condition =
-  texture family (``SN_42``, ``SImg_605`` ...; ``blank1``/``blank2`` -> ``"blank"``), the texture
+  texture family (``SN_42``, ``SImg_605`` ...; ``blank1``, ``blank2`` ... -> ``"blank"``), the texture
   name is kept in ``texture``.
 """
 
@@ -73,10 +73,13 @@ class StimulusRun:
         return {u: self.spikes.spikes(u) for u in self.spikes.unit_ids(label=None)}
 
 
-def texture_family(names: pd.Series, blanks: tuple[str, ...] = ("blank1", "blank2")) -> pd.Series:
-    """Texture family from texture names: ``"SN_42_3"`` -> ``"SN_42"``; blank textures -> ``"blank"``."""
+def texture_family(names: pd.Series) -> pd.Series:
+    """Texture family from texture names: ``"SN_42_3"`` -> ``"SN_42"``.
+
+    Blank textures (``blank1``, ``blank2``, ``blank3`` ...) all become ``"blank"``.
+    """
     family = names.str.rsplit("_", n=1).str[0]
-    return family.where(~names.isin(blanks), "blank")
+    return family.where(~names.str.fullmatch(r"blank\d*"), "blank")
 
 
 def _seconds(edges) -> np.ndarray:

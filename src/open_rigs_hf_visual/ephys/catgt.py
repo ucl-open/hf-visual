@@ -70,21 +70,27 @@ class CatGTOutput:
         folder: The processed folder.
         offsets: Gate start times in each joined stream (see ``read_offsets``).
         first_gate: The gate number of the first joined gate.
+        cmdline: The CatGT command line.
         nidq_duration: Length of the joined NI-DAQ file, in seconds.
         probe_duration: Length of the joined probe file, in seconds (end of the last spike
             search window); ``NaN`` if unknown.
         imec_sync, nidq_sync: Sync edge times in the joined probe and NI-DAQ files, in seconds.
         kilosort_dir: The Kilosort output folder, or ``None`` if not found.
+        joined_gates: For each stream (``"nidq"``, ``"imap0"``), the gate numbers it joined, in
+            order, when known (see ``joined_gates``). Otherwise the gates are taken to follow
+            each other from ``first_gate`` with none missing.
     """
 
     folder: Path
     offsets: dict[str, np.ndarray]
     first_gate: int
+    cmdline: str
     nidq_duration: float
     probe_duration: float
     imec_sync: np.ndarray
     nidq_sync: np.ndarray
     kilosort_dir: Path | None
+    joined_gates: dict[str, list[int]] | None = None
 
     @property
     def probe_to_nidq(self) -> ClockMap:
@@ -94,15 +100,19 @@ class CatGTOutput:
         # between gates can shift the two joined files slightly relative to each other.
         return ClockMap.fit(*pair_nearest(self.imec_sync, self.nidq_sync), piecewise=True)
 
+    def gates(self, stream: str = "nidq") -> list[int]:
+        """Gate numbers joined in the file of ``stream``, in order."""
+        if self.joined_gates and stream in self.joined_gates:
+            return self.joined_gates[stream]
+        return list(range(self.first_gate, self.first_gate + len(self.offsets[stream])))
+
     def gate_window(self, gate: int, stream: str = "nidq") -> tuple[float, float]:
         """Start and end of a gate in the joined file of ``stream``, in seconds."""
         starts = self.offsets[stream]
-        index = gate - self.first_gate
-        if not 0 <= index < len(starts):
-            raise ValueError(
-                f"gate {gate} is not in the joined {stream} file (it has gates "
-                f"{self.first_gate} to {self.first_gate + len(starts) - 1})"
-            )
+        gates = self.gates(stream)
+        if gate not in gates:
+            raise ValueError(f"gate {gate} is not in the joined {stream} file (it has gates {gates})")
+        index = gates.index(gate)
         if index + 1 < len(starts):
             end = starts[index + 1]
         else:
@@ -137,6 +147,7 @@ def load_catgt(folder: str | Path) -> CatGTOutput:
         folder=folder,
         offsets=offsets,
         first_gate=_first_gate(nidq_meta),
+        cmdline=nidq_meta.get("catGTCmdline0", ""),
         nidq_duration=float(nidq_meta["fileTimeSecs"]),
         probe_duration=probe_duration,
         imec_sync=imec_sync,
@@ -153,7 +164,54 @@ def gate_number(run_folder: str | Path) -> int:
     return int(match.group(1))
 
 
-def load_gate_spikes(folder: str | Path, gate: int, kilosort: KilosortResult | None = None) -> KilosortResult:
+def joined_gates(run_folder: str | Path, catgt: CatGTOutput) -> dict[str, list[int]]:
+    """The gates CatGT joined in each stream, from the gate folders of the recording.
+
+    CatGT joins the gates ``-g=first,last`` in order but skips a gate whose files are missing
+    (no ``_g2`` folder, as on M26031 2026-10-06, or no probe ``.meta`` in it with
+    ``-prb_miss_ok``, as on 2026-10-08), so a gate's place in the joined file is not always
+    ``gate - first``. The gates found are checked against the starts in ``*_ct_offsets.txt``.
+
+    Args:
+        run_folder: Any SpikeGLX gate folder of the recording (``..._gN``); its siblings are
+            the other gates.
+        catgt: The CatGT output of that recording.
+    """
+    run_folder = Path(run_folder)
+    stem = re.sub(r"_g\d+$", "", run_folder.name)
+    match = re.search(r"-g=\d+,(\d+)", catgt.cmdline)
+    last = int(match.group(1)) if match else None
+    # The NI-DAQ files sit in the gate folder, the probe files in an _imec0 subfolder.
+    patterns = {"nidq": "*.nidq.meta", "imap0": "*_imec0/*.imec0.ap.meta"}
+    result = {}
+    for stream, pattern in patterns.items():
+        if stream not in catgt.offsets:
+            continue
+        gates = []
+        for folder in run_folder.parent.glob(f"{stem}_g*"):
+            number = re.search(r"_g(\d+)$", folder.name)
+            if not number:
+                continue
+            gate = int(number.group(1))
+            in_range = gate >= catgt.first_gate and (last is None or gate <= last)
+            if in_range and any(folder.glob(pattern)):
+                gates.append(gate)
+        gates.sort()
+        if len(gates) != len(catgt.offsets[stream]):
+            raise ValueError(
+                f"found gates {gates} with {stream} files next to {run_folder}, but the joined "
+                f"{stream} file in {catgt.folder} has {len(catgt.offsets[stream])} gates"
+            )
+        result[stream] = gates
+    return result
+
+
+def load_gate_spikes(
+    folder: str | Path,
+    gate: int,
+    kilosort: KilosortResult | None = None,
+    run_folder: str | Path | None = None,
+) -> KilosortResult:
     """Spikes of one gate, with times in seconds on that gate's own NI-DAQ file clock.
 
     Args:
@@ -161,22 +219,25 @@ def load_gate_spikes(folder: str | Path, gate: int, kilosort: KilosortResult | N
         gate: Gate number (``1`` for ``..._g1``).
         kilosort: An already loaded sorting of the joined probe file; loaded from ``folder``
             otherwise.
+        run_folder: The SpikeGLX gate folder, to find which gates were joined when some are
+            missing (see ``joined_gates``). Without it, the gates are taken to be consecutive.
 
     Returns:
         A ``KilosortResult`` holding only the spikes recorded during the gate. Its times can
         be compared directly with a session aligned to that gate's NI-DAQ file.
     """
     catgt = load_catgt(folder)
+    if run_folder is not None:
+        catgt.joined_gates = joined_gates(run_folder, catgt)
     if kilosort is None:
         if catgt.kilosort_dir is None:
             raise FileNotFoundError(f"no kilosort4 output under {folder}")
         kilosort = load_kilosort(catgt.kilosort_dir)
     # Keep the spikes inside this gate's part of the joined probe file. If the probe files of
     # this gate were missing, CatGT left the gate out of the probe stream: there are no spikes.
-    if "imap0" in catgt.offsets and gate - catgt.first_gate >= len(catgt.offsets["imap0"]):
+    if "imap0" in catgt.offsets and gate not in catgt.gates("imap0"):
         raise ValueError(
-            f"gate {gate} has no probe data in {folder}: the joined probe file only covers gates "
-            f"{catgt.first_gate} to {catgt.first_gate + len(catgt.offsets['imap0']) - 1}"
+            f"gate {gate} has no probe data in {folder}: the joined probe file only covers gates {catgt.gates('imap0')}"
         )
     probe_start, probe_end = catgt.gate_window(gate, "imap0") if "imap0" in catgt.offsets else (0.0, np.inf)
     gate_spikes = kilosort.restrict(probe_start, probe_end)
@@ -210,6 +271,6 @@ def load_run_spikes(
             return None
         kilosort_dir = found[0].parent
     if is_catgt_folder(kilosort_dir):
-        return load_gate_spikes(kilosort_dir, gate_number(run_folder))
+        return load_gate_spikes(kilosort_dir, gate_number(run_folder), run_folder=run_folder)
     spikes = load_kilosort(kilosort_dir, sample_rate=sample_rate)
     return spikes.map_times(probe_map) if probe_map is not None else spikes

@@ -136,10 +136,16 @@ conditions, rasters and PSTHs of the most selective units, and a population heat
 Open **examples → explore_units.ipynb**, set `day` in the **Settings** cell and click **Run All**. Loading takes
 about a minute per run. Each day lists its runs, one per SpikeGLX gate, with the kind of stimulus:
 
-| Day | `_g0` | `_g1` | `_g2` | `_g3` |
-|---|---|---|---|---|
-| 2026-10-08 (`Processed_1`) | dot motion | drifting gratings | textures (no spikes: probe meta file missing) | |
-| 2026-10-18 (`Processed_0`) | drifting gratings | checkerboard | sparse noise | textures & noise |
+| Day | `_g0` | `_g1` | `_g2` | `_g3` | `_g4` |
+|---|---|---|---|---|---|
+| 2026-10-06 (`Processed_1`) | dot motion | gratings, spatial frequency | (no `_g2`) | gratings, temporal frequency | |
+| 2026-10-07 (`Processed_1`) | gratings, direction | gratings, spatial frequency | textures | | |
+| 2026-10-08 (`Processed_1`) | dot motion | gratings, direction | textures (no spikes: probe meta file missing) | | |
+| 2026-10-09 (`Processed_1`) | gratings, spatial frequency | gratings, temporal frequency | textures | | |
+| 2026-10-13 (`Processed_1`) | dot motion | gratings, temporal frequency | gratings, spatial frequency | sparse noise | checkerboard |
+| 2026-10-18 (`Processed_0`) | gratings, direction | checkerboard | sparse noise | textures & noise | |
+
+Spatial and temporal frequency runs are shown at two directions, so their conditions read e.g. `sf0.020 180`.
 
 To add a day, copy one of the entries in `days` and set its folders, `kilosort_dir` and the `kind` of each run:
 `trials` (gratings, dot motion), `reversals` (checkerboard), `sparse_noise` or `textures` (open-rigs `ses-...`

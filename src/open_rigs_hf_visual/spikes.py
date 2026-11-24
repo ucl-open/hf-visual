@@ -201,13 +201,15 @@ def condition_rates(spike_times, event_times, conditions: Sequence, window: tupl
     """Mean firing rate in ``window`` for each condition (a tuning curve).
 
     Returns:
-        A DataFrame indexed by condition (sorted) with the ``mean`` rate in Hz, its ``sem``
-        across trials and the number of trials ``n``.
+        A DataFrame indexed by condition (sorted, with ``"blank"`` last) with the ``mean``
+        rate in Hz, its ``sem`` across trials and the number of trials ``n``.
     """
     rates = trial_counts(spike_times, event_times, window) / (window[1] - window[0])
     table = pd.DataFrame({"rate": rates, "condition": np.asarray(conditions)})
     grouped = table.groupby("condition")["rate"]
-    return pd.DataFrame({"mean": grouped.mean(), "sem": grouped.sem(), "n": grouped.size()})
+    result = pd.DataFrame({"mean": grouped.mean(), "sem": grouped.sem(), "n": grouped.size()})
+    order = [c for c in result.index if c != "blank"] + [c for c in result.index if c == "blank"]
+    return result.loc[order]
 
 
 def unit_selectivity(
