@@ -103,8 +103,9 @@ def find_runs(folder: str | Path, max_gap: float = 10.0) -> pd.DataFrame:
     """Lists the logged files in a folder (``.csv`` streams and ``.bin`` logs), one row per file.
 
     The files of one run are started by Bonsai within a few seconds of each other, so their
-    time stamps can differ slightly. Files of the same protocol starting within ``max_gap``
+    time stamps can differ slightly. CSV files of the same protocol starting within ``max_gap``
     seconds of each other are grouped into one run, whose ``start`` is the earliest of them.
+    A ``.bin`` log joins the latest run of its protocol that started before it.
 
     Returns:
         A DataFrame with columns ``subject``, ``protocol``, ``start`` (run start, datetime),
@@ -136,12 +137,20 @@ def find_runs(folder: str | Path, max_gap: float = 10.0) -> pd.DataFrame:
     runs = pd.DataFrame(rows, columns=[c for c in columns if c != "start"])
     if runs.empty:
         return pd.DataFrame(columns=columns)
-    # Within each protocol, sort the files by time and start a new run wherever the gap to
+    # Within each protocol, sort the CSV files by time and start a new run wherever the gap to
     # the previous file is longer than max_gap; every file then gets its run's first time.
     runs = runs.sort_values(["protocol", "file_start"], ignore_index=True)
-    gap = runs.groupby("protocol")["file_start"].diff() > pd.Timedelta(seconds=max_gap)
-    run_id = (gap | runs["protocol"].ne(runs["protocol"].shift())).cumsum()
-    runs.insert(2, "start", runs.groupby(run_id)["file_start"].transform("min"))
+    csv = runs["path"].map(lambda p: p.suffix == ".csv")
+    streams = runs[csv]
+    gap = streams.groupby("protocol")["file_start"].diff() > pd.Timedelta(seconds=max_gap)
+    run_id = (gap | streams["protocol"].ne(streams["protocol"].shift())).cumsum()
+    runs.insert(2, "start", streams.groupby(run_id)["file_start"].transform("min"))
+    # A .bin log can be started well after the CSV files, e.g. sparse noise after a few minutes
+    # of grey screen (M26031 2026-10-14: 5.5 min). It belongs to the latest run of its
+    # protocol that had started by then, or forms a run of its own if there is none.
+    for i in runs.index[~csv]:
+        same = runs[csv & (runs["protocol"] == runs.at[i, "protocol"]) & (runs["start"] <= runs.at[i, "file_start"])]
+        runs.at[i, "start"] = same["start"].max() if not same.empty else runs.at[i, "file_start"]
     return runs.sort_values(["start", "name"], ignore_index=True)
 
 

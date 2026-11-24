@@ -82,6 +82,17 @@ def texture_family(names: pd.Series) -> pd.Series:
     return family.where(~names.str.fullmatch(r"blank\d*"), "blank")
 
 
+def _longest_regular_stretch(events: pd.DataFrame, max_gap: float = 10.0) -> pd.DataFrame:
+    """The longest run of events with no gap over ``max_gap`` times the median spacing."""
+    gaps = np.diff(events["onset"].to_numpy())
+    if gaps.size == 0:
+        return events
+    breaks = np.flatnonzero(gaps > max_gap * np.median(gaps)) + 1
+    edges = np.concatenate([[0], breaks, [len(events)]])
+    longest = np.argmax(np.diff(edges))
+    return events.iloc[edges[longest] : edges[longest + 1]].reset_index(drop=True)
+
+
 def _seconds(edges) -> np.ndarray:
     return np.asarray(aeon.to_seconds(pd.DatetimeIndex(edges)), dtype=np.float64)
 
@@ -142,6 +153,10 @@ def load_run(
                 if logs.empty:
                     raise FileNotFoundError(f"no sparse noise .bin log in the {protocol} run")
                 frames = read_sparse_noise(logs["path"].iloc[0], shape=sparse_noise_shape)
+                # Keep the stretch of regularly spaced flips (the noise itself). Stray flips
+                # before it, such as a 17 ms blip 5.7 min before the noise on M26031
+                # 2026-10-14, are cut off by a gap far longer than a frame.
+                events = _longest_regular_stretch(events)
                 # One frame per photodiode flip, in order (checked on M26031: receptive fields
                 # are far clearer than with a one-frame shift either way). The log can hold one
                 # frame more than there are flips.

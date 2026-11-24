@@ -143,6 +143,7 @@ about a minute per run. Each day lists its runs, one per SpikeGLX gate, with the
 | 2026-10-08 (`Processed_1`) | dot motion | gratings, direction | textures (no spikes: probe meta file missing) | | |
 | 2026-10-09 (`Processed_1`) | gratings, spatial frequency | gratings, temporal frequency | textures | | |
 | 2026-10-13 (`Processed_1`) | dot motion | gratings, temporal frequency | gratings, spatial frequency | sparse noise | checkerboard |
+| 2026-10-14 (`Processed_0`) | sparse noise | checkerboard | gratings, direction | textures | gratings, temporal frequency |
 | 2026-10-18 (`Processed_0`) | gratings, direction | checkerboard | sparse noise | textures & noise | |
 
 Spatial and temporal frequency runs are shown at two directions, so their conditions read e.g. `sf0.020 180`.
